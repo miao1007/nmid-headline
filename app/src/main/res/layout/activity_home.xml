@@ -1,0 +1,43 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/include_toolbar" />
+
+        <view
+            android:id="@+id/drawer"
+            class="android.support.v4.widget.DrawerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--coontent view-->
+            <include layout="@layout/include_viewpager" />
+
+            <!--navigation drawer-->
+            <fragment
+                android:id="@+id/fragment"
+                android:name="cn.edu.cqupt.nmid.headline.ui.fragment.NavigationDawerFragment"
+                android:layout_width="@dimen/drawerweigth"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                tools:layout="@layout/fragment_navigation_dawer" />
+
+
+        </view>
+
+
+    </LinearLayout>
+
+    <!--<cn.edu.cqupt.nmid.headline.ui.widget.PullUpLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
+
+</FrameLayout>

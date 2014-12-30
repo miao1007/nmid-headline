@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/abc_cab_background_top_material"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/include_toolbar" />
+
+
+    <TextView
+        android:id="@+id/activity_login_by_qzone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/qq_login"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="使用QQ空间登陆"
+        android:textSize="18dp"></TextView>
+
+    <TextView
+        android:id="@+id/activity_login_by_sinaweibo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/weibo_login"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="使用微博登陆"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/activity_login_exit"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dp"
+        android:background="@color/primary_dark"
+        android:textColor="@color/primary_text_default_material_light"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="退出"
+        android:textSize="18dp" />
+
+</LinearLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColor">@color/secondary_text_night</item>
+    </style>
+
+    <style name="AppTheme.Light" parent="AppTheme">
+        <!-- Set AppCompat’s color theming attrs -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="toolbarStyle">@style/ToolbarTheme.Light</item>
+
+
+    </style>
+
+    <style name="AppTheme.Dark" parent="AppTheme">
+        <!-- Set AppCompat’s color theming attrs -->
+        <item name="colorPrimary">@color/primary_night</item>
+        <item name="colorPrimaryDark">@color/primary_dark_night</item>
+        <item name="colorAccent">@color/accent_night</item>
+
+        <item name="toolbarStyle">@style/ToolbarTheme.Dark</item>
+
+        <!--<item name="android:background">#ff393939</item>-->
+
+    </style>
+
+    <style name="ToolbarTheme" parent="Base.Widget.AppCompat.Toolbar" >
+
+    </style>
+
+
+
+    <style name="ToolbarTheme.Light" parent="ToolbarTheme">
+        <item name="android:background">@color/primary</item>
+    </style>
+
+    <style name="ToolbarTheme.Dark" parent="ToolbarTheme">
+        <item name="android:background">@color/primary_night</item>
+
+    </style>
+
+
+
+</resources>

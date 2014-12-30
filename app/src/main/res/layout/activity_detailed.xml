@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <cn.edu.cqupt.nmid.headline.ui.widget.ObseverWebView
+        android:id="@+id/detailed_webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <ImageView
+        android:id="@+id/detailed_img_btn"
+        android:layout_width="@dimen/btn_fab_size"
+        android:layout_height="@dimen/btn_fab_size"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/btn_fab_margins"
+        android:layout_marginRight="@dimen/btn_fab_margins"
+        android:background="@drawable/btn_fab_default"
+        android:src="@drawable/ic_more_horiz_grey600_48dp"
+        android:textSize="28sp" />
+
+
+</RelativeLayout>

@@ -1,0 +1,5 @@
+<view xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    class="android.support.v7.widget.Toolbar"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" />

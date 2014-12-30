@@ -1,0 +1,17 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="drawerweigth">240dp</dimen>
+    <dimen name="drawerheigth_half">120dp</dimen>
+    <dimen name="ic_menu_size">24dp</dimen>
+    <dimen name="settings_padding_horizon">16dp</dimen>
+    <dimen name="settings_padding_vertical">15dp</dimen>
+    <dimen name="settings_text_size">@dimen/abc_text_size_small_material</dimen>
+
+
+    <dimen name="btn_fab_size">56dp</dimen>
+    <dimen name="btn_fab_margins">16dp</dimen>
+    <dimen name="default_elevation">8dp</dimen>
+    <dimen name="comment_avatar_size">56dp</dimen>
+</resources>

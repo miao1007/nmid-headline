@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/library-2.4.0-715a51ee674a9544062be0705e4542b10f7a44a3.jar" />
+    </item>
+    <item
+        jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp-urlconnection/2.0.0/afe8399d352713b66e597e9670c741d1e60ae923/okhttp-urlconnection-2.0.0.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="afe8399d352713b66e597e9670c741d1e60ae923">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/okhttp-urlconnection-2.0.0-bf24a8aebfbea4595e489f87ac4be053c7fae2f8.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/classes-9262ae103736a240b79a122d6729e28af05c022c.jar" />
+    </item>
+    <item
+        jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/5fc52c41ef0239d1093a1eb7c3697036183677ce/gson-2.3.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/gson-2.3-61544d749980abaccf69b65bbdaadf157f6aa32f.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/exploded-aar/Headline/onekeyshare/unspecified/libs/ShareSDK-QZone-2.5.4.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="f5b64253601e578a21ca30e7d70a62832b159f87">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/ShareSDK-QZone-2.5.4-b9323364320b1b82ccd3744930f9ab46e19b0c58.jar" />
+    </item>
+    <item
+        jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.0.0/2534c458682c73f5b9871131ab3098d3f987ca3/okio-1.0.0.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="02534c458682c73f5b9871131ab3098d3f987ca3">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/okio-1.0.0-cdf2e4c6a2f85780e45aad7e71d7725d5cdcd17e.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/exploded-aar/Headline/onekeyshare/unspecified/libs/mframework.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="25509058b34a5ee08dbf66e57078e3083735d200">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/mframework-330762a307be20c49e4871ebe608739f4646efb6.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Documents/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-ace6b8b1d6eb0885cfb16a87cc832ea5103dc599.jar" />
+    </item>
+    <item
+        jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit/retrofit/1.8.0/a517f29ed06be2b2879524fcd94b6e9b36e2e0b5/retrofit-1.8.0.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="a517f29ed06be2b2879524fcd94b6e9b36e2e0b5">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/retrofit-1.8.0-0e14c260d7453a4b920fea62d9c1659f4be6d6f9.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/exploded-aar/Headline/onekeyshare/unspecified/libs/ShareSDK-Wechat-Moments-2.5.4.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="d6099d9ae9f26a9f11485f92698689554871651f">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/ShareSDK-Wechat-Moments-2.5.4-0569b6388b79196ff82f3016b39cac68ac7de943.jar" />
+    </item>
+    <item
+        jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife/6.0.0/3a10b25b6820e19102e118711afe6a66c0bae123/butterknife-6.0.0.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="3a10b25b6820e19102e118711afe6a66c0bae123">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/butterknife-6.0.0-91277092c3f24f1ceb7d0b1d9ddc2499defa0526.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/exploded-aar/Headline/onekeyshare/unspecified/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="6c24f9f7e9fa84ac80c4c5740f4d31ca21de605b">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/classes-39d46cbf0b4a5eaaa7b22eff68e06f0c59377c11.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/exploded-aar/Headline/onekeyshare/unspecified/libs/ShareSDK-SinaWeibo-2.5.4.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="e9156ea1cce8f9aaa90bec37bcf6a343c78e6607">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/ShareSDK-SinaWeibo-2.5.4-b1e407206791e10876b524a4b6114bb9ff64b74f.jar" />
+    </item>
+    <item
+        jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp/2.0.0/4c8d1536dba3812cc1592090dc20c47a4ed3c35e/okhttp-2.0.0.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="4c8d1536dba3812cc1592090dc20c47a4ed3c35e">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/okhttp-2.0.0-68fc1e0d7881ecee0996108ef317a12b5315a435.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/exploded-aar/Headline/onekeyshare/unspecified/libs/ShareSDK-Socialization-1.0.6.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="469d9ede8576993374dbc259f7ec7ab4c13cfbe6">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/ShareSDK-Socialization-1.0.6-ea8a0325731af90da31eabbc69741ce4582e2bdb.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="4b8945fc23a7461c6fdde15753456d64b0a9358b">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/classes-049f9e46c4c239caf4675a55e13a003df4cf6d89.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/exploded-aar/Headline/onekeyshare/unspecified/libs/ShareSDK-Core-2.5.4.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="74e0af86c3bb20aab1417e8346d7b1d56e3d7ac7">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/ShareSDK-Core-2.5.4-fc28073a57d28d1934638939a6db07918827b811.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/classes-b37081b0f026b3899df7ae9b40ef20b13967d720.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/exploded-aar/Headline/onekeyshare/unspecified/libs/ShareSDK-Wechat-Core-2.5.4.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="152797473d23c4d98066f0d341d18f992f75098a">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/ShareSDK-Wechat-Core-2.5.4-5b1a0c7e18bce246e0a9d10e8773c711696e67ae.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-d906f8b250c389b91646b2c583c27b50cfd81a96.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/exploded-aar/Headline/onekeyshare/unspecified/libs/ShareSDK-QQ-2.5.4.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="d73975558112ed2a419b7b1e522ca51e05b900ef">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/ShareSDK-QQ-2.5.4-82585393183352590349eadfd2f1e345f23b1e66.jar" />
+    </item>
+    <item
+        jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.4.0/f36d2d4e3a36b3259aaf9d004d29b4cdc6c1bfb2/picasso-2.4.0.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="f36d2d4e3a36b3259aaf9d004d29b4cdc6c1bfb2">
+        <dex dex="/Users/leon/Desktop/NMID-HEADLINE/Headline/app/build/intermediates/pre-dexed/debug/picasso-2.4.0-370b51096b744632bc1407362ee0ffaf8f22ce0a.jar" />
+    </item>
+
+</items>
