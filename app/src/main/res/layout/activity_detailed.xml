@@ -1,29 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
 
-    <cn.edu.cqupt.nmid.headline.ui.widget.ObseverWebView
+    <cn.edu.cqupt.nmid.headline.ui.widget.ObservableWebView
         android:id="@+id/detailed_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
 
-    <ImageView
-        android:id="@+id/detailed_img_btn"
-        android:layout_width="@dimen/btn_fab_size"
-        android:layout_height="@dimen/btn_fab_size"
+    <cn.edu.cqupt.nmid.headline.ui.widget.FloatingActionsMenuHidable
+        android:id="@+id/detailed_multiple_actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/btn_fab_margins"
-        android:layout_marginRight="@dimen/btn_fab_margins"
-        android:background="@drawable/btn_fab_default"
-        android:src="@drawable/ic_more_horiz_grey600_48dp"
-        android:textSize="28sp" />
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        fab:fab_addButtonColorNormal="@color/icons"
+        fab:fab_addButtonColorPressed="@color/divider"
+        fab:fab_addButtonPlusIconColor="#808080"
+        fab:fab_labelStyle="@style/menu_labels_style">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/detailed_action_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/icons"
+            fab:fab_icon="@drawable/ic_share_grey600_36dp"
+            fab:fab_colorPressed="@color/divider"
+            fab:fab_title="分享" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/detailed_action_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_favorite_grey600_24dp"
+            fab:fab_colorNormal="@color/icons"
+            fab:fab_colorPressed="@color/divider"
+            fab:fab_title="收藏" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/detailed_action_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/icons"
+            fab:fab_icon="@drawable/ic_settings_grey600_24dp"
+            fab:fab_colorPressed="@color/divider"
+            fab:fab_title="设置" />
+    </cn.edu.cqupt.nmid.headline.ui.widget.FloatingActionsMenuHidable>
 
 
 </RelativeLayout>

@@ -3,14 +3,18 @@ package cn.edu.cqupt.nmid.headline.ui.activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
-import cn.edu.cqupt.nmid.headline.ui.widget.ObseverWebView;
+import cn.edu.cqupt.nmid.headline.ui.widget.FloatingActionsMenuHidable;
+import cn.edu.cqupt.nmid.headline.ui.widget.ObservableScrollViewCallbacks;
+import cn.edu.cqupt.nmid.headline.ui.widget.ObservableWebView;
+import cn.edu.cqupt.nmid.headline.ui.widget.ScrollState;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import cn.edu.cqupt.nmid.headline.utils.NetworkUtils;
 import cn.edu.cqupt.nmid.headline.utils.ThemeUtils;
@@ -19,15 +23,15 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.socialization.Socialization;
 
 /**
- *
+ * Useful @Link:http://developer.android.com/training/animation/crossfade.html
  */
 public class DetailedActivity extends ActionBarActivity {
+
 
     static final String MIME_TYPE = "text/html";
     static final String ENCODING = "utf-8";
 
-    static final String END_POINT = "http://news.tsinghua.edu.cn";
-    String rawWebData = "Hello World";
+    String rawWebData = "Hello World悬浮颗粒的自组装是一种广泛观察到的现象，在生物、制药、制备等方面有广泛的应用。理想情况下，相同的浮动球体或圆柱体筏应聚集成一种密排的方式（图1中的a和b）。然而，实际观察到的组装筏，却呈现大的各种形式的缺陷（图1中的c）。对于这样一个具有普遍性的矛盾，人们似乎一直没有认真思考并作出合理解释。悬浮颗粒的自组装是一种广泛观察到的现象，在生物、制药、制备等方面有广泛的应用。理想情况下，相同的浮动球体或圆柱体筏应聚集成一种密排的方式（图1中的a和b）。然而，实际观察到的组装筏，却呈现大的各种形式的缺陷（图1中的c）。对于这样一个具有普遍性的矛盾，人们似乎一直没有认真思考并作出合理解释。悬浮颗粒的自组装是一种广泛观察到的现象，在生物、制药、制备等方面有广泛的应用。理想情况下，相同的浮动球体或圆柱体筏应聚集成一种密排的方式（图1中的a和b）。然而，实际观察到的组装筏，却呈现大的各种形式的缺陷（图1中的c）。对于这样一个具有普遍性的矛盾，人们似乎一直没有认真思考并作出合理解悬浮颗粒的自组装是一种广泛观察到的现象，在生物、制药、制备等方面有广泛的应用。理想情况下，相同的浮动球体或圆柱体筏应聚集成一种密排的方式（图1中的a和b）。然而，实际观察到的组装筏，却呈现大的各种形式的缺陷（图1中的c）。对于这样一个具有普遍性的矛盾，人们似乎一直没有认真思考并作出合理解释。悬浮颗粒的自组装是一种广泛观察到的现象，在生物、制药、制备等方面有广泛的应用。理想情况下，相同的浮动球体或圆柱体筏应聚集成一种密排的方式（图1中的a和b）。然而，实际观察到的组装筏，却呈现大的各种形式的缺陷（图1中的c）。对于这样一个具有普遍性的矛盾，人们似乎一直没有认真思考并作出合理解释。释。";
     private String TAG = LogUtils.makeLogTag(DetailedActivity.class);
 
     /**
@@ -41,16 +45,20 @@ public class DetailedActivity extends ActionBarActivity {
     OnekeyShare oks;
     Socialization socialization;
 
+    private static final float SCROLLING_ALPHA = 33333;
+
 
     /**
      * Activity views
      */
 
     @InjectView(R.id.detailed_webview)
-    ObseverWebView mWebView;
+    ObservableWebView mWebView;
 
-    @InjectView(R.id.detailed_img_btn)
-    ImageView mImageButton;
+    @InjectView(R.id.detailed_multiple_actions)
+    FloatingActionsMenuHidable mFloatingActionsMenu;
+
+    private boolean isFabAnmation = false;
 
 
 //    @OnClick(R.id.menu_share)
@@ -83,19 +91,63 @@ public class DetailedActivity extends ActionBarActivity {
         oks = new OnekeyShare();
         setContentView(R.layout.activity_detailed);
         ButterKnife.inject(this);
+        mFloatingActionsMenu.expand();
 
         mWebView.setWebViewClient(new DefalutWebViewClient());
+        mWebView.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
+            //正在滚动时，包括drag滚动和惯性滚动
+            @Override
+            public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+                // Log.i(TAG, "onScrollChanged" + String.valueOf(scrollY) + "/" + String.valueOf(dragging));
+
+//                if (scrollY < 0) {
+//                    mFloatingActionsMenu.hide();
+//                } else {
+//                    mFloatingActionsMenu.show();
+//                }
+
+                //mFloatingActionsMenu.animate().translationX(-100).setDuration(200).start();
+            }
+
+            //当按下touch
+            @Override
+            public void onDownMotionEvent() {
+                ///Log.i(TAG, "onDownMotionEvent");
+
+            }
+
+            //当松开touch后，计算相对y
+            @Override
+            public void onUpOrCancelMotionEvent(ScrollState scrollState) {
+                switch (scrollState) {
+                    case STOP:
+                        Log.i(TAG, "stop");
+                        mFloatingActionsMenu.show(true);
+                        break;
+                    case UP:
+                        Log.i(TAG, "UP");
+                        mFloatingActionsMenu.show(false);
+                        break;
+                    case DOWN:
+                        Log.i(TAG, "DOWN");
+                        mFloatingActionsMenu.show(true);
+                }
+
+            }
+        });
 
 
         id = getIntent().getIntExtra("id", 980);
-        rawWebData = getIntent().getStringExtra("content");
+        if (getIntent().getStringExtra("content") != null) {
+            rawWebData = getIntent().getStringExtra("content");
+        }
 
 
         if (NetworkUtils.isNetworkAvailable(this)) {
 
             String htmlData;
             if (ThemeUtils.isNightMode(this)) {
-                // Webview will use asserts/style.css
+                // Webview will use asserts/style_night.css
                 htmlData = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style_night.css\" /> <body class= \"gloable\"> "
                         + rawWebData + "</body>";
             } else {
@@ -141,4 +193,21 @@ public class DetailedActivity extends ActionBarActivity {
         }
     }
 
+
+    @Override
+    public void onBackPressed() {
+        if (mFloatingActionsMenu.isExpanded()) {
+            mFloatingActionsMenu.collapse();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            mFloatingActionsMenu.toggle();
+        }
+        return super.onKeyUp(keyCode, event);
+    }
 }
