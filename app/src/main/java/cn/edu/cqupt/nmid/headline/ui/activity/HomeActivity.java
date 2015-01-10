@@ -149,6 +149,9 @@ public class HomeActivity extends ActionBarActivity implements NavigationDawerFr
                 startActivity(new Intent(this, LoginActivity.class));
                 break;
 
+            case 2:
+                startActivity(new Intent(this, DetailedActivity.class));
+                break;
 
             case 4:
                 startActivity(new Intent(this, SettingsActivity.class));

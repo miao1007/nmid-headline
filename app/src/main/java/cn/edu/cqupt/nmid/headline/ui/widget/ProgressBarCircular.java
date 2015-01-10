@@ -27,6 +27,10 @@ public class ProgressBarCircular extends RelativeLayout {
 
     }
 
+    public ProgressBarCircular(Context context) {
+        super(context);
+    }
+
     public int dpToPx(float dp, Resources resources) {
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics());
         return (int) px;

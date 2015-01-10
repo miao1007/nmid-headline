@@ -13,14 +13,13 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme.Light" >
         <activity
-            android:name="cn.edu.cqupt.nmid.headline.ui.activity.HomeActivity"
+            android:name=".ui.activity.HomeActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,14 +28,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="cn.edu.cqupt.nmid.headline.ui.activity.SettingsActivity"
+            android:name=".ui.activity.SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity
-            android:name="cn.edu.cqupt.nmid.headline.ui.activity.DetailedActivity"
+            android:name=".ui.activity.DetailedActivity"
             android:label="@string/title_activity_detailed" />
-
         <activity
-            android:name="cn.edu.cqupt.nmid.headline.ui.activity.LoginActivity"
+            android:name=".ui.activity.LoginActivity"
             android:label="@string/title_activity_login" />
         <!-- <shareSDK 分享组件> -->
         <activity
@@ -57,16 +55,14 @@
 
         <!-- 微信分享回调 -->
         <activity
-            android:name="cn.edu.cqupt.nmid.headline.api.wxapi.WXEntryActivity"
+            android:name=".api.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name="cn.edu.cqupt.nmid.headline.ui.activity.AboutActivity"
+            android:name=".ui.activity.AboutActivity"
             android:label="@string/title_activity_about" />
-
-
     </application>
 
 </manifest>

@@ -12,16 +12,13 @@
     <string name="title_activity_detailed">DetailedActivity</string>
     <string name="title_activity_about">AboutActivity</string>
 
-
-
     <!-- api info -->
     <string name="api_baidu_weather_ak">OsyKmFSMx2lVYyf5DA0EBmKX</string>
     <string name="api_baidu_endpoint">http://api.map.baidu.com</string>
     <string name="api_baidu_weather_location">重庆</string>
     <string name="api_baidu_weather_output">json</string>
 
-
-    <!--settings-->
+    <!-- settings -->
     <string name="setting_about_url">http://nmid.cqupt.edu.cn/</string>
     <string name="settings_about_nexus">关于NexusLine</string>
     <string name="settings_account">账号设置</string>
@@ -31,7 +28,7 @@
     <string name="settings_night_mode">夜间模式</string>
     <string name="settings_push_news">推送设置</string>
 
-    <!--share sdk-->
+    <!-- share sdk -->
     <string name="title_activity_detailed_post">详细信息</string>
     <string name="networkerr">请检查网络连接！</string>
     <string name="post_isempty">文章到底啦！</string>
@@ -52,7 +49,6 @@
     <string name="HTTP_500">检测到重复评论，您似乎已经提交过这条评论了！ </string>
     <string name="HTTP_404">界面未找到, 请尝试登陆网页版! </string>
     <string name="UNEXPECTED">未知错误, 请邮件联系作者！:</string>
-
-
+    <string name="title_activity_data_usage_control">DataUsageControlActivity</string>
 
 </resources>

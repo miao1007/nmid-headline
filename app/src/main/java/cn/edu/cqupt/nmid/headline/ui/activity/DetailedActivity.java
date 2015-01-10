@@ -1,22 +1,25 @@
 package cn.edu.cqupt.nmid.headline.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.ui.widget.FloatingActionsMenuHidable;
 import cn.edu.cqupt.nmid.headline.ui.widget.ObservableScrollViewCallbacks;
 import cn.edu.cqupt.nmid.headline.ui.widget.ObservableWebView;
+import cn.edu.cqupt.nmid.headline.ui.widget.ProgressBarCircular;
 import cn.edu.cqupt.nmid.headline.ui.widget.ScrollState;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
-import cn.edu.cqupt.nmid.headline.utils.NetworkUtils;
 import cn.edu.cqupt.nmid.headline.utils.ThemeUtils;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
@@ -61,24 +64,18 @@ public class DetailedActivity extends ActionBarActivity {
     private boolean isFabAnmation = false;
 
 
-//    @OnClick(R.id.menu_share)
-//    void menu_share() {
-//        CommentListPage page = new CommentListPage();
-//        page.setTopic(String.valueOf(id), title, date, author);
-//        page.setOnekeyShare(oks);
-//        page.show(DetailedActivity.this, null);
-//    }
-//
-//    @OnClick(R.id.menu_like)
-//    void menu_like(View v){
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                socialization.likeTopic(String.valueOf(id), title);
-//            }
-//        }).start();
-//
-//    }
+    @OnClick(R.id.detailed_action_share)
+    void detailed_action_share() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
+    }
+
+    @InjectView(R.id.detailed_progressbar)
+    ProgressBarCircular mProgressBarCircular;
+
 
 
     @Override
@@ -91,7 +88,6 @@ public class DetailedActivity extends ActionBarActivity {
         oks = new OnekeyShare();
         setContentView(R.layout.activity_detailed);
         ButterKnife.inject(this);
-        mFloatingActionsMenu.expand();
 
         mWebView.setWebViewClient(new DefalutWebViewClient());
         mWebView.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
@@ -143,53 +139,45 @@ public class DetailedActivity extends ActionBarActivity {
         }
 
 
-        if (NetworkUtils.isNetworkAvailable(this)) {
-
-            String htmlData;
-            if (ThemeUtils.isNightMode(this)) {
-                // Webview will use asserts/style_night.css
-                htmlData = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style_night.css\" /> <body class= \"gloable\"> "
-                        + rawWebData + "</body>";
-            } else {
-                // Webview will use asserts/style.css
-                htmlData = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" /> <body class= \"gloable\"> "
-                        + rawWebData + "</body>";
-            }
-
-            mWebView.loadDataWithBaseURL("file:///android_asset/", htmlData, MIME_TYPE, ENCODING, null);
-
-
+        String htmlData;
+        if (ThemeUtils.isNightMode(this)) {
+            // Webview will use asserts/style_night.css
+            htmlData = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style_night.css\" /> <body class= \"gloable\"> "
+                    + rawWebData + "</body>";
         } else {
-
+            // Webview will use asserts/style.css
+            htmlData = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" /> <body class= \"gloable\"> "
+                    + rawWebData + "</body>";
         }
+
+        mWebView.loadDataWithBaseURL("file:///android_asset/", htmlData, MIME_TYPE, ENCODING, null);
+
 
 
     }
 
 
     private class DefalutWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            //do nothing
-            return true;
-        }
+//        @Override
+//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//            //do nothing
+//            return true;
+//        }
 
-        @Override
-        public void onLoadResource(WebView view, String url) {
-            super.onLoadResource(view, url);
-            System.out.println("onLoadResource = " + view);
-        }
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            super.onPageStarted(view, url, favicon);
             System.out.println("onPageStarted = " + view);
+            mProgressBarCircular.setVisibility(View.VISIBLE);
+            super.onPageStarted(view, url, favicon);
+
         }
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(view, url);
             System.out.println("onPageFinished = " + view);
+            mProgressBarCircular.setVisibility(View.GONE);
+            super.onPageFinished(view, url);
         }
     }
 

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import butterknife.ButterKnife;
@@ -13,9 +12,8 @@ import butterknife.OnClick;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import cn.edu.cqupt.nmid.headline.utils.ThemeUtils;
-import cn.edu.cqupt.nmid.headline.utils.UIutils;
 
-public class SettingsActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
+public class SettingsActivity extends BaseActivity {
 
     String TAG = LogUtils.makeLogTag(SettingsActivity.class);
 
@@ -30,7 +28,7 @@ public class SettingsActivity extends BaseActivity implements CompoundButton.OnC
 
     @OnClick(R.id.settings_account)
     void onClick() {
-        UIutils.disMsg(this, "settings_account");
+        startActivity(new Intent(this, LoginActivity.class));
     }
 
 
@@ -78,24 +76,8 @@ public class SettingsActivity extends BaseActivity implements CompoundButton.OnC
         mTextView_font_size.setText(getString(R.string.settings_font_size));
 
         mSwitchCompat_push_news.setText(getString(R.string.settings_push_news));
-
-        mSwitchCompat_night_mode.setOnCheckedChangeListener(this);
-
+        mSwitchCompat_night_mode.setText(getString(R.string.settings_night_mode));
 
     }
 
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked) {
-            ThemeUtils.switchTheme(SettingsActivity.this, ThemeUtils.THEME_LIGHT);
-            buttonView.setText("当前为白天");
-        } else {
-            ThemeUtils.switchTheme(SettingsActivity.this, ThemeUtils.THEME_DARK);
-            buttonView.setText("当前为夜间");
-        }
-        //recreate();
-        finish();
-        startActivity(new Intent(this, SettingsActivity.class));
-    }
 }

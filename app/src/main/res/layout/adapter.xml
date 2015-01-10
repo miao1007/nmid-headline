@@ -1,120 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<view xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/view2"
+    class="android.support.v7.widget.CardView"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:orientation="vertical">
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:singleLine="true"
-            android:text="标题"
-            android:maxLines="1"
-            android:textSize="15sp" />
-
-
-        <TextView
-            android:id="@+id/simpleContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/title"
-            android:text="又一家中国公司要赴美上市，虽然这家名“芯原”IC设计公司大家不熟悉，但他是给谷歌等互联网公司定制芯片的，也给很多中国公司定制芯片"
-            android:maxLines="3"
-            android:maxLength="60"
-            android:textSize="12sp" />
-
-
-        <ImageView
-            android:id="@+id/image1"
-            android:layout_width="80dp"
-            android:layout_height="60dp"
-            android:layout_alignParentRight="false"
-            android:src="@drawable/bg_navigation_drawer"
-            android:layout_below="@+id/title"
-            android:layout_toRightOf="@+id/simpleContent" />
-
-    </RelativeLayout>
+    android:layout_margin="4dp"
+    android:theme="@style/CardView.Light">
 
     <LinearLayout
-        android:id="@+id/threeImage"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/image2"
-            android:layout_width="70dp"
-            android:layout_height="60dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/bg_navigation_drawer" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
 
-        <ImageView
-            android:id="@+id/image3"
-            android:layout_width="70dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/bg_navigation_drawer" />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="标题"
+                android:textSize="15sp" />
 
-        <ImageView
-            android:id="@+id/image4"
-            android:layout_width="70dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/bg_navigation_drawer" />
+
+            <TextView
+                android:id="@+id/simpleContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:maxLength="60"
+                android:maxLines="3"
+                android:text="又一家中国公司要赴美上市，虽然这家名“芯原”IC设计公司大家不熟悉，但他是给谷歌等互联网公司定制芯片的，也给很多中国公司定制芯片"
+                android:textSize="12sp" />
+
+
+            <ImageView
+                android:id="@+id/image1"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:layout_alignParentRight="false"
+                android:layout_below="@+id/title"
+                android:layout_toRightOf="@+id/simpleContent"
+                android:src="@drawable/bg_navigation_drawer" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/threeImage"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/image2"
+                android:layout_width="70dp"
+                android:layout_height="60dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_navigation_drawer" />
+
+            <ImageView
+                android:id="@+id/image3"
+                android:layout_width="70dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_navigation_drawer" />
+
+            <ImageView
+                android:id="@+id/image4"
+                android:layout_width="70dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_navigation_drawer" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/clock"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_toRightOf="@id/clock"
+                android:text="12小时前"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/collect"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:text="收藏" />
+
+            <Button
+                android:id="@+id/share"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_toLeftOf="@id/collect"
+                android:text="分享" />
+        </RelativeLayout>
+
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/clock"
-            android:layout_width="14dp"
-            android:layout_height="14dp"
-            android:layout_centerVertical="true" />
+</view>
 
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:layout_toRightOf="@id/clock"
-            android:text="12小时前"
-            android:textSize="14sp" />
-
-        <Button
-            android:id="@+id/collect"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:text="收藏" />
-
-        <Button
-            android:id="@+id/share"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:layout_toLeftOf="@id/collect"
-            android:text="分享" />
-    </RelativeLayout>
-</LinearLayout>

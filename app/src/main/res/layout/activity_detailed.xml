@@ -11,7 +11,17 @@
     <cn.edu.cqupt.nmid.headline.ui.widget.ObservableWebView
         android:id="@+id/detailed_webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+
+    </cn.edu.cqupt.nmid.headline.ui.widget.ObservableWebView>
+
+    <cn.edu.cqupt.nmid.headline.ui.widget.ProgressBarCircular
+        android:id="@+id/detailed_progressbar"
+        android:layout_width="40dp"
+        android:visibility="gone"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true" />
 
 
     <cn.edu.cqupt.nmid.headline.ui.widget.FloatingActionsMenuHidable
@@ -34,17 +44,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/icons"
-            fab:fab_icon="@drawable/ic_share_grey600_36dp"
             fab:fab_colorPressed="@color/divider"
+            fab:fab_icon="@drawable/ic_share_grey600_36dp"
             fab:fab_title="分享" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/detailed_action_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_icon="@drawable/ic_favorite_grey600_24dp"
             fab:fab_colorNormal="@color/icons"
             fab:fab_colorPressed="@color/divider"
+            fab:fab_icon="@drawable/ic_favorite_grey600_24dp"
             fab:fab_title="收藏" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
@@ -52,8 +62,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/icons"
-            fab:fab_icon="@drawable/ic_settings_grey600_24dp"
             fab:fab_colorPressed="@color/divider"
+            fab:fab_icon="@drawable/ic_settings_grey600_24dp"
             fab:fab_title="设置" />
     </cn.edu.cqupt.nmid.headline.ui.widget.FloatingActionsMenuHidable>
 
