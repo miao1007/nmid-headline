@@ -38,7 +38,7 @@ import cn.sharesdk.framework.utils.UIHandler;
 /**
  * 快捷分享的入口
  * <p>
- * 通过不同的setter设置参数，然后调用{@link #show(Context)}方法启动快捷分享
+ * 通过不同的setter设置参数，然后调用{@link #show(android.content.Context)}方法启动快捷分享
  */
 public class OnekeyShare implements PlatformActionListener, Callback {
 	private static final int MSG_TOAST = 1;
@@ -274,10 +274,11 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 	}
 
 	/** 设置自己图标和点击事件，可以重复调用添加多次 */
-	public void setCustomerLogo(Bitmap logo, String label, OnClickListener ocListener) {
+	public void setCustomerLogo(Bitmap enableLogo,Bitmap disableLogo, String label, OnClickListener ocListener) {
 		CustomerLogo cl = new CustomerLogo();
 		cl.label = label;
-		cl.logo = logo;
+		cl.enableLogo = enableLogo;
+		cl.disableLogo = disableLogo;
 		cl.listener = ocListener;
 		customers.add(cl);
 	}
@@ -329,15 +330,15 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 			plat.SSOSetting(disableSSO);
 			String name = plat.getName();
 
-			boolean isGooglePlus = "GooglePlus".equals(name);
-			if (isGooglePlus && !plat.isValid()) {
-				Message msg = new Message();
-				msg.what = MSG_TOAST;
-				int resId = getStringRes(context, "google_plus_client_inavailable");
-				msg.obj = context.getString(resId);
-				UIHandler.sendMessage(msg, this);
-				continue;
-			}
+//			boolean isGooglePlus = "GooglePlus".equals(name);
+//			if (isGooglePlus && !plat.isValid()) {
+//				Message msg = new Message();
+//				msg.what = MSG_TOAST;
+//				int resId = getStringRes(context, "google_plus_client_inavailable");
+//				msg.obj = context.getString(resId);
+//				UIHandler.sendMessage(msg, this);
+//				continue;
+//			}
 
 			boolean isKakaoTalk = "KakaoTalk".equals(name);
 			if (isKakaoTalk && !plat.isValid()) {

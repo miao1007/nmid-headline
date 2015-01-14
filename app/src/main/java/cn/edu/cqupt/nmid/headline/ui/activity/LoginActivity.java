@@ -174,16 +174,6 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-//    //Call OnSharedPreferencesChanged On HomeActivity
-//    private void setResult(String name, String avatar) {
-//        Log.e("setResult", name + "+" + avatar);
-//        //shared performance
-//        SharedPreferences preferences = mActivity.getSharedPreferences("sharesdk", 0);
-//        SharedPreferences.Editor editor = preferences.edit();
-//        editor.putString("name", name);
-//        editor.putString("avatar", avatar);
-//        editor.commit();
-//
-//    }
+
 
 }

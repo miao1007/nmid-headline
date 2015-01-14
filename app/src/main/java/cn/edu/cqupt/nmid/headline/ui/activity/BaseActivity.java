@@ -1,6 +1,8 @@
 package cn.edu.cqupt.nmid.headline.ui.activity;
 
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -107,4 +109,14 @@ public class BaseActivity extends ActionBarActivity {
         int velocity = (int) mVelocityTracker.getXVelocity();
         return Math.abs(velocity);
     }
+
+    void trySetupToolbar(Toolbar mToolbar){
+        try {
+            setSupportActionBar(mToolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        } catch (NullPointerException e){
+            Log.e(getClass().getSimpleName(),"toolbar is null!");
+        }
+    }
+
 }

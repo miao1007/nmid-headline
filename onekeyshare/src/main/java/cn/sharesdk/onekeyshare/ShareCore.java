@@ -27,7 +27,7 @@ import cn.sharesdk.framework.utils.R;
 
 /**
  * ShareCore是快捷分享的实际出口，此类使用了反射的方式，配合传递进来的HashMap，
- *构造{@link ShareParams}对象，并执行分享，使快捷分享不再需要考虑目标平台
+ *构造{@link cn.sharesdk.framework.Platform.ShareParams}对象，并执行分享，使快捷分享不再需要考虑目标平台
  */
 public class ShareCore {
 	private ShareContentCustomizeCallback customizeCallback;
@@ -41,7 +41,7 @@ public class ShareCore {
 	 * 向指定平台分享内容
 	 * <p>
 	 * <b>注意：</b><br>
-	 * 参数data的键值需要严格按照{@link ShareParams}不同子类具体字段来命名，
+	 * 参数data的键值需要严格按照{@link cn.sharesdk.framework.Platform.ShareParams}不同子类具体字段来命名，
 	 *否则无法反射此字段，也无法设置其值。
 	 */
 	public boolean share(Platform plat, HashMap<String, Object> data) {
@@ -86,6 +86,7 @@ public class ShareCore {
 				|| "Mingdao".equals(platform) || "Line".equals(platform)
 				|| "KakaoStory".equals(platform) || "KakaoTalk".equals(platform)
 				|| "Bluetooth".equals(platform) || "WhatsApp".equals(platform)
+				|| "BaiduTieba".equals(platform)
 				) {
 			return true;
 		} else if ("Evernote".equals(platform)) {
@@ -111,11 +112,12 @@ public class ShareCore {
 	public static boolean canAuthorize(Context context, String platform) {
 		return !("WechatMoments".equals(platform)
 				|| "WechatFavorite".equals(platform) || "ShortMessage".equals(platform)
-				|| "Email".equals(platform) || "GooglePlus".equals(platform)
+				|| "Email".equals(platform)
 				|| "Pinterest".equals(platform) || "Yixin".equals(platform)
 				|| "YixinMoments".equals(platform) || "Line".equals(platform)
 				|| "KakaoStory".equals(platform) || "KakaoTalk".equals(platform)
-				|| "Bluetooth".equals(platform) || "WhatsApp".equals(platform));
+				|| "Bluetooth".equals(platform) || "WhatsApp".equals(platform)
+				|| "BaiduTieba".equals(platform));
 	}
 
 
@@ -123,12 +125,12 @@ public class ShareCore {
 	public static boolean canGetUserInfo(Context context, String platform) {
 		return !("WechatMoments".equals(platform)
 				|| "WechatFavorite".equals(platform) || "ShortMessage".equals(platform)
-				|| "Email".equals(platform) || "GooglePlus".equals(platform)
+				|| "Email".equals(platform)
 				|| "Pinterest".equals(platform) || "Yixin".equals(platform)
 				|| "YixinMoments".equals(platform) || "Line".equals(platform)
 				|| "KakaoStory".equals(platform) || "KakaoTalk".equals(platform)
 				|| "Bluetooth".equals(platform) || "WhatsApp".equals(platform)
-				|| "Pocket".equals(platform));
+				|| "Pocket".equals(platform) || "BaiduTieba".equals(platform));
 	}
 
 	/** 判断是否直接分享 */

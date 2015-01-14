@@ -24,10 +24,10 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
-import cn.edu.cqupt.nmid.headline.api.weather.WeatherService;
-import cn.edu.cqupt.nmid.headline.model.weather.Weather;
-import cn.edu.cqupt.nmid.headline.model.weather.WeatherDatum;
 import cn.edu.cqupt.nmid.headline.support.Constant;
+import cn.edu.cqupt.nmid.headline.support.api.weather.WeatherService;
+import cn.edu.cqupt.nmid.headline.support.weather.Weather;
+import cn.edu.cqupt.nmid.headline.support.weather.WeatherDatum;
 import cn.edu.cqupt.nmid.headline.ui.adapter.PagerAdapter;
 import cn.edu.cqupt.nmid.headline.ui.fragment.FeedFragment;
 import cn.edu.cqupt.nmid.headline.ui.fragment.NavigationDawerFragment;
@@ -79,7 +79,14 @@ public class HomeActivity extends ActionBarActivity implements NavigationDawerFr
         ThemeUtils.setThemeFromDb(this);
         setContentView(R.layout.activity_home);
         ButterKnife.inject(this);
-
+//        // create our manager instance after the content view is set
+//        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+//        // enable status bar tint
+//        tintManager.setStatusBarTintEnabled(true);
+//        // enable navigation bar tint
+//        tintManager.setNavigationBarTintEnabled(true);
+//        tintManager.setTintAlpha(100);
+//        tintManager.setTintColor(getResources().getColor(R.color.primary_dark_night));
         trySetupToolbarAndTab();
 
 
@@ -97,8 +104,8 @@ public class HomeActivity extends ActionBarActivity implements NavigationDawerFr
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open, R.string.close);
         mDrawerToggle.syncState();
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
         trySyncWeather();
+        trySyncTab();
     }
 
 
@@ -149,9 +156,17 @@ public class HomeActivity extends ActionBarActivity implements NavigationDawerFr
                 startActivity(new Intent(this, LoginActivity.class));
                 break;
 
+            case 1:
+                break;
+
             case 2:
                 startActivity(new Intent(this, DetailedActivity.class));
                 break;
+
+            case 3:
+                startActivity(new Intent(this, FavListActivity.class));
+                break;
+
 
             case 4:
                 startActivity(new Intent(this, SettingsActivity.class));
@@ -160,13 +175,13 @@ public class HomeActivity extends ActionBarActivity implements NavigationDawerFr
             case 5://set theme
 
 
-                ThemeUtils.switchTheme(this, ThemeUtils.THEME_DARK);
+                ThemeUtils.switchTheme(this, true);
                 recreate();
                 break;
 
             case 6://settings
                 //startActivity(new Intent(this, SettingsActivity.class));
-                ThemeUtils.switchTheme(this, ThemeUtils.THEME_LIGHT);
+                ThemeUtils.switchTheme(this, false);
                 recreate();
                 break;
 
@@ -184,7 +199,7 @@ public class HomeActivity extends ActionBarActivity implements NavigationDawerFr
         fragments.add(FeedFragment.newInstance("青春通信", Constant.TYPE_YOUTH));
         fragments.add(FeedFragment.newInstance("科技创新", Constant.TYPE_SCIENTIFIC));
         fragments.add(FeedFragment.newInstance("通信校友", Constant.TYPE_CLASSMATE));
-        if (ThemeUtils.isNightMode(this)){
+        if (ThemeUtils.isNightMode(this)) {
             mTabLayout.setBackgroundColor(getResources().getColor(R.color.primary_night));
         } else {
             mTabLayout.setBackgroundColor(getResources().getColor(R.color.primary));
@@ -201,32 +216,6 @@ public class HomeActivity extends ActionBarActivity implements NavigationDawerFr
         mViewPager.setAdapter(mPagerAdapter);
         mTabLayout.setViewPager(mViewPager);
 
-
-    }
-
-    private void startIntroAnim() {
-        int actionbarSize = ScreenUtils.dpToPx(56);
-        mToolbar.setTranslationY(-actionbarSize);
-        actionView.getActionView().setTranslationY(-actionbarSize);
-        mToolbar.animate()
-                .translationY(0)
-                .setDuration(300)
-                .setStartDelay(300);
-        actionView.getActionView().animate()
-                .translationY(0)
-                .setDuration(300)
-                .setStartDelay(600).start();
-        mTabLayout.setTranslationY(-mToolbar.getHeight() - mTabLayout.getHeight());
-        mTabLayout.animate()
-                .translationY(0)
-                .setDuration(300)
-                .setStartDelay(700).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                trySyncTab();
-            }
-
-        });
 
     }
 
@@ -272,4 +261,31 @@ public class HomeActivity extends ActionBarActivity implements NavigationDawerFr
         Log.d(TAG, "onRestart");
         //recreate();
     }
+
+    private void startIntroAnim() {
+        int actionbarSize = ScreenUtils.dpToPx(56);
+        mToolbar.setTranslationY(-actionbarSize);
+        actionView.getActionView().setTranslationY(-actionbarSize);
+        mToolbar.animate()
+                .translationY(0)
+                .setDuration(300)
+                .setStartDelay(300);
+        actionView.getActionView().animate()
+                .translationY(0)
+                .setDuration(300)
+                .setStartDelay(600).start();
+        mTabLayout.setTranslationY(-mToolbar.getHeight() - mTabLayout.getHeight());
+        mTabLayout.animate()
+                .translationY(0)
+                .setDuration(300)
+                .setStartDelay(700).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+        });
+
+    }
+
 }

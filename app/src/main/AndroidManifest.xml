@@ -36,6 +36,7 @@
         <activity
             android:name=".ui.activity.LoginActivity"
             android:label="@string/title_activity_login" />
+
         <!-- <shareSDK 分享组件> -->
         <activity
             android:name="cn.sharesdk.framework.ShareSDKUIShell"
@@ -55,14 +56,33 @@
 
         <!-- 微信分享回调 -->
         <activity
-            android:name=".api.wxapi.WXEntryActivity"
+            android:name=".support.api.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".ui.activity.AboutActivity"
-            android:label="@string/title_activity_about" />
+            android:label="@string/title_activity_about" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name=".ui.activity.AboutActivity" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.SettingsMoreActivity"
+            android:label="@string/title_activity_settings_more" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name=".ui.activity.SettingsMoreActivity" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.FavListActivity"
+            android:label="@string/title_activity_fav_list" >
+        </activity>
     </application>
 
 </manifest>

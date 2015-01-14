@@ -6,5 +6,5 @@
         android:id="@+id/action_weather"
         android:title="weather"
         app:showAsAction="always"
-        android:actionLayout="@layout/include_weather"/>
+        android:actionLayout="@layout/include_weather" />
 </menu>

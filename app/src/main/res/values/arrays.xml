@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="settings_entries_feeds_count">
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+    </string-array>
+
+    <string-array name="settings_entry_values_feeds_count">
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+    </string-array>
+
+    <string-array name="settings_entries_font_sizes">
+        <item>小</item>
+        <item>中</item>
+        <item>大</item>
+    </string-array>
+
+    <string-array name="settings_entry_values_font_sizes">
+        <item>80</item>
+        <item>100</item>
+        <item>120</item>
+    </string-array>
+
+
+    <string-array name="settings_entries_load_images">
+        <item>不加载</item>
+        <item>加载</item>
+        <item>仅WiFi加载</item>
+    </string-array>
+
+    <string-array name="settings_entry_values_load_images">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+
+</resources>

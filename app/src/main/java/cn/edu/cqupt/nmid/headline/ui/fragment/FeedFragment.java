@@ -1,6 +1,5 @@
 package cn.edu.cqupt.nmid.headline.ui.fragment;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,7 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.AbsListView;
 import android.widget.ListView;
 
 import java.util.HashMap;
@@ -20,22 +19,13 @@ import java.util.LinkedList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
-import cn.edu.cqupt.nmid.headline.api.HeadlineService;
-import cn.edu.cqupt.nmid.headline.controller.Controller;
-import cn.edu.cqupt.nmid.headline.controller.bean.HeadJson;
-import cn.edu.cqupt.nmid.headline.controller.bean.NewsBean;
 import cn.edu.cqupt.nmid.headline.support.Constant;
-import cn.edu.cqupt.nmid.headline.ui.activity.DetailedActivity;
+import cn.edu.cqupt.nmid.headline.support.controller.Controller;
+import cn.edu.cqupt.nmid.headline.support.controller.bean.NewsBean;
 import cn.edu.cqupt.nmid.headline.ui.adapter.FeedAdapter;
-import cn.edu.cqupt.nmid.headline.utils.UIutils;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import cn.edu.cqupt.nmid.headline.utils.PreferenceUtils;
 
 import static cn.edu.cqupt.nmid.headline.utils.LogUtils.LOGD;
-import static cn.edu.cqupt.nmid.headline.utils.LogUtils.LOGE;
-import static cn.edu.cqupt.nmid.headline.utils.LogUtils.LOGW;
 import static cn.edu.cqupt.nmid.headline.utils.LogUtils.makeLogTag;
 
 
@@ -69,21 +59,31 @@ public class FeedFragment extends Fragment {
 
     Handler handler;
 
-    private boolean isRefresh = false;
     HashMap<String, Object> currentQueryMap = new HashMap<String, Object>();
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "title";
-    private static final String ARG_PARAM2 = "slug";
+    private static final String ARG_TITLE = "title";
+    private static final String ARG_CATEGORY = "slug";
+    private static final String ARG_FAV = "favorite";
 
     private String title;
     private int feed_type = Constant.TYPE_COLLEGE;
+    private boolean favorite = false;
+    private int limit = 15;
 
     public static FeedFragment newInstance(String title, int type) {
         FeedFragment fragment = new FeedFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, title);
-        args.putInt(ARG_PARAM2, type);
+        args.putString(ARG_TITLE, title);
+        args.putInt(ARG_CATEGORY, type);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static FeedFragment newFavInstance(Boolean isFav) {
+        FeedFragment fragment = new FeedFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(ARG_FAV, isFav);
         fragment.setArguments(args);
         return fragment;
     }
@@ -93,12 +93,13 @@ public class FeedFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
         if (getArguments() != null) {
-            title = getArguments().getString(ARG_PARAM1);
-            feed_type = getArguments().getInt(ARG_PARAM2);
+            title = getArguments().getString(ARG_TITLE);
+            feed_type = getArguments().getInt(ARG_CATEGORY);
+            favorite = getArguments().getBoolean(ARG_FAV);
 
-            LOGD(TAG, "getArguments " + feed_type);
+            Log.d(TAG, "getArguments " + feed_type);
         } else {
-            LOGE(TAG, "getArguments == null!");
+            Log.d(TAG, "getArguments == null!");
         }
     }
 
@@ -108,19 +109,21 @@ public class FeedFragment extends Fragment {
         Log.d(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
         ButterKnife.inject(this, view);
+        limit = PreferenceUtils.getQueryLimit(getActivity());
+        controller = new Controller(getActivity());
+        mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN);
         adapter = new FeedAdapter(newsBeans, getActivity());
         mListView.setAdapter(adapter);
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 if (msg.what == 1) {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                    newsBeans.clear();
+                    //mSwipeRefreshLayout.setRefreshing(false);
                     newsBeans.addAll(tmpnewsBeans);
                     adapter.notifyDataSetChanged();
                 }
                 if (msg.what == 2) {
-                    mSwipeRefreshLayout.setRefreshing(false);
+                    //mSwipeRefreshLayout.setRefreshing(false);
                     newsBeans.clear();
                     newsBeans.addAll(tmpnewsBeans);
                     adapter.notifyDataSetChanged();
@@ -128,50 +131,60 @@ public class FeedFragment extends Fragment {
             }
         };
 
-        controller = new Controller(getActivity());
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                LOGD(TAG, "onClick!");
-                Intent intent = new Intent(getActivity(), DetailedActivity.class);
-                intent.putExtra("content", newsBeans.get(position).getContent());
-                startActivity(intent);
-            }
-        });
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //http://113.250.153.205/txtt/public/api/android/freshnews?id=10&category=1&limit=10
-                new RestAdapter.Builder()
-                        .setEndpoint(Constant.API_URL)
-                        .setLogLevel(RestAdapter.LogLevel.FULL)
-                        .build()
-                        .create(HeadlineService.class)
-                        .getFeeds(1,10,10, new Callback<HeadJson>() {
-                            @Override
-                            public void success(HeadJson headJson, Response response) {
-                                mSwipeRefreshLayout.setRefreshing(false);
-                                newsBeans.clear();
-                                newsBeans.addAll(tmpnewsBeans);
-                                adapter.notifyDataSetChanged();
-                            }
-
-                            @Override
-                            public void failure(RetrofitError error) {
-                                mSwipeRefreshLayout.setRefreshing(false);
-                                UIutils.disErr(getActivity(), error);
-                            }
-                        });
-
+                controller.RefreshData(handler, tmpnewsBeans, feed_type, limit);
             }
         });
 
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            boolean loading = false;
 
-        mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN);
-        mSwipeRefreshLayout.setRefreshing(true);
-        //load beans from datebase
-        controller.InitData(handler, tmpnewsBeans, feed_type, 15);
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
+                //what is the bottom iten that is visible
+                int lastInScreen = firstVisibleItem + visibleItemCount;
+                //is the bottom item visible & not loading more already ? Load more !
+                if ((lastInScreen == totalItemCount)) {
+                    controller.OldData(handler, tmpnewsBeans, feed_type, limit);
+                }
+            }
+        });
+
+        initialData();
         return view;
+    }
+
+    private void initialData() {
+        if (favorite) {
+            tmpnewsBeans = controller.getFavoriteList();
+            handler.sendEmptyMessage(1);
+        } else {
+            //controller.InitData(handler, tmpnewsBeans, feed_type, limit);
+
+        }
+    }
+
+    void loadMockData(LinkedList<NewsBean> newsBeans) {
+        NewsBean newsBean = new NewsBean();
+        newsBean.set_id(11);
+        newsBean.setCategory(1);
+        newsBean.setImage1("http://www.baidu.com/img/bdlogo.png");
+        newsBean.setImage2("http://www.baidu.com/img/bdlogo.png");
+        newsBean.setImage3("http://www.baidu.com/img/bdlogo.png");
+        newsBean.setSimpleContent("simple content");
+        newsBean.setTitle("title");
+        newsBean.setTimeRelease("2015");
+        for (int i = 0; i < 10; i++) {
+            newsBeans.add(newsBean);
+        }
     }
 
     @Override
@@ -179,17 +192,6 @@ public class FeedFragment extends Fragment {
         super.onDestroyView();
         LOGD(TAG, "onDestroyView");
         ButterKnife.reset(this);
-    }
-
-
-    public void loadPage(HashMap<String, Object> stringObjectMap) {
-        LOGD(TAG, "Http-Get Query is " + stringObjectMap.toString());
-        if (!stringObjectMap.containsKey("page")) {
-            stringObjectMap.put("page", 1);
-            stringObjectMap.put("category_name", getArguments().getString(ARG_PARAM2));
-            LOGW(TAG, "Http-Get Query is empty,try defalut query" + stringObjectMap.toString());
-        }
-        currentQueryMap = stringObjectMap;
     }
 
 

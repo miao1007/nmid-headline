@@ -49,7 +49,7 @@
             fab:fab_title="分享" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/detailed_action_like"
+            android:id="@+id/detailed_action_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/icons"

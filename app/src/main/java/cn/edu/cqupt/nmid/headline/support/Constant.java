@@ -6,5 +6,5 @@ public class Constant {
     final static public int TYPE_YOUTH = 3;
     final static public int TYPE_CLASSMATE = 4;
     final static public String[] TYPE = {"", "college", "scientific", "youth", "classmate"};
-    final static public String API_URL = "http://222.182.106.215";
+    final static public String ENDPOINT = "http://113.250.154.19";
 }

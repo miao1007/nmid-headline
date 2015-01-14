@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Headline</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="open">open</string>
-    <string name="close">close</string>
-    <string name="title_activity_stream">校园实拍</string>
-    <string name="title_activity_settings">设置</string>
-    <string name="title_activity_detailed">DetailedActivity</string>
-    <string name="title_activity_about">AboutActivity</string>
-
     <!-- api info -->
     <string name="api_baidu_weather_ak">OsyKmFSMx2lVYyf5DA0EBmKX</string>
     <string name="api_baidu_endpoint">http://api.map.baidu.com</string>
@@ -19,14 +8,14 @@
     <string name="api_baidu_weather_output">json</string>
 
     <!-- settings -->
-    <string name="setting_about_url">http://nmid.cqupt.edu.cn/</string>
-    <string name="settings_about_nexus">关于NexusLine</string>
+    <string name="settings_about_url">http://nmid.cqupt.edu.cn/</string>
+    <string name="settings_about_us">关于NexusLine</string>
     <string name="settings_account">账号设置</string>
     <string name="settings_clean_cache">清除缓存</string>
-    <string name="settings_save_data">流量设置</string>
+    <string name="settings_data_usage_control">流量设置</string>
     <string name="settings_font_size">字体大小</string>
     <string name="settings_night_mode">夜间模式</string>
-    <string name="settings_push_news">推送设置</string>
+    <string name="settings_push_feeds">推送设置</string>
 
     <!-- share sdk -->
     <string name="title_activity_detailed_post">详细信息</string>
@@ -49,6 +38,21 @@
     <string name="HTTP_500">检测到重复评论，您似乎已经提交过这条评论了！ </string>
     <string name="HTTP_404">界面未找到, 请尝试登陆网页版! </string>
     <string name="UNEXPECTED">未知错误, 请邮件联系作者！:</string>
-    <string name="title_activity_data_usage_control">DataUsageControlActivity</string>
+    <string name="app_name">Headline</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+
+    <!-- activity -->
+    <string name="title_activity_stream">校园实拍</string>
+    <string name="title_activity_settings">设置</string>
+    <string name="title_activity_detailed">高级设置</string>
+    <string name="title_activity_about">关于</string>
+    <string name="title_activity_settings_more">高级设置</string>
+    <string name="settings_more_query_limit">每次刷新消息的个数</string>
+    <string name="settings_refresh">刷新设置</string>
+    <string name="title_activity_fav_list">FavListActivity</string>
 
 </resources>

@@ -27,7 +27,7 @@ public class AboutActivity extends BaseActivity {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
-        intent.setData(Uri.parse(getString(R.string.setting_about_url)));
+        intent.setData(Uri.parse(getString(R.string.settings_about_url)));
         startActivity(intent);
     }
 

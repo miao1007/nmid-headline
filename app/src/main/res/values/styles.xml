@@ -3,6 +3,7 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:textColor">@color/secondary_text_night</item>
+        <item name="android:fitsSystemWindows">true</item>
     </style>
 
     <style name="AppTheme.Light" parent="AppTheme">
@@ -10,6 +11,8 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
+
+
         <item name="toolbarStyle">@style/ToolbarTheme.Light</item>
 
 
@@ -27,10 +30,9 @@
 
     </style>
 
-    <style name="ToolbarTheme" parent="Base.Widget.AppCompat.Toolbar" >
+    <style name="ToolbarTheme" parent="Base.Widget.AppCompat.Toolbar">
 
     </style>
-
 
 
     <style name="ToolbarTheme.Light" parent="ToolbarTheme">
@@ -41,7 +43,6 @@
         <item name="android:background">@color/primary_night</item>
 
     </style>
-
 
 
     <style name="menu_labels_style">

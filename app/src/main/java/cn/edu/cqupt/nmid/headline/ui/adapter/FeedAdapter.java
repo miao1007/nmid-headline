@@ -3,9 +3,9 @@ package cn.edu.cqupt.nmid.headline.ui.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,16 +17,14 @@ import java.util.Date;
 import java.util.LinkedList;
 
 import cn.edu.cqupt.nmid.headline.R;
-import cn.edu.cqupt.nmid.headline.controller.bean.NewsBean;
+import cn.edu.cqupt.nmid.headline.support.controller.bean.NewsBean;
 import cn.edu.cqupt.nmid.headline.ui.activity.DetailedActivity;
 
-public class FeedAdapter extends BaseAdapter {
-    LinkedList<NewsBean> listBeans = null;
-    Context context;
+public class FeedAdapter extends GenericAdapter<NewsBean> {
 
-    public FeedAdapter(LinkedList<NewsBean> listBeans, Context context) {
-        this.listBeans = listBeans;
-        this.context = context;
+
+    public FeedAdapter(LinkedList<NewsBean> list, Context context) {
+        super(list, context);
     }
 
     class ViewHolder {
@@ -49,10 +47,10 @@ public class FeedAdapter extends BaseAdapter {
         }
     }
 
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getDataRow(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        final NewsBean bean = listBeans.get(position);
         if (convertView == null) {
             convertView = ((Activity) context).getLayoutInflater().inflate(R.layout.adapter, null);
             holder = new ViewHolder();
@@ -69,6 +67,7 @@ public class FeedAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
             holder.initView();
         }
+        final NewsBean bean = super.dataList.get(position);
         holder.title.setText(bean.getTitle());
         holder.time.setText(new SimpleDateFormat("HH:mm").format(new Date()));
         if ("".equals(bean.getImage1())) {
@@ -97,7 +96,11 @@ public class FeedAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailedActivity.class);
-                intent.putExtra("content", bean.getContent());
+                //http://127.0.0.1/txtt/public/api/android/newscontent?id=2&category=1
+                intent.putExtra("category", bean.getCategory());
+                intent.putExtra("id", bean.get_id());
+                intent.putExtra("title", bean.getTitle());
+                intent.putExtra("excerpt", bean.getSimpleContent());
                 context.startActivity(intent);
             }
         });
@@ -105,17 +108,21 @@ public class FeedAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        return listBeans.size();
-    }
+    public View getFooterView(int position, View convertView,
+                              ViewGroup parent) {
+        if (position >= serverListSize && serverListSize > 0) {
+            // the ListView has reached the last row
+            TextView tvLastRow = new TextView(context);
+            tvLastRow.setHint("Reached the last row.");
+            tvLastRow.setGravity(Gravity.CENTER);
+            return tvLastRow;
+        }
 
-    @Override
-    public Object getItem(int position) {
-        return null;
-    }
+        if (convertView == null) {
+            return ((Activity) context).getLayoutInflater().inflate(R.layout.include_progressbar, null);
+        } else {
+            return convertView;
+        }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
     }
 }

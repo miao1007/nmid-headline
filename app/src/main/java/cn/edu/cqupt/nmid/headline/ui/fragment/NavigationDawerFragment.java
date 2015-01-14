@@ -14,11 +14,6 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.sina.weibo.SinaWeibo;
-
-import static cn.edu.cqupt.nmid.headline.utils.LogUtils.LOGD;
 
 /**
  *
@@ -108,7 +103,6 @@ public class NavigationDawerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ShareSDK.initSDK(getActivity());
     }
 
     @Override
@@ -121,17 +115,7 @@ public class NavigationDawerFragment extends Fragment {
         setItem(mTextView_home, R.drawable.ic_home_grey600_24dp, "主页");
         setItem(mTextView_star, R.drawable.ic_star_grey600_24dp, "收藏");
         setItem(mTextView_strem, R.drawable.ic_camera_grey600_24dp, "风景");
-        Platform platform = ShareSDK.getPlatform(getActivity(), SinaWeibo.NAME);
-        String avatar = platform.getDb().get("avatar");
-        String name = platform.getDb().get("name");
-        LOGD(TAG,name);
-        LOGD(TAG,avatar);
-//        if (!(avatar.isEmpty() && avatar == null)) {
-//            Picasso.with(getActivity()).load(avatar).into(mImageview_header);
-//        }
-//        if (name != null) {
-//            mTextView_avatar.setText(name);
-//        }
+
 
 
         return rootView;

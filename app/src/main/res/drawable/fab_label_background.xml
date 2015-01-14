@@ -9,7 +9,7 @@
         android:top="4dp" />
     <corners android:radius="2dp" />
     <!--<stroke-->
-        <!--android:width="3dp"-->
-        <!--android:color="#3b5998"></stroke>-->
+    <!--android:width="3dp"-->
+    <!--android:color="#3b5998"></stroke>-->
 
 </shape>

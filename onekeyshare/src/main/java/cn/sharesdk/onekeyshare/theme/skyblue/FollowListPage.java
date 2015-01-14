@@ -75,12 +75,12 @@ public class FollowListPage extends FollowerListFakeActivity implements OnClickL
 			llTitle.getBtnRight().setText(resId);
 		}
 		llTitle.getBtnRight().setOnClickListener(this);
-		llTitle.setLayoutParams(new LinearLayout.LayoutParams(
+		llTitle.setLayoutParams(new LayoutParams(
 				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		llPage.addView(llTitle);
 
 		FrameLayout flPage = new FrameLayout(getContext());
-		LinearLayout.LayoutParams lpFl = new LinearLayout.LayoutParams(
+		LayoutParams lpFl = new LayoutParams(
 				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		lpFl.weight = 1;
 		flPage.setLayoutParams(lpFl);
@@ -197,7 +197,7 @@ public class FollowListPage extends FollowerListFakeActivity implements OnClickL
 
 				if(!simpleMode) {
 					item.aivIcon = new AsyncImageView(getContext());
-					LinearLayout.LayoutParams lpIcon = new LinearLayout.LayoutParams(dp_52, dp_52);
+					LayoutParams lpIcon = new LayoutParams(dp_52, dp_52);
 					lpIcon.gravity = Gravity.CENTER_VERTICAL;
 					lpIcon.setMargins(dp_10, dp_5, dp_10, dp_5);
 					item.aivIcon.setLayoutParams(lpIcon);
@@ -207,7 +207,7 @@ public class FollowListPage extends FollowerListFakeActivity implements OnClickL
 				LinearLayout llText = new LinearLayout(parent.getContext());
 				llText.setPadding(0, dp_10, dp_10, dp_10);
 				llText.setOrientation(LinearLayout.VERTICAL);
-				LinearLayout.LayoutParams lpText = new LinearLayout.LayoutParams(
+				LayoutParams lpText = new LayoutParams(
 						LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 				lpText.gravity = Gravity.CENTER_VERTICAL;
 				lpText.weight = 1;
@@ -233,7 +233,7 @@ public class FollowListPage extends FollowerListFakeActivity implements OnClickL
 
 				item.ivCheck = new ImageView(parent.getContext());
 				item.ivCheck.setPadding(0, 0, dp_10, 0);
-				LinearLayout.LayoutParams lpCheck = new LinearLayout.LayoutParams(
+				LayoutParams lpCheck = new LayoutParams(
 						LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 				lpCheck.gravity = Gravity.CENTER_VERTICAL;
 				item.ivCheck.setLayoutParams(lpCheck);
@@ -361,7 +361,7 @@ public class FollowListPage extends FollowerListFakeActivity implements OnClickL
 			setOrientation(VERTICAL);
 
 			LinearLayout llInner = new LinearLayout(context);
-			LinearLayout.LayoutParams lpInner = new LinearLayout.LayoutParams(
+			LayoutParams lpInner = new LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			lpInner.gravity = Gravity.CENTER_HORIZONTAL;
 			addView(llInner, lpInner);

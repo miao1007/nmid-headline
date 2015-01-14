@@ -2,6 +2,7 @@ package cn.edu.cqupt.nmid.headline.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import cn.edu.cqupt.nmid.headline.R;
 
@@ -11,44 +12,32 @@ import cn.edu.cqupt.nmid.headline.R;
 public class ThemeUtils {
 
     public static String THEME_TYPE = "THEME_TYPE";
-    public static String DBkey = ThemeUtils.class.getSimpleName();
+    public static String DBkey = "settings_general_is_night_mode";
 
     public static int THEME_DARK = 1;
     public static int THEME_LIGHT = 0;
 
-    public static void switchTheme(Context context, int themeType) {
+    public static void switchTheme(Context context, boolean isNight) {
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences(DBkey, 0);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
-
-        if (themeType == THEME_DARK) {
-            editor.putInt(THEME_TYPE, THEME_DARK);
-        } else {
-            editor.putInt(THEME_TYPE, THEME_LIGHT);
-        }
+        editor.putBoolean(DBkey, isNight);
         editor.commit();
-
 
     }
 
     public static void setThemeFromDb(Context context) {
 
-        int currentTheme = context.getSharedPreferences(DBkey, 0).getInt(THEME_TYPE, THEME_LIGHT);
-        if (currentTheme == THEME_DARK){
+        if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(DBkey, false)) {
             context.setTheme(R.style.AppTheme_Dark);
         } else {
             context.setTheme(R.style.AppTheme_Light);
         }
     }
 
-    public static boolean isNightMode(Context context){
-        int currentTheme = context.getSharedPreferences(DBkey, 0).getInt(THEME_TYPE, THEME_LIGHT);
-        if (currentTheme == THEME_DARK){
-            return true;
-        } else {
-            return false;
-        }
+    public static boolean isNightMode(Context context) {
+
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(DBkey,false);
     }
 
 }

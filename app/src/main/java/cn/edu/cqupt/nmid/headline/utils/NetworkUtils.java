@@ -14,4 +14,9 @@ public class NetworkUtils {
         ConnectivityManager con = (ConnectivityManager) context.getSystemService(Activity.CONNECTIVITY_SERVICE);
         return (con.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting() || con.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnectedOrConnecting());
     }
+
+    public static boolean isWifiAviliable(Context context) {
+        ConnectivityManager con = (ConnectivityManager) context.getSystemService(Activity.CONNECTIVITY_SERVICE);
+        return con.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting();
+    }
 }
