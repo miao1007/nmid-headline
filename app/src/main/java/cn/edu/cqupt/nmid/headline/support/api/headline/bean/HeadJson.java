@@ -1,4 +1,4 @@
-package cn.edu.cqupt.nmid.headline.support.controller.bean;
+package cn.edu.cqupt.nmid.headline.support.api.headline.bean;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +7,7 @@ public class HeadJson {
     private List<Datum> data = new ArrayList<Datum>();
 
     /**
-     * 
+     *
      * @return
      *     The status
      */
@@ -16,7 +16,7 @@ public class HeadJson {
     }
 
     /**
-     * 
+     *
      * @param status
      *     The status
      */
@@ -25,7 +25,7 @@ public class HeadJson {
     }
 
     /**
-     * 
+     *
      * @return
      *     The data
      */
@@ -34,7 +34,7 @@ public class HeadJson {
     }
 
     /**
-     * 
+     *
      * @param data
      *     The data
      */

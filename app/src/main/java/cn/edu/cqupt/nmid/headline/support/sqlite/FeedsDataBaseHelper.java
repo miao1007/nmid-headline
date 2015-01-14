@@ -1,4 +1,4 @@
-package cn.edu.cqupt.nmid.headline.support.http;
+package cn.edu.cqupt.nmid.headline.support.sqlite;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import cn.edu.cqupt.nmid.headline.support.controller.bean.NewsBean;
+import cn.edu.cqupt.nmid.headline.support.api.headline.bean.NewsBean;
 
 
 public class FeedsDataBaseHelper extends SQLiteOpenHelper {

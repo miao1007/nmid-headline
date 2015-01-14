@@ -4,7 +4,8 @@ import android.os.Handler;
 
 import java.util.LinkedList;
 
-import cn.edu.cqupt.nmid.headline.support.controller.bean.NewsBean;
+import cn.edu.cqupt.nmid.headline.support.api.headline.bean.NewsBean;
+
 
 public class InitDataThread extends MyThread {
 

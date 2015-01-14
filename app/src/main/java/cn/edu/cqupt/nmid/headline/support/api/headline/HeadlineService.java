@@ -1,7 +1,7 @@
-package cn.edu.cqupt.nmid.headline.support.api;
+package cn.edu.cqupt.nmid.headline.support.api.headline;
 
-import cn.edu.cqupt.nmid.headline.support.controller.bean.HeadJson;
 import cn.edu.cqupt.nmid.headline.support.Constant;
+import cn.edu.cqupt.nmid.headline.support.api.headline.bean.HeadJson;
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Query;

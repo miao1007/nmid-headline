@@ -26,8 +26,7 @@ import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.Constant;
 import cn.edu.cqupt.nmid.headline.support.api.weather.WeatherService;
-import cn.edu.cqupt.nmid.headline.support.weather.Weather;
-import cn.edu.cqupt.nmid.headline.support.weather.WeatherDatum;
+import cn.edu.cqupt.nmid.headline.support.api.weather.bean.Weather;
 import cn.edu.cqupt.nmid.headline.ui.adapter.PagerAdapter;
 import cn.edu.cqupt.nmid.headline.ui.fragment.FeedFragment;
 import cn.edu.cqupt.nmid.headline.ui.fragment.NavigationDawerFragment;
@@ -115,25 +114,21 @@ public class HomeActivity extends ActionBarActivity implements NavigationDawerFr
     private void trySyncWeather() {
         if (NetworkUtils.isNetworkAvailable(this)) {
             new RestAdapter.Builder()
-                    .setEndpoint(WeatherService.API_BAIDU_ENDPOINT)
+                    .setEndpoint(Constant.ENDPOINT)
                             //.setLogLevel(RestAdapter.LogLevel.FULL)
                     .build()
                     .create(WeatherService.class)
                     .getWeatherService(
-                            WeatherService.API_BAIDU_WEATHER_AK,
-                            WeatherService.API_BAIDU_WEATHER_LOCATION,
-                            WeatherService.API_BAIDU_WEATHER_OUTPUT,
                             new Callback<Weather>() {
                                 @Override
                                 public void success(Weather weather, Response response) {
 
-                                    WeatherDatum mWeatherData = weather.getResults().get(0).getWeather_data().get(0);
 
                                     ((TextView) actionView.getActionView().findViewById(R.id.weather_tempeture)).setText(
-                                            mWeatherData.getWind() + " " + mWeatherData.getTemperature());
+                                            weather.getDate().getTemperature() + " " + weather.getDate().getTitle());
 
                                     Picasso.with(HomeActivity.this)
-                                            .load(mWeatherData.getDayPictureUrl())
+                                            .load(weather.getDate().getDaypictureurl())
                                             .into(((ImageView) actionView.getActionView().findViewById(R.id.weather_img))
                                             );
 

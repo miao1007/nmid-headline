@@ -9,11 +9,11 @@ import com.google.gson.Gson;
 import java.util.LinkedList;
 
 import cn.edu.cqupt.nmid.headline.support.Constant;
-import cn.edu.cqupt.nmid.headline.support.controller.bean.Datum;
-import cn.edu.cqupt.nmid.headline.support.controller.bean.HeadJson;
-import cn.edu.cqupt.nmid.headline.support.controller.bean.NewsBean;
-import cn.edu.cqupt.nmid.headline.support.http.FeedsDataBaseHelper;
+import cn.edu.cqupt.nmid.headline.support.api.headline.bean.Datum;
+import cn.edu.cqupt.nmid.headline.support.api.headline.bean.HeadJson;
+import cn.edu.cqupt.nmid.headline.support.api.headline.bean.NewsBean;
 import cn.edu.cqupt.nmid.headline.support.http.HttpHelper;
+import cn.edu.cqupt.nmid.headline.support.sqlite.FeedsDataBaseHelper;
 
 public class Controller {
 	private FeedsDataBaseHelper dataBaseHelper;
@@ -26,8 +26,6 @@ public class Controller {
 	public void InitData(Handler handler, LinkedList<NewsBean> tempList,
 			int category, int limit) {
 		new InitDataThread(handler, tempList, category, limit, this).start();
-
-
 	}
 
 	public void RefreshData(Handler handler, LinkedList<NewsBean> tempList,
@@ -133,20 +131,13 @@ public class Controller {
 		}
 	}
 
-	/**
-	 * 下拉刷新函数
-	 *
-	 * @param category
-	 *            分类
-	 * @return
-	 * @throws java.io.IOException
-	 *
-	 */
+    //包括网络线程与SQL操作
 	public void getRefreshData(LinkedList<NewsBean> listBeans, int category,
 			int limit) {
-
+        //网络线程，获取HeadJson对象
 		HeadJson bean = getHeadJson(listBeans.get(0).get_id(), category, limit,
 				"freshnews");
+        //更新数据库
 		if (bean.getData() == null) {
 			return;
 		} else if (bean.getData().size() < limit) {
@@ -313,4 +304,5 @@ public class Controller {
 		newsBean.setIsCollect(0);
 		return newsBean;
 	}
+
 }

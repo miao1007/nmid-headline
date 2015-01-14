@@ -4,7 +4,8 @@ import android.os.Handler;
 
 import java.util.LinkedList;
 
-import cn.edu.cqupt.nmid.headline.support.controller.bean.NewsBean;
+import cn.edu.cqupt.nmid.headline.support.api.headline.bean.NewsBean;
+
 
 public class OldDataThread extends MyThread{
 	public OldDataThread(Handler handler, LinkedList<NewsBean> tempList,
@@ -16,4 +17,5 @@ public class OldDataThread extends MyThread{
 				controller.getOldData(tempList, category, limit);
 				handler.sendEmptyMessage(2);
 	}
+
 }

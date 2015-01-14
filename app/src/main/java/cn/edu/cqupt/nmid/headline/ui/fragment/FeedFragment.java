@@ -20,8 +20,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.Constant;
+import cn.edu.cqupt.nmid.headline.support.api.headline.bean.NewsBean;
 import cn.edu.cqupt.nmid.headline.support.controller.Controller;
-import cn.edu.cqupt.nmid.headline.support.controller.bean.NewsBean;
 import cn.edu.cqupt.nmid.headline.ui.adapter.FeedAdapter;
 import cn.edu.cqupt.nmid.headline.utils.PreferenceUtils;
 
@@ -153,6 +153,7 @@ public class FeedFragment extends Fragment {
                 int lastInScreen = firstVisibleItem + visibleItemCount;
                 //is the bottom item visible & not loading more already ? Load more !
                 if ((lastInScreen == totalItemCount)) {
+                    Log.d(TAG,"load more");
                     controller.OldData(handler, tmpnewsBeans, feed_type, limit);
                 }
             }
@@ -162,13 +163,15 @@ public class FeedFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Load from database
+     */
     private void initialData() {
         if (favorite) {
             tmpnewsBeans = controller.getFavoriteList();
             handler.sendEmptyMessage(1);
         } else {
-            //controller.InitData(handler, tmpnewsBeans, feed_type, limit);
-
+            controller.InitData(handler, tmpnewsBeans, feed_type, limit);
         }
     }
 

@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.LinkedList;
 
 import cn.edu.cqupt.nmid.headline.R;
-import cn.edu.cqupt.nmid.headline.support.controller.bean.NewsBean;
+import cn.edu.cqupt.nmid.headline.support.api.headline.bean.NewsBean;
 import cn.edu.cqupt.nmid.headline.ui.activity.DetailedActivity;
 
 public class FeedAdapter extends GenericAdapter<NewsBean> {

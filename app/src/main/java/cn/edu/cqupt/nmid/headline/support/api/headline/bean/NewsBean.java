@@ -1,4 +1,4 @@
-package cn.edu.cqupt.nmid.headline.support.controller.bean;
+package cn.edu.cqupt.nmid.headline.support.api.headline.bean;
 
 public class NewsBean {
 	private int _id;

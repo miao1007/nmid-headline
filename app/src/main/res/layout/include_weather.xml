@@ -16,7 +16,6 @@
         android:id="@+id/weather_tempeture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/primary"
         android:paddingLeft="@dimen/abc_dropdownitem_text_padding_left"
         android:paddingRight="@dimen/abc_dropdownitem_text_padding_right"
         android:text="3 ~ -8℃" />
