@@ -30,7 +30,6 @@ import butterknife.OnItemClick;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.api.user.User;
 import cn.edu.cqupt.nmid.headline.support.task.UserInfoGetTask;
-import cn.edu.cqupt.nmid.headline.support.task.callback.UserInfoGetTaskCallbacks;
 import cn.edu.cqupt.nmid.headline.ui.activity.LoginActivity;
 import cn.edu.cqupt.nmid.headline.ui.activity.SettingsActivity;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationItemsAdapter;
@@ -39,7 +38,7 @@ import cn.edu.cqupt.nmid.headline.utils.BlurTransformation;
 import cn.edu.cqupt.nmid.headline.utils.CircleTransformation;
 import com.squareup.picasso.Picasso;
 
-public class NavigationDrawerFragment extends Fragment implements UserInfoGetTaskCallbacks {
+public class NavigationDrawerFragment extends Fragment {
 
   private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
   private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
@@ -142,7 +141,23 @@ public class NavigationDrawerFragment extends Fragment implements UserInfoGetTas
   }
 
   public void fetchUserInfo() {
+    User user = new User();
+    user.setGravatar("http://qzapp.qlogo.cn/qzapp/100371282/515D73610084389BCA6CD32664A10D3D/100");
+    user.setUsername("苗子");
+    if (user != null) {
+      Picasso.with(context)
+          .load(user.getGravatar())
+          .fit()
+          .transform(new CircleTransformation())
+          .into(mAvatar);
 
+      Picasso.with(context)
+          .load(user.getGravatar())
+          .transform(new BlurTransformation(context))
+          .into(mAvatarBg);
+
+      mUsername.setText(user.getUsername());
+    }
   }
 
   public boolean isDrawerOpen() {
@@ -283,28 +298,7 @@ public class NavigationDrawerFragment extends Fragment implements UserInfoGetTas
 
   }
 
-  @Override
-  public void onUserInfoGetTaskPreExecute() {
-        /* Do nothing */
-  }
 
-  @Override
-  public void onUserInfoGetTaskPostExecute(User user) {
-    if (user != null) {
-      Picasso.with(context)
-          .load("http://www.gravatar.com/avatar/" + user.getGravatar() + "?s=100")
-          .fit()
-          .transform(new CircleTransformation())
-          .into(mAvatar);
-
-      Picasso.with(context)
-          .load("http://www.gravatar.com/avatar/" + user.getGravatar())
-          .transform(new BlurTransformation(context))
-          .into(mAvatarBg);
-
-      mUsername.setText(user.getUsername());
-    }
-  }
 
   public static interface NavigationDrawerCallbacks {
     void onNavigationDrawerItemSelected(int position);
