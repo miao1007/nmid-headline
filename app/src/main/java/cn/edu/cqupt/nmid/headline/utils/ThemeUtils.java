@@ -40,4 +40,12 @@ public class ThemeUtils {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(DBkey,false);
     }
 
+    public static int getBackgroundColor(Context context){
+        if (isNightMode(context)){
+            return R.color.background_floating_material_dark;
+        } else {
+            return R.color.background_floating_material_light;
+        }
+    }
+
 }

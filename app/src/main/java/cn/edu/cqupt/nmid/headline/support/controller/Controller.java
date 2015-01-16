@@ -13,7 +13,7 @@ import cn.edu.cqupt.nmid.headline.support.api.headline.bean.Datum;
 import cn.edu.cqupt.nmid.headline.support.api.headline.bean.HeadJson;
 import cn.edu.cqupt.nmid.headline.support.api.headline.bean.NewsBean;
 import cn.edu.cqupt.nmid.headline.support.http.HttpHelper;
-import cn.edu.cqupt.nmid.headline.support.sqlite.FeedsDataBaseHelper;
+import cn.edu.cqupt.nmid.headline.support.db.FeedsDataBaseHelper;
 
 public class Controller {
 	private FeedsDataBaseHelper dataBaseHelper;

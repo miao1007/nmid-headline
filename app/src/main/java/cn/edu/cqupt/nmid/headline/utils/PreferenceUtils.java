@@ -2,6 +2,7 @@ package cn.edu.cqupt.nmid.headline.utils;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import cn.edu.cqupt.nmid.headline.R;
 
@@ -9,6 +10,8 @@ import cn.edu.cqupt.nmid.headline.R;
  * Created by leon on 1/14/15.
  */
 public class PreferenceUtils {
+
+    static String TAG = PreferenceUtils.class.getSimpleName();
 
     public static int getWebViewTextZoom(Context context) {
         try {
@@ -20,7 +23,11 @@ public class PreferenceUtils {
 
     public static int getQueryLimit(Context context) {
         try {
-            return Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(context).getString(context.getString(R.string.settings_push_feeds), "15"));
+            int a = Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(context).getString(context.getString(R.string.settings_push_feeds), "15"));
+            Log.i(TAG,a + "");
+            return a;
+
+
         } catch (ClassCastException e) {
             return 15;
         }

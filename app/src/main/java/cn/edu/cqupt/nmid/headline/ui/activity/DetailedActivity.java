@@ -1,15 +1,12 @@
 package cn.edu.cqupt.nmid.headline.ui.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -17,6 +14,8 @@ import butterknife.OnClick;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.Constant;
 import cn.edu.cqupt.nmid.headline.support.controller.Controller;
+import cn.edu.cqupt.nmid.headline.support.task.WebContentGetTask;
+import cn.edu.cqupt.nmid.headline.support.task.callback.WebContentGetTaskCallback;
 import cn.edu.cqupt.nmid.headline.ui.widget.FloatingActionsMenuHidable;
 import cn.edu.cqupt.nmid.headline.ui.widget.ObservableScrollViewCallbacks;
 import cn.edu.cqupt.nmid.headline.ui.widget.ObservableWebView;
@@ -131,6 +130,8 @@ public class DetailedActivity extends ActionBarActivity {
 
     private void trySetupWebview() {
 
+        String url = Constant.ENDPOINT + "/txtt/public/api/android/newscontent?id=" + id + "&category=" + category;
+        url = "http://bbs.pcbeta.com/";
         WebSettings settings = mWebView.getSettings();
         settings.setTextZoom(PreferenceUtils.getWebViewTextZoom(this));
         if (NetworkUtils.isWifiAviliable(this)) {
@@ -148,7 +149,7 @@ public class DetailedActivity extends ActionBarActivity {
                 }
                 break;
         }
-        mWebView.setWebViewClient(new DefalutWebViewClient());
+
         mWebView.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
             //正在滚动时，包括drag滚动和惯性滚动
             @Override
@@ -184,41 +185,34 @@ public class DetailedActivity extends ActionBarActivity {
         });
 
 
-        String htmlData;
-        String url = Constant.ENDPOINT + "/txtt/public/api/android/newscontent?id=" + id + "&category=" + category;
-        if (ThemeUtils.isNightMode(this)) {
-            // Webview will use asserts/style_night.css
-            htmlData = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style_night.css\" /> <body class= \"gloable\"> "
-                    + url + "</body>";
-        } else {
-            // Webview will use asserts/style.css
-            htmlData = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" /> <body class= \"gloable\"> "
-                    + url + "</body>";
-        }
+        new WebContentGetTask(this,new WebContentGetTaskCallback() {
+            @Override
+            public void onPreExcute() {
+                mProgressBarCircular.setVisibility(View.VISIBLE);
+            }
 
-        //mWebView.loadDataWithBaseURL("file:///android_asset/", htmlData, MIME_TYPE, ENCODING, null);
-        mWebView.loadUrl(Constant.ENDPOINT + "/txtt/public/api/android/newscontent?id=" + id + "&category=" + category);
-    }
+            @Override
+            public void onSuccess(Object o) {
+                Log.d(TAG,o.toString());
+                mProgressBarCircular.setVisibility(View.GONE);
+                String htmlData;
+                if (ThemeUtils.isNightMode(DetailedActivity.this)) {
+                    // Webview will use asserts/style_night.css
+                    htmlData = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style_night.css\" /> <body class= \"gloable\"> "
+                            + o + "</body>";
+                } else {
+                    // Webview will use asserts/style.css
+                    htmlData = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" /> <body class= \"gloable\"> "
+                            + o + "</body>";
+                }
 
-
-    private class DefalutWebViewClient extends WebViewClient {
-
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            System.out.println("onPageStarted = " + view);
-            mProgressBarCircular.setVisibility(View.VISIBLE);
-            super.onPageStarted(view, url, favicon);
-
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            System.out.println("onPageFinished = " + view);
-            mProgressBarCircular.setVisibility(View.GONE);
-            super.onPageFinished(view, url);
-        }
+                //mWebView.loadDataWithBaseURL("file:///android_asset/", htmlData, MIME_TYPE, ENCODING, null);
+                mWebView.loadDataWithBaseURL("file:///android_asset/", o.toString(), MIME_TYPE, ENCODING, null);
+            }
+        }).execute(url);
 
     }
+
 
 
     @Override

@@ -5,20 +5,17 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-
-import java.util.HashMap;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.utils.ThemeUtils;
-import cn.edu.cqupt.nmid.headline.utils.UIutils;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qzone.QZone;
+import java.util.HashMap;
 
 /**
  * Created by leon on 14/10/1.
@@ -98,46 +95,12 @@ public class LoginActivity extends BaseActivity {
 
 
 
-
-    private void authorize(Platform plat) {
-        if (plat instanceof QZone){
-            plat.authorize();
-        }else if (plat instanceof SinaWeibo){
-            plat.authorize();
-        }
-
-
-//
-//        if (plat == null) {
-//            Log.e("authorize", "plat is Empty");
-//        } else if (!plat.isValid()) {
-//            Log.e("authorize", "trying to log in");
-//            plat.showUser(null);
-//            plat.setPlatformActionListener(mPlatformListener);
-//        } else {
-//            String userId = plat.getDb().getUserId();
-//            //如果id不为空，就视为用户已经登录
-//            String avatar = plat.getDb().getUserIcon();
-//            String name = plat.getDb().getUserName();
-//            if (!TextUtils.isEmpty(userId)) {
-//                Log.e("authorize", "You have already logined in");
-//                setResult(name, avatar);
-//                UIutils.disMsg(this,"You have already logined in");
-//            } else {
-//                Log.e("authorize", "userId isEmpty");
-//            }
-//        }
-    }
-
-
-
     class MyPlatformListener implements PlatformActionListener {
         //这个只有第一次登陆能使用，登陆成功后就没用了
         @Override
         public void onComplete(Platform plat, int action, HashMap<String, Object> stringObjectHashMap) {
             String name;
             String avatar;
-            UIutils.disMsg(mActivity,"您已经成功登陆");
             if (plat instanceof SinaWeibo) {
                 name = String.valueOf(stringObjectHashMap.get("name"));
                 avatar = String.valueOf(stringObjectHashMap.get("avatar_large"));
@@ -160,7 +123,7 @@ public class LoginActivity extends BaseActivity {
         @Override
         public void onError(Platform platform, int i, Throwable throwable) {
             if (i == Platform.ACTION_USER_INFOR) {
-                UIutils.disMsg(mActivity,"授权错误");
+
             }
             throwable.printStackTrace();
         }
@@ -168,7 +131,7 @@ public class LoginActivity extends BaseActivity {
         @Override
         public void onCancel(Platform platform, int i) {
             if (i == Platform.ACTION_USER_INFOR) {
-                UIutils.disMsg(mActivity,"授权取消");
+
             }
         }
     }

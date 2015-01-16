@@ -22,6 +22,7 @@ public class SettingsActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         ThemeUtils.setThemeFromDb(this);
         setContentView(R.layout.include_settings);
+
         ButterKnife.inject(this);
         trySetupToolbar(mToolbar);
         getFragmentManager().beginTransaction().replace(R.id.include_settings_container, new MyPreferenceFragment()).commit();
@@ -35,6 +36,7 @@ public class SettingsActivity extends BaseActivity{
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.settings_general);
         }
+
     }
 
 

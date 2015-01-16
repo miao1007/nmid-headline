@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App Theme Colors -->
+    <color name="apptheme_main">#e91e63</color>
+    <color name="apptheme_main_light">#f8bbd0</color>
+    <color name="apptheme_main_dark">#c2185b</color>
+    <color name="apptheme_actionbar">@color/apptheme_main</color>
+    <color name="apptheme_accent">#eeff41</color>
+    <color name="apptheme_accent_fallback_light">#f4ff81</color>
+    <color name="apptheme_accent_fallback_dark">#c6ff00</color>
+    <color name="apptheme_accent_translucent">#70eeff41</color>
+
+    <!-- WaniKani Colors -->
+    <color name="wanikani_burned">#eeeeee</color>
+    <color name="wanikani_radical">#009ce9</color>
+    <color name="wanikani_radical_dark">#ff0088cd</color>
+    <color name="wanikani_kanji">#f500a3</color>
+    <color name="wanikani_kanji_dark">#ffd90091</color>
+    <color name="wanikani_vocabulary">#9d33b7</color>
+    <color name="wanikani_vocabulary_dark">#ff81319b</color>
+
+    <!-- Holo Colors -->
+    <color name="holo_blue_light">#33B5E5</color>
+    <color name="holo_blue_dark">#0099CC</color>
+    <color name="holo_purple_light">#AA66CC</color>
+    <color name="holo_purple_dark">#9933CC</color>
+    <color name="holo_green_light">#99CC00</color>
+    <color name="holo_green_dark">#669900</color>
+    <color name="holo_orange_light">#FFBB33</color>
+    <color name="holo_orange_dark">#FF8800</color>
+    <color name="holo_red_light">#FF4444</color>
+    <color name="holo_red_dark">#CC0000</color>
+
+    <!-- Swipe To Refresh Colors -->
+    <color name="swipe_refresh">#ec407a</color>
+
+    <!-- Tint Colors -->
+    <color name="tint_black_30">#30000000</color>
+    <color name="tint_black_10">#10000000</color>
+    <color name="tint_black_05">#05000000</color>
+    <color name="tint_black_cc">#cc000000</color>
+    <color name="tint_black_dd">#dd000000</color>
+    <color name="tint_white_30">#30ffffff</color>
+    <color name="tint_white_cc">#ccffffff</color>
+
+    <!-- Background Colors -->
+    <color name="window_background_light">#dddddd</color>
+    <color name="window_background_dark">#353535</color>
+    <color name="nav_drawer_background_light">#eeeeee</color>
+    <color name="nav_drawer_background_dark">#353535</color>
+    <color name="background_gray">#7a7a7a</color>
+    <color name="background_disabled">#7a7a7a</color>
+    <color name="background_nav_draw_lesson_review">#ffffffff</color>
+    <color name="simple_item_background">@android:color/transparent</color>
+    <color name="simple_item_background_pressed">#15000000</color>
+
+    <!-- Gradient Colors -->
+    <color name="gradient_start">#ffc7c7c7</color>
+    <color name="gradient_end">@android:color/transparent</color>
+
+    <!-- Text Colors -->
+    <color name="text_white_translucent">#ddffffff</color>
+    <color name="text_light">#f2f2f2</color>
+    <color name="text_black">#000000</color>
+    <color name="text_gray">#656565</color>
+    <color name="text_gray_dark">#CC000000</color>
+    <color name="text_gray_light">#7a7a7a</color>
+
+    <!-- Separator Colors -->
+    <color name="separator">#507a7a7a</color>
+    <color name="separator_light">#207a7a7a</color>
+    <color name="separator_login">#ffb8b8b8</color>
+
+    <!-- Card colors -->
+    <color name="card_content">#fafafa</color>
+    <color name="card_content_pressed">#ededed</color>
+    <color name="card_content_disabled">#ccfafafa</color>
+    <color name="card_stroke">#f4f4f4</color>
+    <color name="card_stroke_pressed">#e7e7e7</color>
+    <color name="card_stroke_disabled">#ccf4f4f4</color>
+    <color name="card_radical_shadow">#007cb9</color>
+    <color name="card_kanji_shadow">#b5007d</color>
+    <color name="card_vocabulary_shadow">#6f2481</color>
+    <color name="card_disabled_shadow">#6a6a6a</color>
+
+    <!-- SRS colors -->
+    <color name="apprentice">#ff00aa</color>
+    <color name="guru">#aa38c6</color>
+    <color name="enlightened">#00aaff</color>
+    <color name="master">#5571e2</color>
+    <color name="burned">#555</color>
+
+    <!-- TextBox Colors -->
+    <color name="correctbg">#88cc00</color>
+    <color name="correctfg">#fff</color>
+    <color name="incorrectbg">#ff0033</color>
+    <color name="incorrectfg">#fff</color>
+    <color name="ignoredfg">#fff</color>
+    <color name="ignoredbg">#fecc31</color>
+</resources>

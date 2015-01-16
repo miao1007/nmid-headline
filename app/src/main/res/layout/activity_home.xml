@@ -1,43 +1,53 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<view xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:id="@+id/drawer_layout"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    class="android.support.v4.widget.DrawerLayout">
+    <!--coontent view-->
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
+    <LinearLayout
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_width="match_parent">
 
         <include
             android:id="@+id/toolbar"
             layout="@layout/include_toolbar" />
 
-        <view
-            android:id="@+id/drawer"
-            class="android.support.v4.widget.DrawerLayout"
+        <FrameLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <!--coontent view-->
-            <include layout="@layout/include_viewpager" />
-
-            <!--navigation drawer-->
-            <fragment
-                android:id="@+id/fragment"
-                android:name="cn.edu.cqupt.nmid.headline.ui.fragment.NavigationDawerFragment"
-                android:layout_width="@dimen/drawerweigth"
-                android:layout_height="match_parent"
-                android:layout_gravity="left"
-                tools:layout="@layout/fragment_navigation_dawer" />
-
-
-        </view>
-
-
+            android:layout_height="match_parent" />
     </LinearLayout>
 
-    <!--<cn.edu.cqupt.nmid.headline.ui.widget.PullUpLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"/>-->
 
-</FrameLayout>
+    <!--navigation drawer-->
+    <cn.edu.cqupt.nmid.headline.ui.widget.ScrimInsetsFrameLayout
+        android:id="@+id/navigation_drawer_holder"
+        android:layout_width="@dimen/drawerweigth"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:insetForeground="#2000">
+
+        <fragment
+            android:id="@+id/navigation_drawer"
+            android:layout_gravity="start"
+            android:layout_height="match_parent"
+            android:layout_width="@dimen/drawerweigth"
+            android:name="cn.edu.cqupt.nmid.headline.ui.fragment.NavigationDrawerFragment"
+            tools:layout="@layout/fragment_navigation_drawer" />
+    </cn.edu.cqupt.nmid.headline.ui.widget.ScrimInsetsFrameLayout>
+
+
+
+</view>
+
+
+
+
+
+

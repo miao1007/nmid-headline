@@ -13,6 +13,7 @@ public class RefreshDataThread extends MyThread{
 			int category, int limit, Controller controller) {
 		super(handler, tempList, category, limit, controller);
 	}
+
 	@Override
 	public void run() {
 		controller.getRefreshData(tempList, category, limit);

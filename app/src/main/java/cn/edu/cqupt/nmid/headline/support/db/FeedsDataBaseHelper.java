@@ -1,4 +1,4 @@
-package cn.edu.cqupt.nmid.headline.support.sqlite;
+package cn.edu.cqupt.nmid.headline.support.db;
 
 import android.content.ContentValues;
 import android.content.Context;
