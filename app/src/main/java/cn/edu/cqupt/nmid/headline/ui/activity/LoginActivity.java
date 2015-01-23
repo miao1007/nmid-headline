@@ -1,15 +1,16 @@
 package cn.edu.cqupt.nmid.headline.ui.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.LinearLayout;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.edu.cqupt.nmid.headline.R;
+import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
+import cn.edu.cqupt.nmid.headline.ui.widget.swipebacklayout.SwipeBackActivity;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
-import cn.edu.cqupt.nmid.headline.utils.ThemeUtils;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.PlatformDb;
@@ -22,7 +23,7 @@ import java.util.HashMap;
  * Created by leon on 14/10/1.
  * Function : 基于ShareSDK的授权回调Activity
  */
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends SwipeBackActivity {
 
   /**
    * ShareSDK status
@@ -34,9 +35,7 @@ public class LoginActivity extends BaseActivity {
   private static final int MSG_AUTH_COMPLETE = 5;
   private static final String TAG = LogUtils.makeLogTag(LoginActivity.class);
 
-  private MyPlatformListener mPlatformListener;
-  private ActionBarActivity mActivity = LoginActivity.this;
-
+  private ShareSDKPlatformListener mPlatformListener;
   /**
    * ShareSDK author
    */
@@ -62,19 +61,20 @@ public class LoginActivity extends BaseActivity {
   }
 
   @InjectView(R.id.toolbar) Toolbar mToolbar;
+  @InjectView(R.id.login_holder) LinearLayout mLinelayout;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     ShareSDK.initSDK(this);
-    ThemeUtils.setThemeFromDb(this);
     setContentView(R.layout.activity_login);
     ButterKnife.inject(this);
-    mPlatformListener = new MyPlatformListener();
+    mToolbar.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
+    mPlatformListener = new ShareSDKPlatformListener();
     trySetupToolbar(mToolbar);
   }
 
-  class MyPlatformListener implements PlatformActionListener {
+  class ShareSDKPlatformListener implements PlatformActionListener {
     //这个只有第一次登陆能使用，登陆成功后就没用了
     @Override
     public void onComplete(Platform plat, int action, HashMap<String, Object> stringObjectHashMap) {
@@ -101,5 +101,7 @@ public class LoginActivity extends BaseActivity {
 
       }
     }
+
   }
+
 }

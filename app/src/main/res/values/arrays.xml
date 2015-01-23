@@ -19,9 +19,9 @@
     </string-array>
 
     <string-array name="settings_entry_values_font_sizes">
-        <item>80</item>
-        <item>100</item>
-        <item>120</item>
+        <item>90</item>
+        <item>115</item>
+        <item>140</item>
     </string-array>
 
 

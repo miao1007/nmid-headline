@@ -6,6 +6,7 @@
  body.gloable {
      background-color: rgb(51,51,51);
      padding: 4px;
+     line-height : 150%;
      color: rgb(145,145,145);
  }
 

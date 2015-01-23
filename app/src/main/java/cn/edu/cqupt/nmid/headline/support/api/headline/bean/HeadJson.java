@@ -4,7 +4,7 @@ import java.util.List;
 
 public class HeadJson {
     private Integer status;
-    private List<Datum> data = new ArrayList<Datum>();
+    private List<Feed> data = new ArrayList<Feed>();
 
     /**
      *
@@ -29,7 +29,7 @@ public class HeadJson {
      * @return
      *     The data
      */
-    public List<Datum> getData() {
+    public List<Feed> getData() {
         return data;
     }
 
@@ -38,7 +38,7 @@ public class HeadJson {
      * @param data
      *     The data
      */
-    public void setData(List<Datum> data) {
+    public void setData(List<Feed> data) {
         this.data = data;
     }
 

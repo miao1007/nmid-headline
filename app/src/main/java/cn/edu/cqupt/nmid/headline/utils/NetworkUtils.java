@@ -3,20 +3,24 @@ package cn.edu.cqupt.nmid.headline.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 /**
  * Created by leon on 14/10/11.
  */
 public class NetworkUtils {
-    private Context context;
 
-    public static boolean isNetworkAvailable(Context context) {
-        ConnectivityManager con = (ConnectivityManager) context.getSystemService(Activity.CONNECTIVITY_SERVICE);
-        return (con.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting() || con.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnectedOrConnecting());
-    }
+  public static boolean isWifiAviliable(Context context) {
+    ConnectivityManager con =
+        (ConnectivityManager) context.getSystemService(Activity.CONNECTIVITY_SERVICE);
+    NetworkInfo activeNetworkInfo = con.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+    return activeNetworkInfo != null;
+  }
 
-    public static boolean isWifiAviliable(Context context) {
-        ConnectivityManager con = (ConnectivityManager) context.getSystemService(Activity.CONNECTIVITY_SERVICE);
-        return con.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting();
-    }
+  public boolean isNetworkAvailable(Context context) {
+    ConnectivityManager connectivityManager =
+        (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+    return activeNetworkInfo != null;
+  }
 }

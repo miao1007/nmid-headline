@@ -1,4 +1,6 @@
 <view xmlns:android="http://schemas.android.com/apk/res/android"
     class="android.support.v7.widget.Toolbar"
+    android:titleTextAppearance="@style/TextAppearance.AppCompat.Headline"
+    android:paddingTop="@dimen/nav_drawer_status_bar_offset"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"/>

@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
@@ -28,15 +29,26 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 import cn.edu.cqupt.nmid.headline.R;
-import cn.edu.cqupt.nmid.headline.support.api.user.User;
+import cn.edu.cqupt.nmid.headline.support.Constant;
+import cn.edu.cqupt.nmid.headline.support.api.weather.WeatherService;
+import cn.edu.cqupt.nmid.headline.support.api.weather.bean.Weather;
+import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.support.task.UserInfoGetTask;
 import cn.edu.cqupt.nmid.headline.ui.activity.LoginActivity;
 import cn.edu.cqupt.nmid.headline.ui.activity.SettingsActivity;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationItemsAdapter;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationSecondaryItemsAdapter;
-import cn.edu.cqupt.nmid.headline.utils.BlurTransformation;
-import cn.edu.cqupt.nmid.headline.utils.CircleTransformation;
+import cn.edu.cqupt.nmid.headline.utils.PreferenceUtils;
+import cn.edu.cqupt.nmid.headline.utils.animation.BlurTransformation;
+import cn.edu.cqupt.nmid.headline.utils.animation.CircleTransformation;
+import cn.sharesdk.framework.PlatformDb;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
 import com.squareup.picasso.Picasso;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class NavigationDrawerFragment extends Fragment {
 
@@ -46,7 +58,22 @@ public class NavigationDrawerFragment extends Fragment {
   View rootView;
   Context context;
 
+  @InjectView(R.id.navigation_drawer_holder) LinearLayout mLinearLayout;
   @InjectView(R.id.navigation_drawer_avatar) ImageView mAvatar;
+  @InjectView(R.id.navigation_drawer_avatar_bg) ImageView mAvatarBg;
+  @InjectView(R.id.navigation_drawer_username) TextView mUsername;
+  @InjectView(R.id.navigation_drawer_profile) FrameLayout mProfile;
+  @InjectView(R.id.navigation_drawer_list_main) ListView mMainListView;
+  @InjectView(R.id.navigation_drawer_list_secondary) ListView mSecondaryListView;
+  NavigationItemsAdapter mNavigationItemsAdapter;
+  private UserInfoGetTask mUserInfoFetchTask;
+  private NavigationDrawerCallbacks mCallbacks;
+  private ActionBarDrawerToggle mDrawerToggle;
+  private DrawerLayout mDrawerLayout;
+  private View mFragmentContainerView;
+  private int mCurrentSelectedPosition = 0;
+  private boolean mFromSavedInstanceState;
+  private boolean mUserLearnedDrawer;
 
   @OnClick(R.id.navigation_drawer_avatar) void navigation_drawer_avatar() {
     startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -54,16 +81,6 @@ public class NavigationDrawerFragment extends Fragment {
       mDrawerLayout.closeDrawer(mFragmentContainerView);
     }
   }
-
-  @InjectView(R.id.navigation_drawer_avatar_bg) ImageView mAvatarBg;
-
-  @InjectView(R.id.navigation_drawer_username) TextView mUsername;
-
-  @InjectView(R.id.navigation_drawer_profile) FrameLayout mProfile;
-
-  @InjectView(R.id.navigation_drawer_list_main) ListView mMainListView;
-
-  @InjectView(R.id.navigation_drawer_list_secondary) ListView mSecondaryListView;
 
   @OnItemClick(R.id.navigation_drawer_list_main) void navigation_drawer_list_main(int position) {
     selectItem(position);
@@ -76,33 +93,18 @@ public class NavigationDrawerFragment extends Fragment {
         startActivity(new Intent(getActivity(), SettingsActivity.class));
         break;
       case 1:
-        showlogoutDialog();
+        getActivity().finish();
         break;
     }
   }
-
-  NavigationItemsAdapter mNavigationItemsAdapter;
-
-  private UserInfoGetTask mUserInfoFetchTask;
-
-  private NavigationDrawerCallbacks mCallbacks;
-  private ActionBarDrawerToggle mDrawerToggle;
-  private DrawerLayout mDrawerLayout;
-
-  private View mFragmentContainerView;
-
-  private int mCurrentSelectedPosition = 0;
-  private boolean mFromSavedInstanceState;
-  private boolean mUserLearnedDrawer;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     context = getActivity();
-
-    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-    mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
+    mUserLearnedDrawer =
+        PreferenceUtils.getPrefBoolean(getActivity(), PREF_USER_LEARNED_DRAWER, false);
 
     if (savedInstanceState != null) {
       mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
@@ -121,6 +123,10 @@ public class NavigationDrawerFragment extends Fragment {
       Bundle savedInstanceState) {
     rootView = inflater.inflate(R.layout.fragment_navigation_drawer, null);
     ButterKnife.inject(this, rootView);
+
+    //add night mode
+    mLinearLayout.setBackgroundResource(ThemePref.getItemBackgroundResColor(getActivity()));
+    mProfile.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(getActivity()));
 
     mNavigationItemsAdapter = new NavigationItemsAdapter(getActivity());
     mMainListView.setAdapter(mNavigationItemsAdapter);
@@ -141,23 +147,33 @@ public class NavigationDrawerFragment extends Fragment {
   }
 
   public void fetchUserInfo() {
-    User user = new User();
-    user.setGravatar("http://qzapp.qlogo.cn/qzapp/100371282/515D73610084389BCA6CD32664A10D3D/100");
-    user.setUsername("苗子");
-    if (user != null) {
+    ShareSDK.initSDK(getActivity());
+    PlatformDb db = ShareSDK.getPlatform(getActivity(), SinaWeibo.NAME).getDb();
+    if (db.isValid()) {
       Picasso.with(context)
-          .load(user.getGravatar())
+          .load(db.getUserIcon())
           .fit()
           .transform(new CircleTransformation())
           .into(mAvatar);
-
       Picasso.with(context)
-          .load(user.getGravatar())
+          .load(db.getUserIcon())
           .transform(new BlurTransformation(context))
           .into(mAvatarBg);
-
-      mUsername.setText(user.getUsername());
+      mUsername.setText(db.getUserName());
     }
+
+    new RestAdapter.Builder().setEndpoint(Constant.ENDPOINT)
+        .build()
+        .create(WeatherService.class)
+        .getWeatherService(new Callback<Weather>() {
+          @Override public void success(Weather weather, Response response) {
+
+          }
+
+          @Override public void failure(RetrofitError error) {
+
+          }
+        });
   }
 
   public boolean isDrawerOpen() {
@@ -293,12 +309,6 @@ public class NavigationDrawerFragment extends Fragment {
     ActionBarActivity activity = (ActionBarActivity) getActivity();
     if (activity != null) activity.getSupportActionBar().setTitle(getString(R.string.app_name));
   }
-
-  private void showlogoutDialog() {
-
-  }
-
-
 
   public static interface NavigationDrawerCallbacks {
     void onNavigationDrawerItemSelected(int position);

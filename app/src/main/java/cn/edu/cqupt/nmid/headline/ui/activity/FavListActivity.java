@@ -2,13 +2,13 @@ package cn.edu.cqupt.nmid.headline.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.ui.fragment.FeedFragment;
+import cn.edu.cqupt.nmid.headline.ui.widget.swipebacklayout.SwipeBackActivity;
 
-public class FavListActivity extends BaseActivity {
+public class FavListActivity extends SwipeBackActivity {
 
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;

@@ -20,7 +20,7 @@ import static cn.edu.cqupt.nmid.headline.utils.ScreenUtils.getScreenHeight;
 import static cn.edu.cqupt.nmid.headline.utils.ScreenUtils.getScreenWidth;
 
 /**
- * Created by leon on 12/20/14.
+ * 仿 Zaker® 的上拉进入，但是个人上非常不喜欢启动界面
  */
 public class PullUpLayout extends RelativeLayout {
     String TAG = LogUtils.makeLogTag(PullUpLayout.class);

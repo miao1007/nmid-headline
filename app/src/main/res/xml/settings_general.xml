@@ -5,8 +5,8 @@
 
         <SwitchPreference
             android:defaultValue="false"
-            android:key="settings_general_is_night_mode"
-            android:title="夜间模式" />
+            android:key="@string/settings_night_mode"
+            android:title="@string/settings_night_mode" />
 
         <ListPreference
             android:defaultValue="100"

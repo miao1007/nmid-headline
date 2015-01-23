@@ -8,13 +8,13 @@
     android:orientation="vertical">
 
 
-    <cn.edu.cqupt.nmid.headline.ui.widget.ObservableWebView
+    <cn.edu.cqupt.nmid.headline.ui.widget.observerWebView.ObservableWebView
         android:id="@+id/detailed_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
-    </cn.edu.cqupt.nmid.headline.ui.widget.ObservableWebView>
+    </cn.edu.cqupt.nmid.headline.ui.widget.observerWebView.ObservableWebView>
 
     <cn.edu.cqupt.nmid.headline.ui.widget.ProgressBarCircular
         android:id="@+id/detailed_progressbar"

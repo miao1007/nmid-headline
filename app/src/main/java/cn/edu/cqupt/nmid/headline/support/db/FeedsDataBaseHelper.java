@@ -6,8 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import cn.edu.cqupt.nmid.headline.support.api.headline.bean.NewsBean;
-
+import cn.edu.cqupt.nmid.headline.support.api.headline.bean.Feed;
 
 public class FeedsDataBaseHelper extends SQLiteOpenHelper {
     private static FeedsDataBaseHelper baseHelper;
@@ -42,10 +41,10 @@ public class FeedsDataBaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public synchronized void insertData(NewsBean news, String type) {
+    public synchronized void insertData(Feed news, String type) {
         SQLiteDatabase db = getReadableDatabase();
         db.execSQL("insert into " + type + " values(?,?,?,?,?,?,?,?,?)", new String[]{
-                String.valueOf(news.get_id()), String.valueOf(news.getCategory()), news.getTitle(), news.getSimpleContent(), news.getImage1(), news.getImage2(), news.getImage3(), news.getTimeRelease(), String.valueOf(news.getIsCollect())});
+                String.valueOf(news.getId()), String.valueOf(news.getCategory()), news.getTitle(), news.getSimple_content(), news.getImage1(), news.getImage2(), news.getImage3(), news.getTime_release(), String.valueOf(news.getIsCollect())});
         db.close();
     }
 

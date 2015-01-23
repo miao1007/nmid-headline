@@ -3,37 +3,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/abc_cab_background_top_material"
+    android:id="@+id/login_holder"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/include_toolbar" />
+  <include
+      android:id="@+id/toolbar"
+      layout="@layout/include_toolbar"/>
 
+  <FrameLayout android:layout_width="match_parent"
+      android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/activity_login_by_qzone"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="15dp"
-        android:drawableLeft="@drawable/logo_qzone"
-        android:gravity="center"
-        android:singleLine="true"
-        android:text="使用QQ空间登陆"
-        android:textSize="18dp"></TextView>
-
-    <TextView
+    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:id="@+id/activity_login_by_sinaweibo"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="15dp"
-        android:drawableLeft="@drawable/logo_sinaweibo"
-        android:gravity="center"
-        android:singleLine="true"
-        android:text="使用微博登陆"
-        android:textSize="18dp" />
+        android:src="@drawable/logo_sinaweibo"/>
+
+    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:id="@+id/activity_login_by_qzone"
+        android:src="@drawable/logo_qzone"/>
+
 
     <TextView
         android:id="@+id/activity_login_exit"
@@ -46,6 +33,9 @@
         android:gravity="center"
         android:singleLine="true"
         android:text="退出"
-        android:textSize="18dp" />
+        android:textSize="18dp"/>
+
+  </FrameLayout>
+
 
 </LinearLayout>
