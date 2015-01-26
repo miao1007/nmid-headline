@@ -1,141 +1,146 @@
-
 package cn.edu.cqupt.nmid.headline.support.api.headline.bean;
 
+import java.util.HashMap;
+import java.util.Map;
 
 public class Datum {
 
-    private int id;
-    private int category;
-    private String title;
-    private String simple_content;
-    private String image1;
-    private String image2;
-    private String image3;
-    private String time_release;
+  private int id;
+  private int category;
+  private String title;
+  private String simple_content;
+  private String image1;
+  private String image2;
+  private String image3;
+  private String time_release;
+  private int isCollect;
+  private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    /**
-     * 
-     * @return
-     *     The id
-     */
-    public int getId() {
-        return id;
-    }
+  public int getIsCollect() {
+    return isCollect;
+  }
 
-    /**
-     * 
-     * @param id
-     *     The id
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
+  public void setIsCollect(int isCollect) {
+    this.isCollect = isCollect;
+  }
 
-    /**
-     * 
-     * @return
-     *     The category
-     */
-    public int getCategory() {
-        return category;
-    }
+  /**
+   * @return The id
+   */
+  public int getId() {
+    return id;
+  }
 
-    /**
-     * 
-     * @param category
-     *     The category
-     */
-    public void setCategory(int category) {
-        this.category = category;
-    }
+  /**
+   * @param id The id
+   */
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    /**
-     * 
-     * @return
-     *     The title
-     */
-    public String getTitle() {
-        return title;
-    }
+  /**
+   * @return The category
+   */
+  public int getCategory() {
+    return category;
+  }
 
-    /**
-     * 
-     * @param title
-     *     The title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
+  /**
+   * @param category The category
+   */
+  public void setCategory(int category) {
+    this.category = category;
+  }
 
-    /**
-     * 
-     * @return
-     *     The image1
-     */
-    public String getImage1() {
-        return image1;
-    }
+  /**
+   * @return The title
+   */
+  public String getTitle() {
+    return title;
+  }
 
-    /**
-     * 
-     * @param image1
-     *     The image1
-     */
-    public void setImage1(String image1) {
-        this.image1 = image1;
-    }
+  /**
+   * @param title The title
+   */
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    /**
-     * 
-     * @return
-     *     The image2
-     */
-    public String getImage2() {
-        return image2;
-    }
+  /**
+   * @return The simpleContent
+   */
+  public String getSimpleContent() {
+    return simple_content;
+  }
 
-    /**
-     * 
-     * @param image2
-     *     The image2
-     */
-    public void setImage2(String image2) {
-        this.image2 = image2;
-    }
+  /**
+   * @param simpleContent The simple_content
+   */
+  public void setSimpleContent(String simpleContent) {
+    this.simple_content = simpleContent;
+  }
 
-    /**
-     * 
-     * @return
-     *     The image3
-     */
-    public String getImage3() {
-        return image3;
-    }
+  /**
+   * @return The image1
+   */
+  public String getImage1() {
+    return image1;
+  }
 
-    /**
-     * 
-     * @param image3
-     *     The image3
-     */
-    public void setImage3(String image3) {
-        this.image3 = image3;
-    }
+  /**
+   * @param image1 The image1
+   */
+  public void setImage1(String image1) {
+    this.image1 = image1;
+  }
 
-	public String getSimple_content() {
-		return simple_content;
-	}
+  /**
+   * @return The image2
+   */
+  public String getImage2() {
+    return image2;
+  }
 
-	public void setSimple_content(String simple_content) {
-		this.simple_content = simple_content;
-	}
+  /**
+   * @param image2 The image2
+   */
+  public void setImage2(String image2) {
+    this.image2 = image2;
+  }
 
-	public String getTime_release() {
-		return time_release;
-	}
+  /**
+   * @return The image3
+   */
+  public String getImage3() {
+    return image3;
+  }
 
-	public void setTime_release(String time_release) {
-		this.time_release = time_release;
-	}
-    
+  /**
+   * @param image3 The image3
+   */
+  public void setImage3(String image3) {
+    this.image3 = image3;
+  }
 
+  /**
+   * @return The timeRelease
+   */
+  public String getTimeRelease() {
+    return time_release;
+  }
+
+  /**
+   * @param timeRelease The time_release
+   */
+  public void setTimeRelease(String timeRelease) {
+    this.time_release = timeRelease;
+  }
+
+  public Map<String, Object> getAdditionalProperties() {
+    return this.additionalProperties;
+  }
+
+  public void setAdditionalProperty(String name, Object value) {
+    this.additionalProperties.put(name, value);
+  }
 }

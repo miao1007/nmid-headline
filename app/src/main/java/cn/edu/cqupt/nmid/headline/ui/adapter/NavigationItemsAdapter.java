@@ -27,11 +27,6 @@ public class NavigationItemsAdapter extends ArrayAdapter<NavigationItemsAdapter.
     mDataset.add(new NavItem(R.drawable.ic_home_grey600_24dp, "我的主页"));
     mDataset.add(new NavItem(R.drawable.ic_camera_grey600_24dp, "校园实拍"));
     mDataset.add(new NavItem(R.drawable.ic_favorite_grey600_24dp, "我的收藏"));
-    mDataset.add(new NavItem(R.drawable.ic_favorite_grey600_24dp, "我的收藏"));
-    mDataset.add(new NavItem(R.drawable.ic_favorite_grey600_24dp, "我的收藏"));
-    mDataset.add(new NavItem(R.drawable.ic_favorite_grey600_24dp, "我的收藏"));
-    mDataset.add(new NavItem(R.drawable.ic_favorite_grey600_24dp, "我的收藏"));
-    mDataset.add(new NavItem(R.drawable.ic_favorite_grey600_24dp, "我的收藏"));
   }
 
   public void selectItem(int n) {

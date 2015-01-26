@@ -15,15 +15,16 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
-import cn.edu.cqupt.nmid.headline.support.api.headline.bean.Feed;
+import cn.edu.cqupt.nmid.headline.support.api.headline.bean.Datum;
 import cn.edu.cqupt.nmid.headline.support.api.headline.bean.HeadJson;
+import cn.edu.cqupt.nmid.headline.support.db.DataBaseHelper;
+import cn.edu.cqupt.nmid.headline.support.db.tables.ScientificBaseTable;
 import cn.edu.cqupt.nmid.headline.support.pref.HttpPref;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.adapter.SwipeAdapter;
 import cn.edu.cqupt.nmid.headline.utils.animation.SlideInOutBottomItemAnimator;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -54,7 +55,7 @@ public class FeedFragment extends Fragment {
    * Data
    */
   LinearLayoutManager mLayoutManager;
-  ArrayList<Feed> feeds = new ArrayList<>();
+  ArrayList<Datum> newsBeans = new ArrayList<>();
   SwipeAdapter adapter;
   int feed_id;
   private String title;
@@ -113,7 +114,7 @@ public class FeedFragment extends Fragment {
     mFloatingActionButton.setIcon(R.drawable.ic_share_grey600_36dp);
 
     mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN);
-    adapter = new SwipeAdapter(getActivity(), feeds);
+    adapter = new SwipeAdapter(getActivity(), newsBeans);
     mRecyclerview.setAdapter(adapter);
     mRecyclerview.setHasFixedSize(true);
     mLayoutManager = new LinearLayoutManager(getActivity());
@@ -142,24 +143,8 @@ public class FeedFragment extends Fragment {
         }
       }
     });
+    //loadDbNews();
     return view;
-  }
-
-  LinkedList<Feed> getMockData() {
-    LinkedList<Feed> feedsToAdd = new LinkedList<>();
-    Feed feed = new Feed();
-    feed.setId(11);
-    feed.setCategory(1);
-    feed.setImage1("http://www.baidu.com/img/bdlogo.png");
-    feed.setImage2("http://www.baidu.com/img/bdlogo.png");
-    feed.setImage3("http://www.baidu.com/img/bdlogo.png");
-    feed.setSimple_content("simple content");
-    feed.setTitle(adapter.getItemCount() + "");
-    feed.setTime_release("2015");
-    for (int i = 0; i < 10; i++) {
-      feedsToAdd.add(feed);
-    }
-    return feedsToAdd;
   }
 
   void loadNewFeeds() {
@@ -171,16 +156,16 @@ public class FeedFragment extends Fragment {
         .getFreshFeeds(feed_cate, 0, feed_limit, new Callback<HeadJson>() {
           @Override public void success(HeadJson headJson, Response response) {
             mSwipeRefreshLayout.setRefreshing(false);
-            feeds.clear();
+            newsBeans.clear();
 
-            //TODO Tell the server !!!
-            for (Feed feed : headJson.getData()) {
-              feeds.add(0, feed);
-            }
-
+            newsBeans.addAll(headJson.getData());
             adapter.notifyDataSetChanged();
 
-            Log.d(TAG, "Last id is" + feeds.get(0).getId());
+            //for (Datum newsBean : headJson.getData()) {
+            //  DataBaseHelper.getInstance(getActivity())
+            //      .insertData(newsBean, ScientificBaseTable.TABLE_NAME);
+            //}
+            Log.d(TAG, "Last id is" + newsBeans.get(0).getId());
           }
 
           @Override public void failure(RetrofitError error) {
@@ -191,7 +176,7 @@ public class FeedFragment extends Fragment {
 
   void loadOldNews() {
     isLoadingMore = true;
-    feed_id = feeds.get(feeds.size() - 1).getId();
+    feed_id = newsBeans.get(newsBeans.size() - 1).getId();
 
     new RestAdapter.Builder().setLogLevel(RestAdapter.LogLevel.FULL)
         .setEndpoint(HeadlineService.END_POINT)
@@ -203,7 +188,7 @@ public class FeedFragment extends Fragment {
             mSwipeRefreshLayout.setRefreshing(false);
             isLoadingMore = false;
             if (headJson.getStatus() == 1) {
-              feeds.addAll(headJson.getData());
+              newsBeans.addAll(headJson.getData());
               adapter.notifyDataSetChanged();
             } else {
               //TODO remove footer
@@ -215,8 +200,15 @@ public class FeedFragment extends Fragment {
 
             mSwipeRefreshLayout.setRefreshing(false);
             isLoadingMore = false;
+
           }
         });
+  }
+
+  void loadDbNews() {
+    newsBeans = DataBaseHelper.getInstance(getActivity())
+        .getDataById(ScientificBaseTable.TABLE_NAME, feed_limit);
+    adapter.notifyDataSetChanged();
   }
 
   @Override

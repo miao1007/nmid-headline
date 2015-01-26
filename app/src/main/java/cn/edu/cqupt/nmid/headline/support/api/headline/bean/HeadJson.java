@@ -1,45 +1,59 @@
+
 package cn.edu.cqupt.nmid.headline.support.api.headline.bean;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HeadJson {
-    private Integer status;
-    private List<Feed> data = new ArrayList<Feed>();
+
+    private int status;
+    private List<Datum> data = new ArrayList<Datum>();
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     *
+     * 
      * @return
      *     The status
      */
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
     /**
-     *
+     * 
      * @param status
      *     The status
      */
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
     /**
-     *
+     * 
      * @return
      *     The data
      */
-    public List<Feed> getData() {
+    public List<Datum> getData() {
         return data;
     }
 
     /**
-     *
+     * 
      * @param data
      *     The data
      */
-    public void setData(List<Feed> data) {
+    public void setData(List<Datum> data) {
         this.data = data;
+    }
+
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
+    }
+
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
     }
 
 }

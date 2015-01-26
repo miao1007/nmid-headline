@@ -1,204 +1,72 @@
 package cn.edu.cqupt.nmid.headline.support.db;
 
-import cn.edu.cqupt.nmid.headline.support.db.table.TxttNewsBaseTable;
-import cn.edu.cqupt.nmid.headline.support.db.table.TxttNewsInstituteTable;
-import cn.edu.cqupt.nmid.headline.support.db.table.TxttNewsSchoolFellowTable;
-import cn.edu.cqupt.nmid.headline.support.db.table.TxttNewsScienceTable;
-import cn.edu.cqupt.nmid.headline.support.db.table.TxttNewsYoungTable;
+import cn.edu.cqupt.nmid.headline.support.db.tables.ClassmateBaseTable;
+import cn.edu.cqupt.nmid.headline.support.db.tables.CollegeBaseTable;
+import cn.edu.cqupt.nmid.headline.support.db.tables.ScientificBaseTable;
+import cn.edu.cqupt.nmid.headline.support.db.tables.YouthBaseTable;
 
-/**
- * Created by leon on 1/20/15.
- */
 public class SQL {
-
-  public static final String DATA_TYPE_DATE = "DATA";
-  public static final String DATA_TYPE_TEXT = " TEXT";
-  public static final String DATA_TYPE_INT = " INTEGER";
-  public static final String DATA_TYPE_VCHAR_255 = " varchar(255)";
-  public static final String DATA_TYPE_TINY_INT_1 = " tinyint(1)";
-  public static final String DATA_TYPE_INT_11 = " int(11)";
-
-  public static final String INTEGER_PRIMARY_KEY_AUTOINCREMENT =
-      " INTEGER PRIMARY KEY AUTOINCREMENT";
-  public static final String COMMA_SEP = ", ";
-
-  public static final String CREATE_TABLE_TXTT_NEWS_BASE =
-      "CREATE TABLE " + TxttNewsBaseTable.TABLE_NAME + " ("
-
-          + TxttNewsBaseTable.COLUMNS[0] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[1] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[2] + DATA_TYPE_TINY_INT_1 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[3] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[4] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[5] + DATA_TYPE_TEXT + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[6] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[7] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[8] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[9] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[10] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[11] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[12] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[13] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + ")";
-
-  public static final String CREATE_TABLE_TXTT_NEWS_INSTITUTE =
-      "CREATE TABLE " + TxttNewsInstituteTable.TABLE_NAME + " ("
-
-          + TxttNewsBaseTable.COLUMNS[0] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[1] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[2] + DATA_TYPE_TINY_INT_1 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[3] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[4] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[5] + DATA_TYPE_TEXT + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[6] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[7] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[8] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[9] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[10] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[11] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[12] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[13] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + ")";
-
-  public static final String CREATE_TABLE_TXTT_NEWS_SCHOOL_FELLOW =
-      "CREATE TABLE " + TxttNewsSchoolFellowTable.TABLE_NAME + " ("
-
-          + TxttNewsBaseTable.COLUMNS[0] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[1] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[2] + DATA_TYPE_TINY_INT_1 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[3] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[4] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[5] + DATA_TYPE_TEXT + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[6] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[7] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[8] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[9] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[10] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[11] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[12] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[13] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + ")";
-
-  public static final String CREATE_TABLE_TXTT_NEWS_YOUNG =
-      "CREATE TABLE " + TxttNewsYoungTable.TABLE_NAME + " ("
-
-          + TxttNewsBaseTable.COLUMNS[0] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[1] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[2] + DATA_TYPE_TINY_INT_1 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[3] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[4] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[5] + DATA_TYPE_TEXT + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[6] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[7] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[8] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[9] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[10] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[11] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[12] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[13] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + ")";
-
-  public static final String CREATE_TABLE_TXTT_NEWS_SCIENCE =
-      "CREATE TABLE " + TxttNewsScienceTable.TABLE_NAME + " ("
-
-          + TxttNewsBaseTable.COLUMNS[0] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[1] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[2] + DATA_TYPE_TINY_INT_1 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[3] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[4] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[5] + DATA_TYPE_TEXT + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[6] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[7] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[8] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[9] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[10] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[11] + DATA_TYPE_VCHAR_255 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[12] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + TxttNewsBaseTable.COLUMNS[13] + DATA_TYPE_INT_11 + COMMA_SEP
-
-          + ")";
-
-  public static final String DELETE_TABLE_TXTT_NEWS_BASE =
-      "DROP TABLE IF EXISTS " + TxttNewsBaseTable.TABLE_NAME;
-
-  public static final String DELETE_TABLE_TXTT_NEWS_INSTITUTE =
-      "DROP TABLE IF EXISTS " + TxttNewsInstituteTable.TABLE_NAME;
-
-  public static final String DELETE_TABLE_TXTT_NEWS_SCHOOL_FELLOW =
-      "DROP TABLE IF EXISTS " + TxttNewsSchoolFellowTable.TABLE_NAME;
-
-  public static final String DELETE_TABLE_TXTT_NEWS_YOUNG =
-      "DROP TABLE IF EXISTS " + TxttNewsYoungTable.TABLE_NAME;
-
-  public static final String DELETE_TABLE_TXTT_NEWS_SCIENCE =
-      "DROP TABLE IF EXISTS " + TxttNewsScienceTable.TABLE_NAME;
+    public static final String TEXT_TYPE = " TEXT";
+    public static final String INTEGER_TYPE = " INTEGER";
+    public static final String INTEGER_PRIMARY_KEY_AUTOINCREMENT = " INTEGER PRIMARY KEY AUTOINCREMENT";
+    public static final String COMMA_SEP = ", ";
+    //学院新闻表
+    public static final String CREATE_TABLE_COLLEGE = "CREATE TABLE "
+            + CollegeBaseTable.TABLE_NAME + " ("
+            + CollegeBaseTable.COLUMN_NAME_ID + INTEGER_PRIMARY_KEY_AUTOINCREMENT + COMMA_SEP
+            + CollegeBaseTable.COLUMN_NAME_CATEGORY + INTEGER_TYPE + COMMA_SEP
+            + CollegeBaseTable.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP
+            + CollegeBaseTable.COLUMN_NAME_SIMPLE_CONTENT + TEXT_TYPE + COMMA_SEP
+            + CollegeBaseTable.COLUMN_NAME_IMAGE1 + TEXT_TYPE + COMMA_SEP
+            + CollegeBaseTable.COLUMN_NAME_IMAGE2 + TEXT_TYPE + COMMA_SEP
+            + CollegeBaseTable.COLUMN_NAME_IMAGE3 + TEXT_TYPE + COMMA_SEP
+            + CollegeBaseTable.COLUMN_NAME_TIME_RELEASE + TEXT_TYPE + COMMA_SEP
+            + CollegeBaseTable.COLUMN_NAME_ISCOLLECT + INTEGER_TYPE + ")";
+    public static final String DELETE_TABLE_COLLEGE = "DROP TABLE IF EXISTS "
+            + CollegeBaseTable.TABLE_NAME;
+    
+    //科研动态表
+    public static final String CREATE_TABLE_SCIENTIFIC = "CREATE TABLE "
+            + ScientificBaseTable.TABLE_NAME + " ("
+            + ScientificBaseTable.COLUMN_NAME_ID + INTEGER_PRIMARY_KEY_AUTOINCREMENT + COMMA_SEP
+            + ScientificBaseTable.COLUMN_NAME_CATEGORY + INTEGER_TYPE + COMMA_SEP
+            + ScientificBaseTable.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP
+            + ScientificBaseTable.COLUMN_NAME_SIMPLE_CONTENT + TEXT_TYPE + COMMA_SEP
+            + ScientificBaseTable.COLUMN_NAME_IMAGE1 + TEXT_TYPE + COMMA_SEP
+            + ScientificBaseTable.COLUMN_NAME_IMAGE2 + TEXT_TYPE + COMMA_SEP
+            + ScientificBaseTable.COLUMN_NAME_IMAGE3 + TEXT_TYPE + COMMA_SEP
+            + ScientificBaseTable.COLUMN_NAME_TIME_RELEASE + TEXT_TYPE + COMMA_SEP
+            + ScientificBaseTable.COLUMN_NAME_ISCOLLECT + INTEGER_TYPE + ")";
+    public static final String DELETE_TABLE_SCIENTIFIC = "DROP TABLE IF EXISTS "
+            + ScientificBaseTable.TABLE_NAME;
+    
+    //青春通信表
+    public static final String CREATE_TABLE_YOUTH = "CREATE TABLE "
+            + YouthBaseTable.TABLE_NAME + " ("
+            + YouthBaseTable.COLUMN_NAME_ID + INTEGER_PRIMARY_KEY_AUTOINCREMENT + COMMA_SEP
+            + YouthBaseTable.COLUMN_NAME_CATEGORY + INTEGER_TYPE + COMMA_SEP
+            + YouthBaseTable.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP
+            + YouthBaseTable.COLUMN_NAME_SIMPLE_CONTENT + TEXT_TYPE + COMMA_SEP
+            + YouthBaseTable.COLUMN_NAME_IMAGE1 + TEXT_TYPE + COMMA_SEP
+            + YouthBaseTable.COLUMN_NAME_IMAGE2 + TEXT_TYPE + COMMA_SEP
+            + YouthBaseTable.COLUMN_NAME_IMAGE3 + TEXT_TYPE + COMMA_SEP
+            + YouthBaseTable.COLUMN_NAME_TIME_RELEASE + TEXT_TYPE + COMMA_SEP
+            + YouthBaseTable.COLUMN_NAME_ISCOLLECT + INTEGER_TYPE + ")";
+    public static final String DELETE_TABLE_YOUTH = "DROP TABLE IF EXISTS "
+            + YouthBaseTable.TABLE_NAME;
+    
+    //校友新闻
+    public static final String CREATE_TABLE_CLASSMATE = "CREATE TABLE "
+            + ClassmateBaseTable.TABLE_NAME + " ("
+            + ClassmateBaseTable.COLUMN_NAME_ID + INTEGER_PRIMARY_KEY_AUTOINCREMENT + COMMA_SEP
+            + ClassmateBaseTable.COLUMN_NAME_CATEGORY + INTEGER_TYPE + COMMA_SEP
+            + ClassmateBaseTable.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP
+            + ClassmateBaseTable.COLUMN_NAME_SIMPLE_CONTENT + TEXT_TYPE + COMMA_SEP
+            + ClassmateBaseTable.COLUMN_NAME_IMAGE1 + TEXT_TYPE + COMMA_SEP
+            + ClassmateBaseTable.COLUMN_NAME_IMAGE2 + TEXT_TYPE + COMMA_SEP
+            + ClassmateBaseTable.COLUMN_NAME_IMAGE3 + TEXT_TYPE + COMMA_SEP
+            + ClassmateBaseTable.COLUMN_NAME_TIME_RELEASE + TEXT_TYPE + COMMA_SEP
+            + ClassmateBaseTable.COLUMN_NAME_ISCOLLECT + INTEGER_TYPE + ")";
+    public static final String DELETE_TABLE_CLASSMATE = "DROP TABLE IF EXISTS "
+            + ClassmateBaseTable.TABLE_NAME;
 }

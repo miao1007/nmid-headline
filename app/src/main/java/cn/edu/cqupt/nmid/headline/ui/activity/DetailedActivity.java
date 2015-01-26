@@ -12,6 +12,7 @@ import butterknife.OnClick;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.Constant;
 import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
+import cn.edu.cqupt.nmid.headline.support.db.DataBaseHelper;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.support.pref.WebViewPref;
 import cn.edu.cqupt.nmid.headline.support.task.WebContentGetTask;
@@ -34,6 +35,7 @@ public class DetailedActivity extends SwipeBackActivity {
 
   static final String MIME_TYPE = "text/html";
   static final String ENCODING = "utf-8";
+  String url;
   /**
    * Activity views
    */
@@ -68,19 +70,17 @@ public class DetailedActivity extends SwipeBackActivity {
     oks.setSite(getString(R.string.app_name));
     //TODO
     // url仅在微信（包括好友和朋友圈）中使用
-    oks.setUrl("http://sharesdk.cn");
+    oks.setUrl(url);
     // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-    oks.setSiteUrl("http://sharesdk.cn");
+    oks.setSiteUrl(url);
     // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-    oks.setTitleUrl("http://sharesdk.cn");
-    // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-    oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
-
+    oks.setTitleUrl(url);
     oks.show(this);
   }
 
   @OnClick(R.id.detailed_action_favorite) void detailed_action_favorite(View v) {
     //mController.likeIt(id, category, true);
+    DataBaseHelper.getInstance(this).setCollect(id,category,true);
   }
 
   @OnClick(R.id.detailed_action_settings) void detailed_action_settings() {
@@ -107,8 +107,7 @@ public class DetailedActivity extends SwipeBackActivity {
 
   private void trySetupWebview() {
 
-    String url =
-        HeadlineService.END_POINT + "/api/android/newscontent?id=" + id + "&category=" + category;
+    url = HeadlineService.END_POINT + "/api/android/newscontent?id=" + id + "&category=" + category;
 
     WebSettings settings = mWebView.getSettings();
     settings.setTextZoom(WebViewPref.getWebViewTextZoom(this));

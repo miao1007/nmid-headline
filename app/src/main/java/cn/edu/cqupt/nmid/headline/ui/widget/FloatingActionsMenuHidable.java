@@ -35,19 +35,19 @@ public class FloatingActionsMenuHidable extends FloatingActionsMenu {
 
     public void show(boolean isVisible) {
         mVisible = isVisible;
-        int translationX = isVisible ? 0 : (getWidth()/2) + getMarginRight();
-        this.animate().translationX(translationX).setDuration(ANIM_DURATION).start();
+        int translationX = isVisible ? 0 : 120 + getMarginButton();
+        this.animate().translationY(translationX).setDuration(ANIM_DURATION).start();
     }
 
     public boolean isShown() {
         return isShown;
     }
 
-    private int getMarginRight() {
+    private int getMarginButton() {
         int marginBottom = 0;
         final ViewGroup.LayoutParams layoutParams = getLayoutParams();
         if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
-            marginBottom = ((MarginLayoutParams) layoutParams).rightMargin;
+            marginBottom = ((MarginLayoutParams) layoutParams).bottomMargin;
         }
         return marginBottom;
     }

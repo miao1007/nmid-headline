@@ -9,7 +9,8 @@ import retrofit.http.Query;
  * Created by leon on 12/27/14.
  */
 public interface HeadlineService {
-  public String END_POINT = "http://192.168.99.148:8888/";
+  //http://115.29.139.53:8080/api/android/newscontent?id=10&category=1
+  public String END_POINT = "http://115.29.139.53:8080/";
 
 
   //1	int	学院新闻

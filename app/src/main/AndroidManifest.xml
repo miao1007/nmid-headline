@@ -33,11 +33,8 @@
         <activity
             android:name=".ui.activity.DetailedActivity"
             android:label="@string/title_activity_detailed" />
-        <activity
-            android:name=".ui.activity.LoginActivity"
-            android:label="@string/title_activity_login" />
 
-        <!-- <shareSDK 分享组件> -->
+      <!-- <shareSDK 分享组件> -->
         <activity
             android:name="cn.sharesdk.framework.ShareSDKUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"

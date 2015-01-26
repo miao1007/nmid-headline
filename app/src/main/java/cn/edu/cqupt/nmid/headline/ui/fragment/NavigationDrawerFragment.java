@@ -34,17 +34,19 @@ import cn.edu.cqupt.nmid.headline.support.api.weather.WeatherService;
 import cn.edu.cqupt.nmid.headline.support.api.weather.bean.Weather;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.support.task.UserInfoGetTask;
-import cn.edu.cqupt.nmid.headline.ui.activity.LoginActivity;
 import cn.edu.cqupt.nmid.headline.ui.activity.SettingsActivity;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationItemsAdapter;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationSecondaryItemsAdapter;
 import cn.edu.cqupt.nmid.headline.utils.PreferenceUtils;
 import cn.edu.cqupt.nmid.headline.utils.animation.BlurTransformation;
 import cn.edu.cqupt.nmid.headline.utils.animation.CircleTransformation;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.PlatformDb;
 import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qzone.QZone;
 import com.squareup.picasso.Picasso;
+import java.util.HashMap;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -76,7 +78,21 @@ public class NavigationDrawerFragment extends Fragment {
   private boolean mUserLearnedDrawer;
 
   @OnClick(R.id.navigation_drawer_avatar) void navigation_drawer_avatar() {
-    startActivity(new Intent(getActivity(), LoginActivity.class));
+    Platform qzone = ShareSDK.getPlatform(getActivity(), QZone.NAME);
+    qzone.setPlatformActionListener(new PlatformActionListener() {
+      @Override public void onComplete(Platform platform, int i, HashMap<String, Object> map) {
+        fetchUserInfo();
+      }
+
+      @Override public void onError(Platform platform, int i, Throwable throwable) {
+
+      }
+
+      @Override public void onCancel(Platform platform, int i) {
+
+      }
+    });
+    qzone.authorize();
     if (mDrawerLayout != null) {
       mDrawerLayout.closeDrawer(mFragmentContainerView);
     }
@@ -121,6 +137,7 @@ public class NavigationDrawerFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
+    ShareSDK.initSDK(getActivity());
     rootView = inflater.inflate(R.layout.fragment_navigation_drawer, null);
     ButterKnife.inject(this, rootView);
 
@@ -147,8 +164,7 @@ public class NavigationDrawerFragment extends Fragment {
   }
 
   public void fetchUserInfo() {
-    ShareSDK.initSDK(getActivity());
-    PlatformDb db = ShareSDK.getPlatform(getActivity(), SinaWeibo.NAME).getDb();
+    PlatformDb db = ShareSDK.getPlatform(getActivity(), QZone.NAME).getDb();
     if (db.isValid()) {
       Picasso.with(context)
           .load(db.getUserIcon())
