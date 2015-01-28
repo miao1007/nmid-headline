@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.api.headline.bean.Datum;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.activity.DetailedActivity;
+import cn.edu.cqupt.nmid.headline.ui.widget.ProgressBarCircular;
+import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
@@ -24,6 +27,7 @@ import java.util.ArrayList;
  */
 public class SwipeAdapter extends HeaderFooterRecyclerViewAdapter {
 
+  private static final String TAG = LogUtils.makeLogTag(SwipeAdapter.class);
   private ArrayList<Datum> mNewsBeans;
   private Context mContext;
 
@@ -75,7 +79,7 @@ public class SwipeAdapter extends HeaderFooterRecyclerViewAdapter {
 
   @Override protected void onBindFooterItemViewHolder(RecyclerView.ViewHolder footerViewHolder,
       int position) {
-
+    Log.d(TAG, "onBindFooterItemViewHolder" + position);
   }
 
   @Override protected void onBindContentItemViewHolder(RecyclerView.ViewHolder holder,
@@ -90,21 +94,30 @@ public class SwipeAdapter extends HeaderFooterRecyclerViewAdapter {
     holder_typed.time.setText(newsBean.getTimeRelease());
     holder_typed.excerpt.setText(newsBean.getSimpleContent());
 
-    //000
-    if (newsBean.getImage1().equals("")) {
-      holder_typed.image1.setVisibility(View.GONE);
+    //XX0
+    if (newsBean.getImage1().trim().length() == 0 || newsBean.getImage2().trim().length() == 0) {
+      //100 010
+      holder_typed.threeImages.setVisibility(View.GONE);
+      //000
+      if (newsBean.getImage1().trim().length() == 0) {
+        holder_typed.image1.setVisibility(View.GONE);
+      } else {
+        //100
+        Picasso.with(mContext).load(newsBean.getImage1()).into(holder_typed.image1);
+      }
     } else {
-      //100
-      Picasso.with(mContext).load(newsBean.getImage1()).into(holder_typed.image1);
+      //11x
+      holder_typed.image1.setVisibility(View.GONE);
+      Picasso.with(mContext).load(newsBean.getImage1()).into(holder_typed.image2);
+      Picasso.with(mContext).load(newsBean.getImage2()).into(holder_typed.image3);
+      if (newsBean.getImage3().trim().length() == 0) {
+        //110
+        holder_typed.image3.setVisibility(View.GONE);
+      } else {
+        //111
+        Picasso.with(mContext).load(newsBean.getImage3()).into(holder_typed.image4);
+      }
     }
-
-    //110
-    //如果2张图片 / 3张图片
-    if (!(newsBean.getImage1().equals("") && newsBean.getImage2().equals(""))) {
-
-    }
-
-
 
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -136,8 +149,11 @@ public class SwipeAdapter extends HeaderFooterRecyclerViewAdapter {
 
   public static class FooterViewHolder extends RecyclerView.ViewHolder {
 
+    @InjectView(R.id.include_progressbar) ProgressBarCircular mProgressBarCircular;
+
     public FooterViewHolder(View itemView) {
       super(itemView);
+      ButterKnife.inject(this, itemView);
     }
   }
 }

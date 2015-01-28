@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
 
     <cn.edu.cqupt.nmid.headline.ui.widget.ProgressBarCircular
-        android:id="@+id/detailed_progressbar"
+        android:id="@+id/include_progressbar"
         android:layout_marginTop="8dp"
         android:layout_width="40dp"
         android:layout_height="40dp"

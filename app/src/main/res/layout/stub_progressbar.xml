@@ -1,0 +1,7 @@
+<cn.edu.cqupt.nmid.headline.ui.widget.ProgressBarCircular
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/stub_progressbar"
+    android:layout_width="40dp"
+    android:visibility="gone"
+    android:layout_height="40dp"
+    android:layout_centerInParent="true"/>

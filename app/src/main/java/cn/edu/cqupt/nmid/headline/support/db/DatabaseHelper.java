@@ -3,35 +3,44 @@ package cn.edu.cqupt.nmid.headline.support.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import cn.edu.cqupt.nmid.headline.support.GlobalContext;
 
-/**
- * Created by leon on 1/20/15.
- */
 public class DatabaseHelper extends SQLiteOpenHelper {
-
   private static final int DATABASE_VERSION = 1;
-  private static final String DATABASE_NAME = "database.db";
+  private static final String DATABASE_NAME = "headline.db";
+  private static DatabaseHelper singleton = null;
 
-  public DatabaseHelper(Context context) {
-    super(context, DATABASE_NAME, null, DATABASE_VERSION);
+  public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory,
+      int version) {
+    super(context, name, factory, version);
+  }
+
+  // Use the application context, which will ensure that you
+  // don't accidentally leak an Activity's context.
+  // See this article for more information: http://bit.ly/6LRzfx
+  public synchronized static DatabaseHelper getInstance() {
+    if (singleton == null) {
+      singleton = new DatabaseHelper(GlobalContext.getInstance(), DATABASE_NAME, null, DATABASE_VERSION);
+    }
+    return singleton;
   }
 
   @Override
   public void onCreate(SQLiteDatabase db) {
-    db.execSQL(SQL.CREATE_TABLE_TXTT_NEWS_BASE);
-    db.execSQL(SQL.CREATE_TABLE_TXTT_NEWS_INSTITUTE);
-    db.execSQL(SQL.CREATE_TABLE_TXTT_NEWS_SCHOOL_FELLOW);
-    db.execSQL(SQL.CREATE_TABLE_TXTT_NEWS_SCIENCE);
-    db.execSQL(SQL.CREATE_TABLE_TXTT_NEWS_YOUNG);
+    db.execSQL(SQL.CREATE_TABLE_COLLEGE);
+    db.execSQL(SQL.CREATE_TABLE_SCIENTIFIC);
+    db.execSQL(SQL.CREATE_TABLE_YOUTH);
+    db.execSQL(SQL.CREATE_TABLE_CLASSMATE);
   }
 
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    db.execSQL(SQL.DELETE_TABLE_TXTT_NEWS_BASE);
-    db.execSQL(SQL.DELETE_TABLE_TXTT_NEWS_INSTITUTE);
-    db.execSQL(SQL.DELETE_TABLE_TXTT_NEWS_SCHOOL_FELLOW);
-    db.execSQL(SQL.DELETE_TABLE_TXTT_NEWS_SCIENCE);
-    db.execSQL(SQL.DELETE_TABLE_TXTT_NEWS_YOUNG);
+    db.execSQL(SQL.DELETE_TABLE_COLLEGE);
+    db.execSQL(SQL.DELETE_TABLE_SCIENTIFIC);
+    db.execSQL(SQL.DELETE_TABLE_YOUTH);
+    db.execSQL(SQL.DELETE_TABLE_CLASSMATE);
     onCreate(db);
   }
+
+
 }

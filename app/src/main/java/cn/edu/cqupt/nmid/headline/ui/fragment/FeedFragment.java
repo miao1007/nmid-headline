@@ -17,8 +17,9 @@ import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
 import cn.edu.cqupt.nmid.headline.support.api.headline.bean.Datum;
 import cn.edu.cqupt.nmid.headline.support.api.headline.bean.HeadJson;
-import cn.edu.cqupt.nmid.headline.support.db.DataBaseHelper;
-import cn.edu.cqupt.nmid.headline.support.db.tables.ScientificBaseTable;
+import cn.edu.cqupt.nmid.headline.support.db.DatabaseManager;
+import cn.edu.cqupt.nmid.headline.support.db.tasks.GetFeedsFromDbTask;
+import cn.edu.cqupt.nmid.headline.support.db.tasks.callback.GetFeedsCallback;
 import cn.edu.cqupt.nmid.headline.support.pref.HttpPref;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.adapter.SwipeAdapter;
@@ -111,7 +112,7 @@ public class FeedFragment extends Fragment {
     mFloatingActionButton.setColorNormalResId(
         ThemePref.getToolbarBackgroundResColor(getActivity()));
     mFloatingActionButton.setColorPressedResId(ThemePref.getItemBackgroundResColor(getActivity()));
-    mFloatingActionButton.setIcon(R.drawable.ic_share_grey600_36dp);
+    mFloatingActionButton.setIcon(R.drawable.ic_reload_48dp);
 
     mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN);
     adapter = new SwipeAdapter(getActivity(), newsBeans);
@@ -143,7 +144,7 @@ public class FeedFragment extends Fragment {
         }
       }
     });
-    //loadDbNews();
+    loadDbNews();
     return view;
   }
 
@@ -161,10 +162,13 @@ public class FeedFragment extends Fragment {
             newsBeans.addAll(headJson.getData());
             adapter.notifyDataSetChanged();
 
-            //for (Datum newsBean : headJson.getData()) {
-            //  DataBaseHelper.getInstance(getActivity())
-            //      .insertData(newsBean, ScientificBaseTable.TABLE_NAME);
-            //}
+            new Thread(new Runnable() {
+              @Override public void run() {
+                DatabaseManager.update(newsBeans, HeadlineService.TABLES[feed_cate - 1],
+                    String.valueOf(feed_cate));
+              }
+            }).start();
+
             Log.d(TAG, "Last id is" + newsBeans.get(0).getId());
           }
 
@@ -190,8 +194,7 @@ public class FeedFragment extends Fragment {
             if (headJson.getStatus() == 1) {
               newsBeans.addAll(headJson.getData());
               adapter.notifyDataSetChanged();
-            } else {
-              //TODO remove footer
+            } else if (headJson.getStatus() == 0) {
 
             }
           }
@@ -200,15 +203,18 @@ public class FeedFragment extends Fragment {
 
             mSwipeRefreshLayout.setRefreshing(false);
             isLoadingMore = false;
-
           }
         });
   }
 
   void loadDbNews() {
-    newsBeans = DataBaseHelper.getInstance(getActivity())
-        .getDataById(ScientificBaseTable.TABLE_NAME, feed_limit);
-    adapter.notifyDataSetChanged();
+    new GetFeedsFromDbTask(HeadlineService.TABLES[feed_cate - 1], feed_limit,
+        new GetFeedsCallback() {
+          @Override public void onRefreshData(ArrayList<Datum> listbeans) {
+            newsBeans.addAll(listbeans);
+            adapter.notifyDataSetChanged();
+          }
+        }).execute();
   }
 
   @Override

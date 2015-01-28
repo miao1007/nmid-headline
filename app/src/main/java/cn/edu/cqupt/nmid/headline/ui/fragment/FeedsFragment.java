@@ -74,16 +74,18 @@ public class FeedsFragment extends Fragment {
     Log.d(TAG, "onDetach");
     super.onDetach();
   }
-
-  @Override public void onDestroyView() {
-    Log.d(TAG, "onDestroyView");
+  @Override
+  public void onDestroyView() {
     super.onDestroyView();
+    Log.d(TAG, "onDestroyView");
+    ButterKnife.reset(this);
   }
 
   @Override public void onDestroy() {
     Log.d(TAG, "onDestroy");
     super.onDestroy();
   }
+
 
 
   /**

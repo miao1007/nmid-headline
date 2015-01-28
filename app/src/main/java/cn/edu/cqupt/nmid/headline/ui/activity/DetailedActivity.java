@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewStub;
 import android.webkit.WebSettings;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -12,13 +13,11 @@ import butterknife.OnClick;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.Constant;
 import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
-import cn.edu.cqupt.nmid.headline.support.db.DataBaseHelper;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.support.pref.WebViewPref;
 import cn.edu.cqupt.nmid.headline.support.task.WebContentGetTask;
 import cn.edu.cqupt.nmid.headline.support.task.callback.WebContentGetTaskCallback;
 import cn.edu.cqupt.nmid.headline.ui.widget.FloatingActionsMenuHidable;
-import cn.edu.cqupt.nmid.headline.ui.widget.ProgressBarCircular;
 import cn.edu.cqupt.nmid.headline.ui.widget.observerWebView.ObservableScrollViewCallbacks;
 import cn.edu.cqupt.nmid.headline.ui.widget.observerWebView.ObservableWebView;
 import cn.edu.cqupt.nmid.headline.ui.widget.observerWebView.ScrollState;
@@ -42,7 +41,9 @@ public class DetailedActivity extends SwipeBackActivity {
 
   @InjectView(R.id.detailed_webview) ObservableWebView mWebView;
   @InjectView(R.id.detailed_multiple_actions) FloatingActionsMenuHidable mFloatingActionsMenu;
-  @InjectView(R.id.detailed_progressbar) ProgressBarCircular mProgressBarCircular;
+  @InjectView(R.id.detailed_progressbar) ViewStub mViewStub;
+
+
   private String TAG = LogUtils.makeLogTag(DetailedActivity.class);
   /**
    * Intent extra uesd for ShareSDK
@@ -68,7 +69,6 @@ public class DetailedActivity extends SwipeBackActivity {
     oks.setComment("我在通信头条分享了文章");
     // site是分享此内容的网站名称，仅在QQ空间使用
     oks.setSite(getString(R.string.app_name));
-    //TODO
     // url仅在微信（包括好友和朋友圈）中使用
     oks.setUrl(url);
     // siteUrl是分享此内容的网站地址，仅在QQ空间使用
@@ -79,8 +79,8 @@ public class DetailedActivity extends SwipeBackActivity {
   }
 
   @OnClick(R.id.detailed_action_favorite) void detailed_action_favorite(View v) {
-    //mController.likeIt(id, category, true);
-    DataBaseHelper.getInstance(this).setCollect(id,category,true);
+    //TODO
+
   }
 
   @OnClick(R.id.detailed_action_settings) void detailed_action_settings() {
@@ -116,6 +116,7 @@ public class DetailedActivity extends SwipeBackActivity {
         settings.setLoadsImagesAutomatically(false);
         break;
       case 1:
+
         break;
       case 2:
         if (!NetworkUtils.isWifiAviliable(this)) {
@@ -148,6 +149,9 @@ public class DetailedActivity extends SwipeBackActivity {
             break;
           case UP:
             Log.i(TAG, "UP");
+            if (mFloatingActionsMenu.isExpanded()) {
+              mFloatingActionsMenu.toggle();
+            }
             mFloatingActionsMenu.show(false);
             break;
           case DOWN:
@@ -160,13 +164,12 @@ public class DetailedActivity extends SwipeBackActivity {
     new WebContentGetTask(this, new WebContentGetTaskCallback() {
       @Override
       public void onPreExcute() {
-        mProgressBarCircular.setVisibility(View.VISIBLE);
+        mViewStub.inflate();
       }
 
       @Override
       public void onSuccess(Object o) {
-        Log.d(TAG, o.toString());
-        mProgressBarCircular.setVisibility(View.GONE);
+        mViewStub.setVisibility(View.GONE);
         String htmlData;
         if (ThemePref.isNightMode(DetailedActivity.this)) {
           // Webview will use asserts/style_night.css

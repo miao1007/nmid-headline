@@ -10,4 +10,5 @@ public class BaseTable {
 	public static final String COLUMN_NAME_IMAGE3="image3";
 	public static final String COLUMN_NAME_TIME_RELEASE="time_release";
 	public static final String COLUMN_NAME_ISCOLLECT="iscollect";
+
 }

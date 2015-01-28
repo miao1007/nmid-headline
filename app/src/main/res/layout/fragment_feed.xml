@@ -26,10 +26,10 @@
       android:layout_marginBottom="16dp"
       android:layout_marginEnd="16dp"
       android:layout_marginRight="16dp"
+      fab:fab_icon="@drawable/ic_reload_48dp"
       fab:fab_addButtonColorNormal="@color/icons"
       fab:fab_addButtonColorPressed="@color/divider"
-      fab:fab_addButtonPlusIconColor="#808080"
-      fab:fab_labelStyle="@style/menu_labels_style">
+      fab:fab_addButtonPlusIconColor="#808080">
 
 
   </com.getbase.floatingactionbutton.FloatingActionButton>

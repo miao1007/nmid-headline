@@ -1,6 +1,10 @@
 package cn.edu.cqupt.nmid.headline.support.api.headline;
 
 import cn.edu.cqupt.nmid.headline.support.api.headline.bean.HeadJson;
+import cn.edu.cqupt.nmid.headline.support.db.tables.ClassmateBaseTable;
+import cn.edu.cqupt.nmid.headline.support.db.tables.CollegeBaseTable;
+import cn.edu.cqupt.nmid.headline.support.db.tables.ScientificBaseTable;
+import cn.edu.cqupt.nmid.headline.support.db.tables.YouthBaseTable;
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Query;
@@ -22,6 +26,13 @@ public interface HeadlineService {
   public int CATE_TECHNOLOGY = 2;
   public int CATE_TELECOMMUNICATION = 3;
   public int CATE_ALUMNUS = 4;
+
+  public static String[] TABLES = {
+      CollegeBaseTable.TABLE_NAME,
+      ScientificBaseTable.TABLE_NAME,
+      YouthBaseTable.TABLE_NAME,
+      ClassmateBaseTable.TABLE_NAME,
+  };
 
   public String CATEGORY = "category";
 

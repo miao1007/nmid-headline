@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -72,7 +73,6 @@ public class NavigationDrawerFragment extends Fragment {
   private NavigationDrawerCallbacks mCallbacks;
   private ActionBarDrawerToggle mDrawerToggle;
   private DrawerLayout mDrawerLayout;
-  private View mFragmentContainerView;
   private int mCurrentSelectedPosition = 0;
   private boolean mFromSavedInstanceState;
   private boolean mUserLearnedDrawer;
@@ -94,7 +94,7 @@ public class NavigationDrawerFragment extends Fragment {
     });
     qzone.authorize();
     if (mDrawerLayout != null) {
-      mDrawerLayout.closeDrawer(mFragmentContainerView);
+      mDrawerLayout.closeDrawer(Gravity.START);
     }
   }
 
@@ -193,21 +193,21 @@ public class NavigationDrawerFragment extends Fragment {
   }
 
   public boolean isDrawerOpen() {
-    return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
+    return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(Gravity.START);
   }
 
   public void toggleDrawer() {
     if (mDrawerLayout != null) {
       if (isDrawerOpen()) {
-        mDrawerLayout.closeDrawer(mFragmentContainerView);
+        mDrawerLayout.closeDrawer(Gravity.START);
       } else {
-        mDrawerLayout.openDrawer(mFragmentContainerView);
+        mDrawerLayout.openDrawer(Gravity.START);
       }
     }
   }
 
-  public void setUp(int drawerHolderId, DrawerLayout drawerLayout, Toolbar toolbar) {
-    mFragmentContainerView = getActivity().findViewById(drawerHolderId);
+  public void setUp(DrawerLayout drawerLayout, Toolbar toolbar) {
+
     mDrawerLayout = drawerLayout;
     mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
@@ -244,7 +244,7 @@ public class NavigationDrawerFragment extends Fragment {
     };
 
     if (!mUserLearnedDrawer && !mFromSavedInstanceState) {
-      mDrawerLayout.openDrawer(mFragmentContainerView);
+      mDrawerLayout.openDrawer(Gravity.START);
     }
 
     mDrawerLayout.post(new Runnable() {
@@ -261,7 +261,7 @@ public class NavigationDrawerFragment extends Fragment {
     mCurrentSelectedPosition = position;
 
     if (mMainListView != null) mMainListView.setItemChecked(position, true);
-    if (mDrawerLayout != null) mDrawerLayout.closeDrawer(mFragmentContainerView);
+    if (mDrawerLayout != null) mDrawerLayout.closeDrawer(Gravity.START);
     if (mCallbacks != null) mCallbacks.onNavigationDrawerItemSelected(position);
 
     if (position == 100) {
@@ -319,6 +319,12 @@ public class NavigationDrawerFragment extends Fragment {
       return true;
     }
     return super.onOptionsItemSelected(item);
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    ButterKnife.reset(this);
   }
 
   private void showGlobalContextActionBar() {

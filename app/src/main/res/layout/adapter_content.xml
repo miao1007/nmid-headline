@@ -40,14 +40,14 @@
           android:maxLength="60"
           android:maxLines="3"
           android:text="又一家中国公司要赴美上市，虽然这家名“芯原”IC设计公司大家不熟悉，但他是给谷歌等互联网公司定制芯片的，也给很多中国公司定制芯片"
-          android:textSize="@dimen/abc_text_size_caption_material" android:layout_weight="4" android:layout_below="@+id/item_title"
+          android:textSize="@dimen/abc_text_size_caption_material" android:layout_weight="4"
+          android:layout_below="@+id/item_title"
           android:layout_toLeftOf="@+id/item_image1"/>
 
 
       <ImageView
           android:id="@+id/item_image1"
           android:layout_width="60dp"
-          android:background="@color/background_floating_material_dark"
           android:layout_height="60dp"
           android:layout_alignParentRight="true" android:layout_weight="1"
           android:layout_below="@+id/item_title"/>
@@ -66,24 +66,21 @@
           android:id="@+id/item_image2"
           android:layout_width="70dp"
           android:layout_height="60dp"
-          android:scaleType="fitXY"
-          android:src="@drawable/bg_navigation_drawer"/>
+          android:scaleType="fitXY"/>
 
       <ImageView
           android:id="@+id/item_image3"
           android:layout_width="70dp"
           android:layout_height="60dp"
           android:layout_marginLeft="20dp"
-          android:scaleType="fitXY"
-          android:src="@drawable/bg_navigation_drawer"/>
+          android:scaleType="fitXY"/>
 
       <ImageView
           android:id="@+id/item_image4"
           android:layout_width="70dp"
           android:layout_height="60dp"
           android:layout_marginLeft="20dp"
-          android:scaleType="fitXY"
-          android:src="@drawable/bg_navigation_drawer"/>
+          android:scaleType="fitXY"/>
     </LinearLayout>
 
 

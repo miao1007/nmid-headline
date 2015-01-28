@@ -16,7 +16,6 @@ import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.fragment.FeedFragment;
 import cn.edu.cqupt.nmid.headline.ui.fragment.FeedsFragment;
 import cn.edu.cqupt.nmid.headline.ui.fragment.NavigationDrawerFragment;
-import cn.edu.cqupt.nmid.headline.ui.widget.ScrimInsetsFrameLayout;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 
 /**
@@ -27,8 +26,7 @@ public class HomeActivity extends ActionBarActivity
 
   @InjectView(R.id.toolbar) Toolbar mToolbar;
   @InjectView(R.id.home_drawer_layout) DrawerLayout mDrawerLayout;
-  @InjectView(R.id.navigation_drawer_holder) ScrimInsetsFrameLayout mScrimInsetsFrameLayout;
-  @InjectView(R.id.content_holder) LinearLayout mLinearLayout;
+  @InjectView(R.id.home_content_layout) LinearLayout mLinearLayout;
 
   NavigationDrawerFragment mNavigationDrawerFragment;
   private String TAG = LogUtils.makeLogTag(HomeActivity.class);
@@ -36,7 +34,7 @@ public class HomeActivity extends ActionBarActivity
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    Log.d(TAG, "onRestart");
+    Log.d(TAG, "onCreate");
     setContentView(R.layout.activity_home);
     ButterKnife.inject(this);
     mToolbar.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
@@ -52,7 +50,7 @@ public class HomeActivity extends ActionBarActivity
         (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(
             R.id.navigation_drawer);
 
-    mNavigationDrawerFragment.setUp(R.id.navigation_drawer_holder, mDrawerLayout, mToolbar);
+    mNavigationDrawerFragment.setUp(mDrawerLayout, mToolbar);
   }
 
   @Override
