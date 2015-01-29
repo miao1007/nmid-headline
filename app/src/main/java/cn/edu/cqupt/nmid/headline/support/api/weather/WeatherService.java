@@ -9,10 +9,6 @@ import retrofit.http.GET;
  */
 public interface WeatherService {
 
-    //reference:
-    // @link :http://127.0.0.1/txtt/public/api/android/weather
-
-
-    @GET("/txtt/public/api/android/weather")
+    @GET("/api/android/weather")
     void getWeatherService(Callback<Weather> weatherCallback);
 }

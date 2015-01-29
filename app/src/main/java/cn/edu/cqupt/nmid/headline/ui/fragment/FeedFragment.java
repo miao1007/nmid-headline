@@ -18,11 +18,13 @@ import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
 import cn.edu.cqupt.nmid.headline.support.api.headline.bean.Datum;
 import cn.edu.cqupt.nmid.headline.support.api.headline.bean.HeadJson;
 import cn.edu.cqupt.nmid.headline.support.db.DatabaseManager;
+import cn.edu.cqupt.nmid.headline.support.db.tasks.GetFavoriteFeedsFromDbTask;
 import cn.edu.cqupt.nmid.headline.support.db.tasks.GetFeedsFromDbTask;
+import cn.edu.cqupt.nmid.headline.support.db.tasks.callback.GetFavoriteFeedsFromDbTaskCallback;
 import cn.edu.cqupt.nmid.headline.support.db.tasks.callback.GetFeedsCallback;
 import cn.edu.cqupt.nmid.headline.support.pref.HttpPref;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
-import cn.edu.cqupt.nmid.headline.ui.adapter.SwipeAdapter;
+import cn.edu.cqupt.nmid.headline.ui.adapter.EndlessAdapter;
 import cn.edu.cqupt.nmid.headline.utils.animation.SlideInOutBottomItemAnimator;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
@@ -57,12 +59,12 @@ public class FeedFragment extends Fragment {
    */
   LinearLayoutManager mLayoutManager;
   ArrayList<Datum> newsBeans = new ArrayList<>();
-  SwipeAdapter adapter;
+  EndlessAdapter adapter;
   int feed_id;
   private String title;
   private int feed_limit = 15;
   private int feed_cate = HeadlineService.CATE_ALUMNUS;
-  private boolean favorite = false;
+  private boolean isFavorite = false;
   private boolean isLoadingMore = false;
 
   public static FeedFragment newInstance(String title, int type) {
@@ -74,10 +76,10 @@ public class FeedFragment extends Fragment {
     return fragment;
   }
 
-  public static FeedFragment newFavInstance(Boolean isFav) {
+  public static FeedFragment newFavInstance() {
     FeedFragment fragment = new FeedFragment();
     Bundle args = new Bundle();
-    args.putBoolean(ARG_FAV, isFav);
+    args.putBoolean(ARG_FAV, true);
     fragment.setArguments(args);
     return fragment;
   }
@@ -90,10 +92,14 @@ public class FeedFragment extends Fragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     Log.d(TAG, "onCreate");
+    getArgsAndPrefs();
+  }
+
+  private void getArgsAndPrefs() {
     if (getArguments() != null) {
       title = getArguments().getString(ARG_TITLE);
       feed_cate = getArguments().getInt(ARG_CATEGORY);
-      favorite = getArguments().getBoolean(ARG_FAV);
+      isFavorite = getArguments().getBoolean(ARG_FAV);
 
       Log.d(TAG, "getArguments " + feed_cate);
     } else {
@@ -115,7 +121,7 @@ public class FeedFragment extends Fragment {
     mFloatingActionButton.setIcon(R.drawable.ic_reload_48dp);
 
     mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN);
-    adapter = new SwipeAdapter(getActivity(), newsBeans);
+    adapter = new EndlessAdapter(getActivity(), newsBeans);
     mRecyclerview.setAdapter(adapter);
     mRecyclerview.setHasFixedSize(true);
     mLayoutManager = new LinearLayoutManager(getActivity());
@@ -128,7 +134,7 @@ public class FeedFragment extends Fragment {
         mRecyclerview.smoothScrollToPosition(0);
       }
     });
-
+    //Endless RecyclerView
     mRecyclerview.setOnScrollListener(new RecyclerView.OnScrollListener() {
       @Override
       public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -150,39 +156,42 @@ public class FeedFragment extends Fragment {
 
   void loadNewFeeds() {
     mRecyclerview.smoothScrollToPosition(0);
-    new RestAdapter.Builder().setLogLevel(RestAdapter.LogLevel.BASIC)
-        .setEndpoint(HeadlineService.END_POINT)
-        .build()
-        .create(HeadlineService.class)
-        .getFreshFeeds(feed_cate, 0, feed_limit, new Callback<HeadJson>() {
-          @Override public void success(HeadJson headJson, Response response) {
-            mSwipeRefreshLayout.setRefreshing(false);
-            newsBeans.clear();
+    if (isFavorite) {
+      mSwipeRefreshLayout.setRefreshing(false);
+    } else {
+      new RestAdapter.Builder()
+          .setEndpoint(HeadlineService.END_POINT)
+          .build()
+          .create(HeadlineService.class)
+          .getFreshFeeds(feed_cate, 0, feed_limit, new Callback<HeadJson>() {
+            @Override public void success(HeadJson headJson, Response response) {
+              mSwipeRefreshLayout.setRefreshing(false);
+              newsBeans.clear();
 
-            newsBeans.addAll(headJson.getData());
-            adapter.notifyDataSetChanged();
+              newsBeans.addAll(headJson.getData());
+              adapter.notifyDataSetChanged();
 
-            new Thread(new Runnable() {
-              @Override public void run() {
-                DatabaseManager.update(newsBeans, HeadlineService.TABLES[feed_cate - 1],
-                    String.valueOf(feed_cate));
-              }
-            }).start();
+              new Thread(new Runnable() {
+                @Override public void run() {
+                  DatabaseManager.update(newsBeans, feed_cate);
+                }
+              }).start();
 
-            Log.d(TAG, "Last id is" + newsBeans.get(0).getId());
-          }
+              Log.d(TAG, "Last id is" + newsBeans.get(0).getId());
+            }
 
-          @Override public void failure(RetrofitError error) {
-            mSwipeRefreshLayout.setRefreshing(false);
-          }
-        });
+            @Override public void failure(RetrofitError error) {
+              mSwipeRefreshLayout.setRefreshing(false);
+            }
+          });
+    }
   }
 
   void loadOldNews() {
     isLoadingMore = true;
     feed_id = newsBeans.get(newsBeans.size() - 1).getId();
 
-    new RestAdapter.Builder().setLogLevel(RestAdapter.LogLevel.FULL)
+    new RestAdapter.Builder()
         .setEndpoint(HeadlineService.END_POINT)
         .build()
         .create(HeadlineService.class)
@@ -208,13 +217,22 @@ public class FeedFragment extends Fragment {
   }
 
   void loadDbNews() {
-    new GetFeedsFromDbTask(HeadlineService.TABLES[feed_cate - 1], feed_limit,
-        new GetFeedsCallback() {
-          @Override public void onRefreshData(ArrayList<Datum> listbeans) {
-            newsBeans.addAll(listbeans);
-            adapter.notifyDataSetChanged();
-          }
-        }).execute();
+
+    if (isFavorite) {
+      new GetFavoriteFeedsFromDbTask(new GetFavoriteFeedsFromDbTaskCallback() {
+        @Override public void onCollectData(ArrayList<Datum> listbeans) {
+          newsBeans.addAll(listbeans);
+          adapter.notifyDataSetChanged();
+        }
+      }).execute();
+    } else {
+      new GetFeedsFromDbTask(feed_cate, feed_limit, new GetFeedsCallback() {
+        @Override public void onRefreshData(ArrayList<Datum> listbeans) {
+          newsBeans.addAll(listbeans);
+          adapter.notifyDataSetChanged();
+        }
+      }).execute();
+    }
   }
 
   @Override

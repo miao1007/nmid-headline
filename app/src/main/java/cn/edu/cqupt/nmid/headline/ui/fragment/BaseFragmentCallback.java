@@ -1,10 +1,12 @@
 package cn.edu.cqupt.nmid.headline.ui.fragment;
 
-import cn.edu.cqupt.nmid.headline.ui.adapter.SwipeAdapter;
+import cn.edu.cqupt.nmid.headline.ui.adapter.EndlessAdapter;
 
 /**
  * Created by leon on 1/28/15.
  */
+
+@Deprecated
 public interface BaseFragmentCallback {
 
   void onGetArgs();
@@ -17,6 +19,6 @@ public interface BaseFragmentCallback {
 
   void onLoadFromDb();
 
-  SwipeAdapter getAdapter();
+  EndlessAdapter getAdapter();
 
 }

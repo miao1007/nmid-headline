@@ -3,33 +3,13 @@ package cn.edu.cqupt.nmid.headline.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import cn.edu.cqupt.nmid.headline.R;
 
 /**
  * Created by leon on 1/14/15.
  */
 public class PreferenceUtils {
 
-    static String TAG = PreferenceUtils.class.getSimpleName();
-
-
-    public static int getQueryLimit(Context context) {
-        try {
-            int a = Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(context).getString(context.getString(R.string.settings_push_feeds), "15"));
-            Log.i(TAG,a + "");
-            return a;
-
-
-        } catch (ClassCastException e) {
-            return 15;
-        }
-    }
-
-    public static boolean isPushFeeds(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(context.getString(R.string.settings_push_feeds), false);
-    }
-
+  static String TAG = LogUtils.makeLogTag(PreferenceUtils.class);
 
   public static String getPrefString(Context context, String key, final String defaultValue) {
     final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
@@ -91,6 +71,4 @@ public class PreferenceUtils {
     editor.clear();
     editor.commit();
   }
-
-
 }

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 
 public class SwipeBackActivity extends ActionBarActivity implements SwipeBackActivityBase {
@@ -45,13 +47,26 @@ public class SwipeBackActivity extends ActionBarActivity implements SwipeBackAct
     getSwipeBackLayout().scrollToFinishActivity();
   }
 
-
-  public void trySetupToolbar(Toolbar mToolbar){
+  public void trySetupToolbar(Toolbar mToolbar) {
     try {
       setSupportActionBar(mToolbar);
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    } catch (NullPointerException e){
+    } catch (NullPointerException e) {
       Log.e(getClass().getSimpleName(), "toolbar is null!");
     }
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == android.R.id.home) {
+      scrollToFinishActivity();
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
+  @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
+    if (keyCode == KeyEvent.KEYCODE_BACK){
+      scrollToFinishActivity();
+    }
+    return super.onKeyDown(keyCode, event);
   }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <!-- api info -->
+  <!-- api info  deprecated -->
   <string name="api_baidu_weather_ak">OsyKmFSMx2lVYyf5DA0EBmKX</string>
   <string name="api_baidu_endpoint">http://api.map.baidu.com</string>
   <string name="api_baidu_weather_location">重庆</string>
@@ -19,22 +19,7 @@
   <string name="settings_more_query_limit">每次刷新消息的个数</string>
   <string name="settings_refresh">刷新设置</string>
 
-  <!-- share sdk -->
-  <string name="title_activity_detailed_post">详细信息</string>
-  <string name="networkerr">请检查网络连接！</string>
-  <string name="post_isempty">文章到底啦！</string>
-  <string name="user_login">请登陆</string>
-  <string name="user_already_login">你已经登陆了</string>
-  <string name="defaultavatar_link">http://www.iteye.com/images/user-logo-thumb.gif?1324994303
-  </string>
-  <string name="about_us">
-    校园飞鸽是一款基于重邮最新资讯的社会化阅读软件，该软件支持使用新浪微博等第三方账号参与评论，分享文章，投稿新闻，同时它是开源的，你甚至可以参与开发
-  </string>
-  <string name="project_address">https://github.com/miao1007/CQUPT-FLYNEWS</string>
-  <string name="empty_text">轻触屏幕重新加载</string>
-  <string name="commit_message">提交</string>
-  <string name="no_fill">请完整填写</string>
-  <string name="title_activity_login">登陆</string>
+
 
   <!-- Retrofit Error -->
   <string name="NETWORK">无法访问服务器地址，请检查你的网络！ :</string>
@@ -64,6 +49,8 @@
   <string name="title_activity_about">关于</string>
   <string name="title_activity_settings_more">高级设置</string>
   <string name="title_activity_fav_list">FavListActivity</string>
+
+
 
 
 </resources>

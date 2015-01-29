@@ -11,11 +11,11 @@ import android.widget.LinearLayout;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
-import cn.edu.cqupt.nmid.headline.support.Constant;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.fragment.FeedFragment;
 import cn.edu.cqupt.nmid.headline.ui.fragment.FeedsFragment;
 import cn.edu.cqupt.nmid.headline.ui.fragment.NavigationDrawerFragment;
+import cn.edu.cqupt.nmid.headline.ui.fragment.StreamFragment;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 
 /**
@@ -62,10 +62,10 @@ public class HomeActivity extends ActionBarActivity
         fragment = new FeedsFragment();
         break;
       case 1:
-        fragment = FeedFragment.newInstance("title", Constant.TYPE_COLLEGE);
+        fragment = new StreamFragment();
         break;
-      case 3:
-        fragment = new FeedsFragment();
+      case 2:
+        fragment = FeedFragment.newFavInstance();
         break;
     }
 

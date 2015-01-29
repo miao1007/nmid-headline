@@ -1,86 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.edu.cqupt.nmid.headline">
+    package="cn.edu.cqupt.nmid.headline" >
 
-  <uses-permission android:name="android.permission.INTERNET"/>
-  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-  <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-  <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
-  <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-  <uses-permission android:name="android.permission.READ_PROFILE"/>
-  <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
-  <application
-      android:allowBackup="true"
-      android:icon="@drawable/ic_launcher"
-      android:label="@string/app_name"
-      android:name=".support.GlobalContext"
-      android:theme="@style/AppTheme">
-    <activity
-        android:name=".ui.activity.HomeActivity"
-        android:label="@string/app_name">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
+    <application
+        android:name=".support.GlobalContext"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".ui.activity.HomeActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
-    </activity>
-    <activity
-        android:name=".ui.activity.SettingsActivity"
-        android:label="@string/title_activity_settings"/>
-    <activity
-        android:name=".ui.activity.DetailedActivity"
-        android:label="@string/title_activity_detailed"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.SettingsActivity"
+            android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".ui.activity.DetailedActivity"
+            android:label="@string/title_activity_detailed" />
 
-    <!-- <shareSDK 分享组件> -->
-    <activity
-        android:name="cn.sharesdk.framework.ShareSDKUIShell"
-        android:configChanges="keyboardHidden|orientation|screenSize"
-        android:screenOrientation="portrait"
-        android:theme="@android:style/Theme.Translucent.NoTitleBar"
-        android:windowSoftInputMode="stateHidden|adjustResize">
-      <intent-filter>
-        <data android:scheme="tencent100371282"/>
+        <!-- <shareSDK 分享组件> -->
+        <activity
+            android:name="cn.sharesdk.framework.ShareSDKUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+            <intent-filter>
+                <data android:scheme="tencent100371282" />
 
-        <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-        <category android:name="android.intent.category.BROWSABLE"/>
-        <category android:name="android.intent.category.DEFAULT"/>
-      </intent-filter>
-    </activity>
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
-    <!-- 微信分享回调 -->
-    <activity
-        android:name=".ui.activity.wxapi.WXEntryActivity"
-        android:configChanges="keyboardHidden|orientation|screenSize"
-        android:exported="true"
-        android:screenOrientation="portrait"
-        android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
-    <activity
-        android:name=".ui.activity.AboutActivity"
-        android:label="@string/title_activity_about">
-      <intent-filter>
-        <category android:name="android.intent.category.DEFAULT"/>
+        <!-- 微信分享回调 -->
+        <activity
+            android:name=".ui.activity.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".ui.activity.AboutActivity"
+            android:label="@string/title_activity_about" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
 
-        <action android:name=".ui.activity.AboutActivity"/>
-      </intent-filter>
-    </activity>
-    <activity
-        android:name=".ui.activity.SettingsMoreActivity"
-        android:label="@string/title_activity_settings_more">
-      <intent-filter>
-        <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name=".ui.activity.AboutActivity" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.SettingsMoreActivity"
+            android:label="@string/title_activity_settings_more" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
 
-        <action android:name=".ui.activity.SettingsMoreActivity"/>
-      </intent-filter>
-    </activity>
-    <activity
-        android:name=".ui.activity.FavListActivity"
-        android:label="@string/title_activity_fav_list">
-    </activity>
-  </application>
+                <action android:name=".ui.activity.SettingsMoreActivity" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.FavListActivity"
+            android:label="@string/title_activity_fav_list" >
+        </activity>
+        <activity
+            android:name=".ui.activity.StreamActivity"
+            android:label="@string/title_activity_stream" >
+        </activity>
+    </application>
 
 </manifest>

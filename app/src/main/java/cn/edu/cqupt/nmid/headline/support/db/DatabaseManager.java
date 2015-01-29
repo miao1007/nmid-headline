@@ -6,10 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import cn.edu.cqupt.nmid.headline.support.api.headline.bean.Datum;
 import cn.edu.cqupt.nmid.headline.support.db.tables.BaseTable;
-import cn.edu.cqupt.nmid.headline.support.db.tables.ClassmateBaseTable;
-import cn.edu.cqupt.nmid.headline.support.db.tables.CollegeBaseTable;
-import cn.edu.cqupt.nmid.headline.support.db.tables.ScientificBaseTable;
-import cn.edu.cqupt.nmid.headline.support.db.tables.YouthBaseTable;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import java.util.ArrayList;
 
@@ -26,14 +22,17 @@ public class DatabaseManager {
   }
 
   private static SQLiteDatabase getRsd() {
-    DatabaseHelper databaseHelper = DatabaseHelper.getInstance();
-    return databaseHelper.getReadableDatabase();
+    return DatabaseHelper.getInstance().getReadableDatabase();
   }
 
-  public static ArrayList<Datum> get(String tablename, int limit) {
+  public static ArrayList<Datum> getFeeds(int category, int limit) {
     ArrayList<Datum> listBeans = new ArrayList<>();
-    String sql = "select * from "
-        + tablename
+    String sql = "SELECT * FROM "
+        + BaseTable.TABLE_NAME
+        + " WHERE "
+        + BaseTable.COLUMN_NAME_CATEGORY
+        + " = "
+        + category
         + " order by "
         + BaseTable.COLUMN_NAME_ID
         + " desc limit "
@@ -49,13 +48,13 @@ public class DatabaseManager {
     return listBeans;
   }
 
-  public static void update(ArrayList<Datum> datumArrayList, String tablename, String category) {
+  public static void update(ArrayList<Datum> datumArrayList, int category) {
 
     if (datumArrayList == null || datumArrayList.size() == 0) {
       return;
     }
 
-    clear(tablename, category);
+    clear(BaseTable.TABLE_NAME, category);
     Log.d(TAG, datumArrayList.size() + "");
     for (Datum news : datumArrayList) {
       ContentValues values = new ContentValues();
@@ -67,12 +66,12 @@ public class DatabaseManager {
       values.put(BaseTable.COLUMN_NAME_IMAGE2, news.getImage2());
       values.put(BaseTable.COLUMN_NAME_IMAGE3, news.getImage3());
       values.put(BaseTable.COLUMN_NAME_TIME_RELEASE, news.getTimeRelease());
-      values.put(BaseTable.COLUMN_NAME_ISCOLLECT, news.getIsCollect());
-      getWsd().insert(tablename, BaseTable.COLUMN_NAME_ID, values);
+      values.put(BaseTable.COLUMN_NAME_ISCOLLECT, false);
+      getWsd().insert(BaseTable.TABLE_NAME, BaseTable.COLUMN_NAME_ID, values);
     }
   }
 
-  private static void clear(String tablename, String category) {
+  private static void clear(String tablename, int category) {
     String sql =
         "delete from " + tablename + " where " + BaseTable.COLUMN_NAME_CATEGORY + " = " + category;
     getWsd().execSQL(sql);
@@ -92,61 +91,51 @@ public class DatabaseManager {
     return newsBean;
   }
 
-  public static synchronized void isLikeIt(String tablename, int id, Boolean isLikeit) {
+  public static synchronized boolean toggleLikeIt(int id) {
+    boolean current = isLikeIt(id);
     ContentValues cv = new ContentValues();
-    cv.put(BaseTable.COLUMN_NAME_ISCOLLECT, isLikeit);
-    String[] args = { Integer.toString(isLikeit ? 1 : 0) };
-    getWsd().update(tablename, cv, id + "=?", args);
+    String[] args = { Integer.toString(id) };
+    cv.put(BaseTable.COLUMN_NAME_ISCOLLECT, !current);
+    //UPDATE tablename SET iscollect=? WHERE _id=?
+    getWsd().update(BaseTable.TABLE_NAME, cv, BaseTable.COLUMN_NAME_ID + "=?", args);
+    return !current;
   }
 
-  //得到收藏列表
+  public static synchronized boolean isLikeIt(int id) {
+    Cursor cursor = getRsd().rawQuery(
+        "select * from " + BaseTable.TABLE_NAME + " WHERE " + BaseTable.COLUMN_NAME_ID + " = " + id,
+        null);
+
+    if (cursor.isFirst()) {
+      cursor.moveToFirst();
+      boolean result = cursor.getInt(8) == 1 ? true : false;
+      return result;
+    }
+    cursor.close();
+    Log.d(TAG, "cursor.getCount()>0");
+    return false;
+  }
+
   public static ArrayList<Datum> getFavoriteList() {
 
-    ArrayList<Datum> tempList = new ArrayList<Datum>();
-    Cursor cursor = getRsd().rawQuery("select * from "
-        + ClassmateBaseTable.TABLE_NAME
-        + " where "
+    ArrayList<Datum> listBeans = new ArrayList<>();
+    String sql = "SELECT * FROM "
+        + BaseTable.TABLE_NAME
+        + " WHERE "
         + BaseTable.COLUMN_NAME_ISCOLLECT
-        + "=1 order by "
+        + "="
+        + "1"
+        + " order by "
         + BaseTable.COLUMN_NAME_ID
-        + " desc", null);
-    while (cursor.moveToNext()) {
-      tempList.add(getBeanFromDb(cursor));
+        + " DESC";
+    Cursor c = getRsd().rawQuery(sql, null);
+    while (c.moveToNext()) {
+
+      Datum newsBean = getBeanFromDb(c);
+      listBeans.add(newsBean);
     }
-    cursor.close();
-    cursor = getRsd().rawQuery("select * from "
-        + CollegeBaseTable.TABLE_NAME
-        + " where "
-        + BaseTable.COLUMN_NAME_ISCOLLECT
-        + "=1 order by "
-        + BaseTable.COLUMN_NAME_ID
-        + " desc", null);
-    while (cursor.moveToNext()) {
-      tempList.add(getBeanFromDb(cursor));
-    }
-    cursor.close();
-    cursor = getRsd().rawQuery("select * from "
-        + ScientificBaseTable.TABLE_NAME
-        + " where "
-        + BaseTable.COLUMN_NAME_ISCOLLECT
-        + "=1 order by "
-        + BaseTable.COLUMN_NAME_ID
-        + " desc", null);
-    while (cursor.moveToNext()) {
-      tempList.add(getBeanFromDb(cursor));
-    }
-    cursor.close();
-    cursor = getRsd().rawQuery("select * from "
-        + YouthBaseTable.TABLE_NAME
-        + " where "
-        + BaseTable.COLUMN_NAME_ISCOLLECT
-        + "=1 order by "
-        + BaseTable.COLUMN_NAME_ID
-        + " desc", null);
-    while (cursor.moveToNext()) {
-      tempList.add(getBeanFromDb(cursor));
-    }
-    cursor.close();
-    return tempList;
+    c.close();
+
+    return listBeans;
   }
 }

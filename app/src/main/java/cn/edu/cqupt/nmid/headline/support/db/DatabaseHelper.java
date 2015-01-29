@@ -27,18 +27,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
   @Override
   public void onCreate(SQLiteDatabase db) {
-    db.execSQL(SQL.CREATE_TABLE_COLLEGE);
-    db.execSQL(SQL.CREATE_TABLE_SCIENTIFIC);
-    db.execSQL(SQL.CREATE_TABLE_YOUTH);
-    db.execSQL(SQL.CREATE_TABLE_CLASSMATE);
+    db.execSQL(SQL.CREATE_TABLE_BASE);
   }
 
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    db.execSQL(SQL.DELETE_TABLE_COLLEGE);
-    db.execSQL(SQL.DELETE_TABLE_SCIENTIFIC);
-    db.execSQL(SQL.DELETE_TABLE_YOUTH);
-    db.execSQL(SQL.DELETE_TABLE_CLASSMATE);
+    db.execSQL(SQL.DELETE_TABLE_BASE);
     onCreate(db);
   }
 

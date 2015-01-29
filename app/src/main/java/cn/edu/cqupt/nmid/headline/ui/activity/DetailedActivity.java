@@ -13,6 +13,10 @@ import butterknife.OnClick;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.Constant;
 import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
+import cn.edu.cqupt.nmid.headline.support.db.tasks.GetIsFavoriteFeedFromDbTask;
+import cn.edu.cqupt.nmid.headline.support.db.tasks.SetIfLikeTheFeedIntoDbTask;
+import cn.edu.cqupt.nmid.headline.support.db.tasks.callback.GetIsFavoriteFeedFromDbTaskCallback;
+import cn.edu.cqupt.nmid.headline.support.db.tasks.callback.SetIfLikeTheFeedIntoDbTaskCallback;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.support.pref.WebViewPref;
 import cn.edu.cqupt.nmid.headline.support.task.WebContentGetTask;
@@ -26,6 +30,7 @@ import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import cn.edu.cqupt.nmid.headline.utils.NetworkUtils;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 
 /**
  * Useful @Link:http://developer.android.com/training/animation/crossfade.html
@@ -42,7 +47,7 @@ public class DetailedActivity extends SwipeBackActivity {
   @InjectView(R.id.detailed_webview) ObservableWebView mWebView;
   @InjectView(R.id.detailed_multiple_actions) FloatingActionsMenuHidable mFloatingActionsMenu;
   @InjectView(R.id.detailed_progressbar) ViewStub mViewStub;
-
+  @InjectView(R.id.detailed_action_favorite) FloatingActionButton mFloatingActionButton;
 
   private String TAG = LogUtils.makeLogTag(DetailedActivity.class);
   /**
@@ -52,7 +57,6 @@ public class DetailedActivity extends SwipeBackActivity {
   private int category;
   private String title;
   private String excerpt;
-  private boolean isFabAnmation = false;
 
   @OnClick(R.id.detailed_action_share) void detailed_action_share() {
     mFloatingActionsMenu.toggle();
@@ -79,8 +83,15 @@ public class DetailedActivity extends SwipeBackActivity {
   }
 
   @OnClick(R.id.detailed_action_favorite) void detailed_action_favorite(View v) {
-    //TODO
 
+    new SetIfLikeTheFeedIntoDbTask(HeadlineService.TABLES[category - 1], id,
+        new SetIfLikeTheFeedIntoDbTaskCallback() {
+          @Override public void onRefreshData(Boolean b) {
+            Log.d(TAG, "onRefreshData + " + b);
+            mFloatingActionButton.setColorNormalResId(b ? R.color.holo_red_dark : R.color.icons);
+          }
+        }).execute();
+    mFloatingActionsMenu.toggle();
   }
 
   @OnClick(R.id.detailed_action_settings) void detailed_action_settings() {
@@ -93,8 +104,13 @@ public class DetailedActivity extends SwipeBackActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_detailed);
     ButterKnife.inject(this);
-
     tryGetIntent();
+    new GetIsFavoriteFeedFromDbTask(HeadlineService.TABLES[category - 1], id,
+        new GetIsFavoriteFeedFromDbTaskCallback() {
+          @Override public void onComplete(Boolean b) {
+            mFloatingActionButton.setColorNormalResId(b ? R.color.holo_red_dark : R.color.icons);
+          }
+        }).execute();
     trySetupWebview();
   }
 

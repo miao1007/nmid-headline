@@ -9,9 +9,14 @@ import java.util.ArrayList;
 public class GetFeedsFromDbTask extends AsyncTask<Integer, Integer, ArrayList<Datum>> {
 
   private GetFeedsCallback mCallbacks;
-  private String tablename;
+  private int category;
   private int feed_limit;
 
+  public GetFeedsFromDbTask(int category, int feed_limit, GetFeedsCallback mCallbacks) {
+    this.feed_limit = feed_limit;
+    this.category = category;
+    this.mCallbacks = mCallbacks;
+  }
 
   public void executeSerial() {
     execute();
@@ -21,16 +26,10 @@ public class GetFeedsFromDbTask extends AsyncTask<Integer, Integer, ArrayList<Da
     executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
   }
 
-  public GetFeedsFromDbTask(String tablename,int feed_limit, GetFeedsCallback mCallbacks) {
-    this.feed_limit = feed_limit;
-    this.tablename = tablename;
-    this.mCallbacks = mCallbacks;
-  }
-
   @Override
   protected ArrayList<Datum> doInBackground(Integer... params) {
 
-    return DatabaseManager.get(tablename, feed_limit);
+    return DatabaseManager.getFeeds(category, feed_limit);
   }
 
   @Override

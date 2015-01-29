@@ -25,13 +25,13 @@ import java.util.ArrayList;
 /**
  * Created by leon on 1/19/15.
  */
-public class SwipeAdapter extends HeaderFooterRecyclerViewAdapter {
+public class EndlessAdapter extends HeaderFooterRecyclerViewAdapter {
 
-  private static final String TAG = LogUtils.makeLogTag(SwipeAdapter.class);
+  private static final String TAG = LogUtils.makeLogTag(EndlessAdapter.class);
   private ArrayList<Datum> mNewsBeans;
   private Context mContext;
 
-  public SwipeAdapter(Context mContext, ArrayList<Datum> newsBeans) {
+  public EndlessAdapter(Context mContext, ArrayList<Datum> newsBeans) {
     this.mContext = mContext;
     this.mNewsBeans = newsBeans;
   }
@@ -46,7 +46,8 @@ public class SwipeAdapter extends HeaderFooterRecyclerViewAdapter {
   }
 
   @Override protected int getFooterItemCount() {
-    return 1;
+    //TODO
+    return 0;
   }
 
   @Override protected int getContentItemCount() {

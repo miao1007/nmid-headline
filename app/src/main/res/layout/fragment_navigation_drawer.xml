@@ -61,9 +61,39 @@
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
                 android:ellipsize="marquee"
-                android:text="username"
+                android:text="请登陆"
                 android:textAppearance="@android:style/TextAppearance.Large"
                 android:textColor="@android:color/white"/>
+          </LinearLayout>
+
+          <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="right" android:orientation="horizontal"
+              android:layout_marginTop="16dp" android:layout_marginRight="16dp"
+              android:layout_alignParentLeft="false" android:layout_alignParentRight="true"
+              android:layout_alignParentTop="true">
+
+            <ImageView
+                android:id="@+id/navigation_drawer_weather_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/qing"/>
+            <TextView
+                android:id="@+id/navigation_drawer_weather_tempeture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/abc_dropdownitem_text_padding_left"
+                android:paddingRight="@dimen/abc_dropdownitem_text_padding_right"
+                android:text="8℃" android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true" android:layout_alignParentEnd="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="阴"
+                android:id="@+id/navigation_drawer_weather_title"/>
+
           </LinearLayout>
         </RelativeLayout>
       </FrameLayout>

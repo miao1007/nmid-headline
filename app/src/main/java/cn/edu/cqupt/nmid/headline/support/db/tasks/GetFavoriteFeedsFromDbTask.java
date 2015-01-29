@@ -7,14 +7,10 @@ import cn.edu.cqupt.nmid.headline.support.db.tasks.callback.GetFavoriteFeedsFrom
 import java.util.ArrayList;
 
 public class GetFavoriteFeedsFromDbTask extends AsyncTask<Void, Integer, ArrayList<Datum>> {
-  private String tablename;
-  private int feed_limit;
   private GetFavoriteFeedsFromDbTaskCallback mCallbacks;
 
-  public GetFavoriteFeedsFromDbTask(String tablename, int feed_limit,
+  public GetFavoriteFeedsFromDbTask(
       GetFavoriteFeedsFromDbTaskCallback mCallbacks) {
-    this.tablename = tablename;
-    this.feed_limit = feed_limit;
     this.mCallbacks = mCallbacks;
   }
 

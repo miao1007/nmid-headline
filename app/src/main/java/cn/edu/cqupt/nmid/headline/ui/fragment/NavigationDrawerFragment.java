@@ -30,11 +30,10 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 import cn.edu.cqupt.nmid.headline.R;
-import cn.edu.cqupt.nmid.headline.support.Constant;
+import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
 import cn.edu.cqupt.nmid.headline.support.api.weather.WeatherService;
 import cn.edu.cqupt.nmid.headline.support.api.weather.bean.Weather;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
-import cn.edu.cqupt.nmid.headline.support.task.UserInfoGetTask;
 import cn.edu.cqupt.nmid.headline.ui.activity.SettingsActivity;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationItemsAdapter;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationSecondaryItemsAdapter;
@@ -68,8 +67,12 @@ public class NavigationDrawerFragment extends Fragment {
   @InjectView(R.id.navigation_drawer_profile) FrameLayout mProfile;
   @InjectView(R.id.navigation_drawer_list_main) ListView mMainListView;
   @InjectView(R.id.navigation_drawer_list_secondary) ListView mSecondaryListView;
+  @InjectView(R.id.navigation_drawer_weather_img) ImageView mImageWeather;
+  @InjectView(R.id.navigation_drawer_weather_tempeture) TextView mTextWeather;
+  @InjectView(R.id.navigation_drawer_weather_title) TextView mTextWeatherTitle;
+
+
   NavigationItemsAdapter mNavigationItemsAdapter;
-  private UserInfoGetTask mUserInfoFetchTask;
   private NavigationDrawerCallbacks mCallbacks;
   private ActionBarDrawerToggle mDrawerToggle;
   private DrawerLayout mDrawerLayout;
@@ -166,24 +169,33 @@ public class NavigationDrawerFragment extends Fragment {
   public void fetchUserInfo() {
     PlatformDb db = ShareSDK.getPlatform(getActivity(), QZone.NAME).getDb();
     if (db.isValid()) {
+
+      Picasso.with(context)
+          .load(db.getUserIcon())
+          .transform(new BlurTransformation(context))
+          .placeholder(R.drawable.ic_avater)
+          .into(mAvatarBg);
       Picasso.with(context)
           .load(db.getUserIcon())
           .fit()
           .transform(new CircleTransformation())
           .into(mAvatar);
-      Picasso.with(context)
-          .load(db.getUserIcon())
-          .transform(new BlurTransformation(context))
-          .into(mAvatarBg);
+
       mUsername.setText(db.getUserName());
     }
 
-    new RestAdapter.Builder().setEndpoint(Constant.ENDPOINT)
+    new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
         .build()
         .create(WeatherService.class)
         .getWeatherService(new Callback<Weather>() {
           @Override public void success(Weather weather, Response response) {
-
+            Picasso.with(context)
+                .load(weather.getData().getDaypictureurl())
+                .fit()
+                .transform(new CircleTransformation())
+                .into(mImageWeather);
+            mTextWeather.setText(weather.getData().getTemperature());
+            mTextWeatherTitle.setText(weather.getData().getTitle());
           }
 
           @Override public void failure(RetrofitError error) {
@@ -265,8 +277,6 @@ public class NavigationDrawerFragment extends Fragment {
     if (mCallbacks != null) mCallbacks.onNavigationDrawerItemSelected(position);
 
     if (position == 100) {
-      // Profile was selected
-      //HomeActivity.m = getString(R.string.title_profile);
 
       if (mMainListView != null && mMainListView.getAdapter() != null) {
         ((NavigationItemsAdapter) mMainListView.getAdapter()).selectItem(100);

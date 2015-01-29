@@ -86,13 +86,6 @@
         <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/okhttp-urlconnection-2.0.0-bf24a8aebfbea4595e489f87ac4be053c7fae2f8.jar" />
     </item>
     <item
-        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/com.malinskiy/superrecyclerview/1.1.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="4649d32a5916687ff5d8e430aacb9a4e4eb10724">
-        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-50816073e0ccb3cf84675248e7fee6eaa5d065cb.jar" />
-    </item>
-    <item
         jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
         jumboMode="false"
         revision="21.1.1"

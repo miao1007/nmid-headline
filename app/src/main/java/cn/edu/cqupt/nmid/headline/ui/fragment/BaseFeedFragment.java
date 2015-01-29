@@ -15,7 +15,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
-import cn.edu.cqupt.nmid.headline.ui.adapter.SwipeAdapter;
+import cn.edu.cqupt.nmid.headline.ui.adapter.EndlessAdapter;
 import cn.edu.cqupt.nmid.headline.utils.animation.SlideInOutBottomItemAnimator;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
@@ -24,6 +24,8 @@ import static cn.edu.cqupt.nmid.headline.utils.LogUtils.makeLogTag;
 /**
  * Created by leon on 1/28/15.
  */
+
+@Deprecated
 public abstract class BaseFeedFragment extends Fragment implements BaseFragmentCallback {
 
   String TAG = makeLogTag(BaseFeedFragment.class);
@@ -43,8 +45,8 @@ public abstract class BaseFeedFragment extends Fragment implements BaseFragmentC
   }
 
   private boolean isLoadingMore = true;
-  LinearLayoutManager mLayoutManager;
-  SwipeAdapter adapter;
+  private LinearLayoutManager mLayoutManager;
+  private EndlessAdapter adapter;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -99,5 +101,12 @@ public abstract class BaseFeedFragment extends Fragment implements BaseFragmentC
     });
     onLoadFromDb();
     return view;
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    Log.d(TAG, "onDestroyView");
+    ButterKnife.reset(this);
   }
 }
