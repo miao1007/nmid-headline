@@ -1,6 +1,5 @@
 package cn.edu.cqupt.nmid.headline.support.task;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import cn.edu.cqupt.nmid.headline.support.task.callback.WebContentGetTaskCallback;
@@ -13,13 +12,10 @@ import java.io.IOException;
  */
 public class WebContentGetTask extends AsyncTask<String, Void, String> {
 
-  private boolean isLog = false;
-
-  private Context mContext;
   private WebContentGetTaskCallback mCallback;
+  private String url;
 
-  public WebContentGetTask(Context mContext, WebContentGetTaskCallback mCallback) {
-    this.mContext = mContext;
+  public WebContentGetTask(WebContentGetTaskCallback mCallback) {
     this.mCallback = mCallback;
   }
 
@@ -27,8 +23,10 @@ public class WebContentGetTask extends AsyncTask<String, Void, String> {
   protected String doInBackground(String... params) {
     OkHttpClient client = new OkHttpClient();
 
-    String url = params[0];
-    Request request = new Request.Builder().url(url).build();
+    if (params[0] == null){
+      throw new IllegalStateException("set url before execute!");
+    }
+    Request request = new Request.Builder().url(params[0]).build();
     try {
       return client.newCall(request).execute().body().string();
     } catch (IOException e) {
@@ -53,5 +51,17 @@ public class WebContentGetTask extends AsyncTask<String, Void, String> {
         mCallback.onSuccess(s);
       }
     }
+  }
+
+  void setUrl(String url) {
+    this.url = url;
+  }
+
+  public void executeSerial() {
+    execute();
+  }
+
+  public void executeParallell() {
+    executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
   }
 }

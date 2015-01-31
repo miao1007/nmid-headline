@@ -33,9 +33,9 @@ public class DatabaseManager {
         + BaseTable.COLUMN_NAME_CATEGORY
         + " = "
         + category
-        + " order by "
+        + " ORDER BY "
         + BaseTable.COLUMN_NAME_ID
-        + " desc limit "
+        + " DESC LIMIT "
         + limit;
     Cursor c = getRsd().rawQuery(sql, null);
     while (c.moveToNext()) {
@@ -73,7 +73,7 @@ public class DatabaseManager {
 
   private static void clear(String tablename, int category) {
     String sql =
-        "delete from " + tablename + " where " + BaseTable.COLUMN_NAME_CATEGORY + " = " + category;
+        "DELETE FROM " + tablename + " WHERE " + BaseTable.COLUMN_NAME_CATEGORY + " = " + category;
     getWsd().execSQL(sql);
   }
 
@@ -103,7 +103,7 @@ public class DatabaseManager {
 
   public static synchronized boolean isLikeIt(int id) {
     Cursor cursor = getRsd().rawQuery(
-        "select * from " + BaseTable.TABLE_NAME + " WHERE " + BaseTable.COLUMN_NAME_ID + " = " + id,
+        "SELECT * FROM " + BaseTable.TABLE_NAME + " WHERE " + BaseTable.COLUMN_NAME_ID + " = " + id,
         null);
 
     if (cursor.isFirst()) {

@@ -64,9 +64,12 @@ public class SwipeBackActivity extends ActionBarActivity implements SwipeBackAct
   }
 
   @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
-    if (keyCode == KeyEvent.KEYCODE_BACK){
+    if (keyCode == KeyEvent.KEYCODE_BACK) {
       scrollToFinishActivity();
+      // don't pass by the event
+      return false;
+    } else {
+      return super.onKeyDown(keyCode, event);
     }
-    return super.onKeyDown(keyCode, event);
   }
 }

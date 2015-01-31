@@ -1,7 +1,6 @@
 package cn.edu.cqupt.nmid.headline.support.db;
 
 import cn.edu.cqupt.nmid.headline.support.db.tables.BaseTable;
-import cn.edu.cqupt.nmid.headline.support.db.tables.ClassmateBaseTable;
 
 public class SQL {
   public static final String TEXT_TYPE = " TEXT";
@@ -42,6 +41,5 @@ public class SQL {
       + BaseTable.COLUMN_NAME_ISCOLLECT
       + INTEGER_TYPE
       + ")";
-  public static final String DELETE_TABLE_BASE =
-      "DROP TABLE IF EXISTS " + ClassmateBaseTable.TABLE_NAME;
+  public static final String DELETE_TABLE_BASE = "DROP TABLE IF EXISTS " + BaseTable.TABLE_NAME;
 }

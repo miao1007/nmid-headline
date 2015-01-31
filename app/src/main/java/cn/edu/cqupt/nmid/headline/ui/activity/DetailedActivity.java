@@ -11,7 +11,6 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.edu.cqupt.nmid.headline.R;
-import cn.edu.cqupt.nmid.headline.support.Constant;
 import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
 import cn.edu.cqupt.nmid.headline.support.db.tasks.GetIsFavoriteFeedFromDbTask;
 import cn.edu.cqupt.nmid.headline.support.db.tasks.SetIfLikeTheFeedIntoDbTask;
@@ -84,13 +83,12 @@ public class DetailedActivity extends SwipeBackActivity {
 
   @OnClick(R.id.detailed_action_favorite) void detailed_action_favorite(View v) {
 
-    new SetIfLikeTheFeedIntoDbTask(HeadlineService.TABLES[category - 1], id,
-        new SetIfLikeTheFeedIntoDbTaskCallback() {
-          @Override public void onRefreshData(Boolean b) {
-            Log.d(TAG, "onRefreshData + " + b);
-            mFloatingActionButton.setColorNormalResId(b ? R.color.holo_red_dark : R.color.icons);
-          }
-        }).execute();
+    new SetIfLikeTheFeedIntoDbTask(id, new SetIfLikeTheFeedIntoDbTaskCallback() {
+      @Override public void onRefreshData(Boolean b) {
+        Log.d(TAG, "onRefreshData + " + b);
+        mFloatingActionButton.setColorNormalResId(b ? R.color.holo_red_dark : R.color.icons);
+      }
+    }).execute();
     mFloatingActionsMenu.toggle();
   }
 
@@ -105,18 +103,17 @@ public class DetailedActivity extends SwipeBackActivity {
     setContentView(R.layout.activity_detailed);
     ButterKnife.inject(this);
     tryGetIntent();
-    new GetIsFavoriteFeedFromDbTask(HeadlineService.TABLES[category - 1], id,
-        new GetIsFavoriteFeedFromDbTaskCallback() {
-          @Override public void onComplete(Boolean b) {
-            mFloatingActionButton.setColorNormalResId(b ? R.color.holo_red_dark : R.color.icons);
-          }
-        }).execute();
+    new GetIsFavoriteFeedFromDbTask(id, new GetIsFavoriteFeedFromDbTaskCallback() {
+      @Override public void onComplete(Boolean b) {
+        mFloatingActionButton.setColorNormalResId(b ? R.color.holo_red_dark : R.color.icons);
+      }
+    }).execute();
     trySetupWebview();
   }
 
   private void tryGetIntent() {
     id = getIntent().getIntExtra("id", 1);
-    category = getIntent().getIntExtra("category", Constant.TYPE_CLASSMATE);
+    category = getIntent().getIntExtra("category", HeadlineService.CATE_ALUMNUS);
     title = getIntent().getStringExtra("title");
     excerpt = getIntent().getStringExtra("excerpt");
   }
@@ -126,6 +123,7 @@ public class DetailedActivity extends SwipeBackActivity {
     url = HeadlineService.END_POINT + "/api/android/newscontent?id=" + id + "&category=" + category;
 
     WebSettings settings = mWebView.getSettings();
+
     settings.setTextZoom(WebViewPref.getWebViewTextZoom(this));
     switch (WebViewPref.isAutoLoadImages(this)) {
       case 0:
@@ -177,7 +175,7 @@ public class DetailedActivity extends SwipeBackActivity {
       }
     });
 
-    new WebContentGetTask(this, new WebContentGetTaskCallback() {
+    new WebContentGetTask(new WebContentGetTaskCallback() {
       @Override
       public void onPreExcute() {
         mViewStub.inflate();

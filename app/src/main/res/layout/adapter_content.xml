@@ -105,23 +105,6 @@
           android:text="12小时前"
           android:textSize="14sp"/>
 
-      <Button
-          android:id="@+id/collect"
-          android:layout_width="12dp"
-          android:layout_height="12dp"
-          android:layout_alignParentRight="true"
-          android:layout_centerVertical="true"
-          android:layout_marginRight="10dp"
-          android:text="收藏"/>
-
-      <Button
-          android:id="@+id/share"
-          android:layout_width="12dp"
-          android:layout_height="12dp"
-          android:layout_centerVertical="true"
-          android:layout_marginRight="15dp"
-          android:layout_toLeftOf="@id/collect"
-          android:text="分享"/>
     </RelativeLayout>
 
   </LinearLayout>

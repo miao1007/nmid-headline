@@ -17,6 +17,7 @@ import cn.edu.cqupt.nmid.headline.ui.fragment.FeedsFragment;
 import cn.edu.cqupt.nmid.headline.ui.fragment.NavigationDrawerFragment;
 import cn.edu.cqupt.nmid.headline.ui.fragment.StreamFragment;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  *
@@ -31,15 +32,12 @@ public class HomeActivity extends ActionBarActivity
   NavigationDrawerFragment mNavigationDrawerFragment;
   private String TAG = LogUtils.makeLogTag(HomeActivity.class);
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    Log.d(TAG, "onCreate");
     setContentView(R.layout.activity_home);
     ButterKnife.inject(this);
     mToolbar.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
     mLinearLayout.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
-
     trySetupToolbar();
   }
 
@@ -53,8 +51,7 @@ public class HomeActivity extends ActionBarActivity
     mNavigationDrawerFragment.setUp(mDrawerLayout, mToolbar);
   }
 
-  @Override
-  public void onNavigationDrawerItemSelected(int position) {
+  @Override public void onNavigationDrawerItemSelected(int position) {
     FragmentManager fragmentManager = getSupportFragmentManager();
     Fragment fragment = null;
     switch (position) {
@@ -74,27 +71,17 @@ public class HomeActivity extends ActionBarActivity
     }
   }
 
-  @Override
-  protected void onStart() {
-    super.onStart();
-    //recreate();
-    Log.d(TAG, "onStart");
+  @Override protected void onResume() {
+    super.onResume();
+    JPushInterface.onResume(this);
   }
 
-  @Override
-  protected void onStop() {
-    super.onStop();
-    Log.d(TAG, "onStop");
-  }
-
-  @Override
-  protected void onPause() {
+  @Override protected void onPause() {
     super.onPause();
-    Log.d(TAG, "onPause");
+    JPushInterface.onPause(this);
   }
 
-  @Override
-  protected void onRestart() {
+  @Override protected void onRestart() {
     super.onRestart();
     Log.d(TAG, "onRestart");
   }

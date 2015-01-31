@@ -10,16 +10,6 @@ import cn.edu.cqupt.nmid.headline.utils.PreferenceUtils;
 public class ThemePref {
 
 
-
-  //public static void switchTheme(Context context, boolean isNight) {
-  //
-  //  SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-  //  SharedPreferences.Editor editor = sharedPreferences.edit();
-  //  editor.putBoolean(DBkey, isNight);
-  //  editor.commit();
-  //
-  //}
-
   public static boolean isNightMode(Context context) {
 
     String DBkey = context.getString(R.string.settings_night_mode);

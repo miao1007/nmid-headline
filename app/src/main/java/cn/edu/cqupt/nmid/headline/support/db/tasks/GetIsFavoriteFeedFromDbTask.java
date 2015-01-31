@@ -5,13 +5,11 @@ import cn.edu.cqupt.nmid.headline.support.db.DatabaseManager;
 import cn.edu.cqupt.nmid.headline.support.db.tasks.callback.GetIsFavoriteFeedFromDbTaskCallback;
 
 public class GetIsFavoriteFeedFromDbTask extends AsyncTask<Void, Integer, Boolean> {
-  private String tablename;
   private int id;
   private GetIsFavoriteFeedFromDbTaskCallback mCallbacks;
 
-  public GetIsFavoriteFeedFromDbTask(String tablename, int id,
+  public GetIsFavoriteFeedFromDbTask(int id,
       GetIsFavoriteFeedFromDbTaskCallback mCallbacks) {
-    this.tablename = tablename;
     this.id = id;
     this.mCallbacks = mCallbacks;
   }

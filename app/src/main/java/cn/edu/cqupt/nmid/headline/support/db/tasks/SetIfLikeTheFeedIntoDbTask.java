@@ -10,9 +10,8 @@ public class SetIfLikeTheFeedIntoDbTask extends AsyncTask<Integer, Integer, Bool
   private String tablename;
   private int id;
 
-  public SetIfLikeTheFeedIntoDbTask(String tablename, int id,
+  public SetIfLikeTheFeedIntoDbTask(int id,
       SetIfLikeTheFeedIntoDbTaskCallback mCallbacks) {
-    this.tablename = tablename;
     this.id = id;
     this.mCallbacks = mCallbacks;
   }

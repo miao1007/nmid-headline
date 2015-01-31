@@ -150,7 +150,9 @@ public class FeedFragment extends Fragment {
         }
       }
     });
-    loadDbNews();
+
+    loadDbFeeds();
+    loadNewFeeds();
     return view;
   }
 
@@ -159,8 +161,7 @@ public class FeedFragment extends Fragment {
     if (isFavorite) {
       mSwipeRefreshLayout.setRefreshing(false);
     } else {
-      new RestAdapter.Builder()
-          .setEndpoint(HeadlineService.END_POINT)
+      new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
           .build()
           .create(HeadlineService.class)
           .getFreshFeeds(feed_cate, 0, feed_limit, new Callback<HeadJson>() {
@@ -191,8 +192,7 @@ public class FeedFragment extends Fragment {
     isLoadingMore = true;
     feed_id = newsBeans.get(newsBeans.size() - 1).getId();
 
-    new RestAdapter.Builder()
-        .setEndpoint(HeadlineService.END_POINT)
+    new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
         .build()
         .create(HeadlineService.class)
         .getOldFeeds(feed_cate, feed_id, feed_limit, new Callback<HeadJson>() {
@@ -216,7 +216,7 @@ public class FeedFragment extends Fragment {
         });
   }
 
-  void loadDbNews() {
+  void loadDbFeeds() {
 
     if (isFavorite) {
       new GetFavoriteFeedsFromDbTask(new GetFavoriteFeedsFromDbTaskCallback() {

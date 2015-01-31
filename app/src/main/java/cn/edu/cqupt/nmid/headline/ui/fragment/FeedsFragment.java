@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
-import cn.edu.cqupt.nmid.headline.support.Constant;
+import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.widget.SlidingTabLayout;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
@@ -45,10 +45,10 @@ public class FeedsFragment extends Fragment {
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     Log.d(TAG, "onViewCreated");
-    fragments.add(FeedFragment.newInstance("学院风采", Constant.TYPE_COLLEGE));
-    fragments.add(FeedFragment.newInstance("青春通信", Constant.TYPE_YOUTH));
-    fragments.add(FeedFragment.newInstance("科技创新", Constant.TYPE_SCIENTIFIC));
-    fragments.add(FeedFragment.newInstance("通信校友", Constant.TYPE_CLASSMATE));
+    fragments.add(FeedFragment.newInstance("学院风采", HeadlineService.CATE_SCHOOL));
+    fragments.add(FeedFragment.newInstance("青春通信", HeadlineService.CATE_TELECOMMUNICATION));
+    fragments.add(FeedFragment.newInstance("科技创新", HeadlineService.CATE_TECHNOLOGY));
+    fragments.add(FeedFragment.newInstance("通信校友", HeadlineService.CATE_ALUMNUS));
     Log.d(TAG, "setViewPager");
     mTabLayout.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(getActivity()));
     mTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
@@ -74,6 +74,7 @@ public class FeedsFragment extends Fragment {
     Log.d(TAG, "onDetach");
     super.onDetach();
   }
+
   @Override
   public void onDestroyView() {
     super.onDestroyView();
@@ -85,8 +86,6 @@ public class FeedsFragment extends Fragment {
     Log.d(TAG, "onDestroy");
     super.onDestroy();
   }
-
-
 
   /**
    * It's better to use FragmentStatePagerAdapter instead of {@link android.support.v4.view.PagerAdapter}

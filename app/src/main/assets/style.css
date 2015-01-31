@@ -5,8 +5,8 @@
 
  body.gloable {
      background-color: rgb(243,243,243);
-     padding: 16px;
-     line-height : 150%;
+     padding: 50px 12px 0 16px;
+     line-height : 30px;
  }
 
  body.gloable img {
