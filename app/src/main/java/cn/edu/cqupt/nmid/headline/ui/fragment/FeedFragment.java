@@ -24,7 +24,7 @@ import cn.edu.cqupt.nmid.headline.support.db.tasks.callback.GetFavoriteFeedsFrom
 import cn.edu.cqupt.nmid.headline.support.db.tasks.callback.GetFeedsCallback;
 import cn.edu.cqupt.nmid.headline.support.pref.HttpPref;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
-import cn.edu.cqupt.nmid.headline.ui.adapter.EndlessAdapter;
+import cn.edu.cqupt.nmid.headline.ui.adapter.FeedAdapter;
 import cn.edu.cqupt.nmid.headline.utils.animation.SlideInOutBottomItemAnimator;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ public class FeedFragment extends Fragment {
    */
   LinearLayoutManager mLayoutManager;
   ArrayList<Datum> newsBeans = new ArrayList<>();
-  EndlessAdapter adapter;
+  FeedAdapter adapter;
   int feed_id;
   private String title;
   private int feed_limit = 15;
@@ -105,7 +105,7 @@ public class FeedFragment extends Fragment {
     } else {
       Log.d(TAG, "getArguments == null!");
     }
-    feed_limit = HttpPref.getQueryFeedsLimit(getActivity());
+    feed_limit = HttpPref.getQueryFeedsLimit();
   }
 
   @Override
@@ -114,14 +114,16 @@ public class FeedFragment extends Fragment {
     Log.d(TAG, "onCreateView");
     View view = inflater.inflate(R.layout.fragment_feed, container, false);
     ButterKnife.inject(this, view);
+    //set for night mode
     mRecyclerview.setBackgroundResource(ThemePref.getBackgroundResColor(getActivity()));
     mFloatingActionButton.setColorNormalResId(
         ThemePref.getToolbarBackgroundResColor(getActivity()));
     mFloatingActionButton.setColorPressedResId(ThemePref.getItemBackgroundResColor(getActivity()));
+
     mFloatingActionButton.setIcon(R.drawable.ic_reload_48dp);
 
     mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN);
-    adapter = new EndlessAdapter(getActivity(), newsBeans);
+    adapter = new FeedAdapter(getActivity(), newsBeans);
     mRecyclerview.setAdapter(adapter);
     mRecyclerview.setHasFixedSize(true);
     mLayoutManager = new LinearLayoutManager(getActivity());
@@ -162,6 +164,7 @@ public class FeedFragment extends Fragment {
       mSwipeRefreshLayout.setRefreshing(false);
     } else {
       new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
+          //.setLogLevel(RestAdapter.LogLevel.FULL)
           .build()
           .create(HeadlineService.class)
           .getFreshFeeds(feed_cate, 0, feed_limit, new Callback<HeadJson>() {
@@ -169,16 +172,18 @@ public class FeedFragment extends Fragment {
               mSwipeRefreshLayout.setRefreshing(false);
               newsBeans.clear();
 
-              newsBeans.addAll(headJson.getData());
-              adapter.notifyDataSetChanged();
+              if (headJson.getStatus() == 1) {
+                newsBeans.addAll(headJson.getData());
+                adapter.notifyDataSetChanged();
 
-              new Thread(new Runnable() {
-                @Override public void run() {
-                  DatabaseManager.update(newsBeans, feed_cate);
-                }
-              }).start();
+                new Thread(new Runnable() {
+                  @Override public void run() {
+                    DatabaseManager.update(newsBeans, feed_cate);
+                  }
+                }).start();
+                Log.d(TAG, "Last id is" + newsBeans.get(0).getId());
+              }
 
-              Log.d(TAG, "Last id is" + newsBeans.get(0).getId());
             }
 
             @Override public void failure(RetrofitError error) {

@@ -3,10 +3,10 @@
 
     <PreferenceCategory android:title="阅读设置">
 
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/settings_night_mode"
-            android:title="@string/settings_night_mode" />
+        <!--<SwitchPreference-->
+            <!--android:defaultValue="false"-->
+            <!--android:key="@string/settings_night_mode"-->
+            <!--android:title="@string/settings_night_mode" />-->
 
         <ListPreference
             android:defaultValue="100"

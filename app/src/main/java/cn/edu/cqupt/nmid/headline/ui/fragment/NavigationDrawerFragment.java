@@ -38,8 +38,8 @@ import cn.edu.cqupt.nmid.headline.ui.activity.SettingsActivity;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationItemsAdapter;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationSecondaryItemsAdapter;
 import cn.edu.cqupt.nmid.headline.utils.PreferenceUtils;
-import cn.edu.cqupt.nmid.headline.utils.animation.BlurTransformation;
-import cn.edu.cqupt.nmid.headline.utils.animation.CircleTransformation;
+import cn.edu.cqupt.nmid.headline.utils.picasso.BlurTransformation;
+import cn.edu.cqupt.nmid.headline.utils.picasso.CircleTransformation;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.PlatformDb;
@@ -140,7 +140,6 @@ public class NavigationDrawerFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    ShareSDK.initSDK(getActivity());
     rootView = inflater.inflate(R.layout.fragment_navigation_drawer, null);
     ButterKnife.inject(this, rootView);
 
@@ -160,7 +159,7 @@ public class NavigationDrawerFragment extends Fragment {
     mSecondaryListView.getLayoutParams().height = mNavSecondaryItemsAdapter.getListViewHeight();
 
     fetchUserInfo();
-
+    fetchWeather();
     selectItem(mCurrentSelectedPosition);
 
     return rootView;
@@ -184,6 +183,9 @@ public class NavigationDrawerFragment extends Fragment {
       mUsername.setText(db.getUserName());
     }
 
+  }
+
+  private void fetchWeather() {
     new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
         .build()
         .create(WeatherService.class)

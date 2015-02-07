@@ -1,12 +1,40 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:materialdesign="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="cn.edu.cqupt.nmid.headline.ui.fragment.StreamFragment">
+    android:layout_height="match_parent">
 
-  <TextView
+  <view
+      android:id="@+id/feed_swiperefreshlayout"
+      class="android.support.v4.widget.SwipeRefreshLayout"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:text="hello"/>
+      android:layout_height="match_parent">
 
-</FrameLayout>
+
+    <view android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView"
+        android:id="@+id/feed_recyclerview"/>
+  </view>
+
+  <include
+      layout="@layout/include_progressbar"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:id="@+id/stream_progressbar"
+      android:layout_centerInParent="true"/>
+
+  <com.gc.materialdesign.views.ButtonFloat
+      android:id="@+id/stream_multiple_actions"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentRight="true"
+      android:layout_marginBottom="16dp"
+      android:layout_marginEnd="16dp"
+      android:layout_marginRight="16dp"
+      materialdesign:animate="true"
+      materialdesign:iconDrawable="@drawable/ic_camera_grey600_24dp"/>
+
+</RelativeLayout>
+

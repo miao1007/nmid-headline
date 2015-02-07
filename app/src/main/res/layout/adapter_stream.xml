@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    class="android.support.v7.widget.CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="6dp">
+
+  <RelativeLayout
+      android:padding="8dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+    <ImageView
+        android:scaleType="fitStart"
+        android:adjustViewBounds="true"
+        android:src="@drawable/lorempixel"
+        android:id="@+id/item_stream_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView android:layout_width="wrap_content"
+        android:text="Nick Name" android:layout_height="wrap_content"
+        android:id="@+id/item_nick_name"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:layout_marginLeft="8dp"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="8dp" android:layout_alignBottom="@+id/item_stream_imageview"
+        android:layout_toLeftOf="@+id/item_upload_time"
+        android:layout_toStartOf="@+id/item_upload_time"/>
+
+    <TextView android:layout_width="wrap_content"
+        android:text="upload time" android:layout_height="wrap_content"
+        android:id="@+id/item_upload_time"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:textColor="@android:color/white"
+        android:layout_alignBottom="@+id/item_stream_imageview"
+        android:layout_alignTop="@+id/item_nick_name"
+        android:layout_toLeftOf="@+id/item_device_info"
+        android:layout_toStartOf="@+id/item_device_info"/>
+
+
+
+    <TextView android:layout_width="wrap_content"
+        android:theme="@style/TextAppearance.AppCompat.Title"
+        android:textColor="@android:color/white"
+        android:singleLine="true"
+        android:text="HTC FireBall" android:layout_height="wrap_content"
+        android:id="@+id/item_device_info" android:layout_marginRight="32dp"
+        android:layout_marginTop="8dp" android:layout_alignBottom="@+id/item_stream_imageview"
+        android:layout_alignParentRight="true"/>
+
+
+  </RelativeLayout>
+
+
+</view>

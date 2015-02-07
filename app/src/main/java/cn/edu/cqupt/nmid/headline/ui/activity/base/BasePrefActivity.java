@@ -1,6 +1,7 @@
 package cn.edu.cqupt.nmid.headline.ui.activity.base;
 
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,7 +18,8 @@ import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 /**
  * Created by leon on 1/21/15.
  */
-public abstract class BasePrefActivity extends SwipeBackActivity {
+public abstract class BasePrefActivity extends SwipeBackActivity implements
+    Preference.OnPreferenceChangeListener {
 
   final static String TAG = LogUtils.makeLogTag(BasePrefActivity.class);
 
@@ -45,9 +47,11 @@ public abstract class BasePrefActivity extends SwipeBackActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(getPreferencesResId());
           }
+
         })
         .commit();
   }
 
   abstract public int getPreferencesResId();
+
 }

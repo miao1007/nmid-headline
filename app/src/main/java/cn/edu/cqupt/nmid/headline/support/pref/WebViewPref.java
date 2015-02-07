@@ -3,6 +3,7 @@ package cn.edu.cqupt.nmid.headline.support.pref;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import cn.edu.cqupt.nmid.headline.R;
+import cn.edu.cqupt.nmid.headline.support.GlobalContext;
 import cn.edu.cqupt.nmid.headline.utils.PreferenceUtils;
 
 /**
@@ -16,8 +17,8 @@ public class WebViewPref {
   * */
   public static int getWebViewTextZoom(Context context) {
 
-    String key = context.getString(R.string.settings_font_size);
-    return Integer.valueOf(PreferenceUtils.getPrefString(context, key, "115"));
+    String key = GlobalContext.getInstance().getString(R.string.settings_font_size);
+    return Integer.valueOf(PreferenceUtils.getPrefString(key, "115"));
   }
 
 

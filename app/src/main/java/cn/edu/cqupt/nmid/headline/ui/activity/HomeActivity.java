@@ -1,5 +1,6 @@
 package cn.edu.cqupt.nmid.headline.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,6 +8,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -36,6 +39,7 @@ public class HomeActivity extends ActionBarActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
     ButterKnife.inject(this);
+    Log.d(TAG, "onCreate");
     mToolbar.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
     mLinearLayout.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
     trySetupToolbar();
@@ -69,6 +73,26 @@ public class HomeActivity extends ActionBarActivity
     if (fragment != null) {
       fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
+  }
+
+  @Override public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu_home, menu);
+    return super.onCreateOptionsMenu(menu);
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.action_night_mode:
+        ThemePref.setNightMode(this, !ThemePref.isNightMode(this));
+        this.recreate();
+        break;
+      case R.id.action_settings:
+        startActivity(new Intent(this, SettingsActivity.class));
+        break;
+      default:
+        break;
+    }
+    return super.onOptionsItemSelected(item);
   }
 
   @Override protected void onResume() {

@@ -8,7 +8,7 @@ import android.telephony.TelephonyManager;
  */
 public class AppUtils {
 
-  public static String getImei(Context context, String imei) {
+  public static String getIMEI(Context context, String imei) {
     try {
       TelephonyManager telephonyManager =
           (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -18,4 +18,6 @@ public class AppUtils {
     }
     return imei;
   }
+
+
 }

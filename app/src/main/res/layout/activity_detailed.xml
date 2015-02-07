@@ -8,20 +8,20 @@
     android:orientation="vertical">
 
 
-  <cn.edu.cqupt.nmid.headline.ui.widget.observerWebView.ObservableWebView
+  <com.github.ksoichiro.android.observablescrollview.ObservableWebView
       android:id="@+id/detailed_webview"
       android:layout_width="match_parent"
       android:layout_height="match_parent">
 
 
-  </cn.edu.cqupt.nmid.headline.ui.widget.observerWebView.ObservableWebView>
+  </com.github.ksoichiro.android.observablescrollview.ObservableWebView>
 
   <ViewStub android:layout_width="match_parent" android:layout_height="wrap_content"
       android:id="@+id/detailed_progressbar"
       android:layout="@layout/stub_progressbar"/>
 
 
-  <cn.edu.cqupt.nmid.headline.ui.widget.FloatingActionsMenuHidable
+  <com.getbase.floatingactionbutton.FloatingActionsMenu
       android:id="@+id/detailed_multiple_actions"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
         fab:fab_colorPressed="@color/divider"
         fab:fab_icon="@drawable/ic_settings_grey600_24dp"
         fab:fab_title="设置"/>
-  </cn.edu.cqupt.nmid.headline.ui.widget.FloatingActionsMenuHidable>
+  </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 
 </RelativeLayout>

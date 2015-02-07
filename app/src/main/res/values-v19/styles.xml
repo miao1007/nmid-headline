@@ -8,4 +8,10 @@
     <item name="android:windowIsTranslucent">true</item>
   </style>
 
+
+  <style name="TextAppearance.Widget.AppCompat.Toolbar.Title.White" parent="Base.TextAppearance.Widget.AppCompat.Toolbar.Title">
+    <item name="android:textColor">@android:color/white</item>
+    <item name="android:color">@android:color/white</item>
+  </style>
+
 </resources>

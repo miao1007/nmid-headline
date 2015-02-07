@@ -12,7 +12,6 @@ public interface HeadlineService {
   //http://115.29.139.53:8080/api/android/newscontent?id=10&category=1
   public String END_POINT = "http://115.29.139.53:8080/";
 
-
   //1	int	学院新闻
   //2	int	科研动态
   //3	int	青春通信
@@ -37,9 +36,11 @@ public interface HeadlineService {
   @GET("/api/android/freshnews") void getFreshFeeds(@Query(CATEGORY) int category,
       @Query(ID) int id, @Query(LIMIT) int limit, Callback<HeadJson> callback);
 
-  @GET("/api/android/oldnews") void getOldFeeds(@Query(CATEGORY) int category,
-      @Query(ID) int id, @Query(LIMIT) int limit, Callback<HeadJson> callback);
+  @GET("/api/android/oldnews") void getOldFeeds(@Query(CATEGORY) int category, @Query(ID) int id,
+      @Query(LIMIT) int limit, Callback<HeadJson> callback);
 
   @GET("/api/android/newscontent") void getNewsContent(@Query(CATEGORY) int category,
       @Query(ID) int id, Callback<Void> callback);
+
+
 }

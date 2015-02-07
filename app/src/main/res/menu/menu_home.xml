@@ -2,9 +2,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".HomeActivity">
-    <item
-        android:id="@+id/action_weather"
-        android:title="weather"
-        app:showAsAction="always"
-        android:actionLayout="@layout/include_weather" />
+  <item
+      android:id="@+id/action_night_mode"
+      android:title="@string/settings_night_mode"/>
+
+  <item
+      android:id="@+id/action_settings"
+      android:title="@string/action_settings"/>
 </menu>

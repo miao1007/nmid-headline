@@ -31,7 +31,9 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+/*
+* Source code from com.google.samples.apps.iosched.ui.widget.SlidingTabLayout
+* */
 public class SlidingTabLayout extends HorizontalScrollView {
 
     public interface TabColorizer {

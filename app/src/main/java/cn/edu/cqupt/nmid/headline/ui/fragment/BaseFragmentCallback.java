@@ -1,6 +1,6 @@
 package cn.edu.cqupt.nmid.headline.ui.fragment;
 
-import cn.edu.cqupt.nmid.headline.ui.adapter.EndlessAdapter;
+import cn.edu.cqupt.nmid.headline.ui.adapter.FeedAdapter;
 
 /**
  * Created by leon on 1/28/15.
@@ -19,6 +19,6 @@ public interface BaseFragmentCallback {
 
   void onLoadFromDb();
 
-  EndlessAdapter getAdapter();
+  FeedAdapter getAdapter();
 
 }

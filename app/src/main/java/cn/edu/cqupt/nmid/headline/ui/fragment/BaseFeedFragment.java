@@ -15,7 +15,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
-import cn.edu.cqupt.nmid.headline.ui.adapter.EndlessAdapter;
+import cn.edu.cqupt.nmid.headline.ui.adapter.FeedAdapter;
 import cn.edu.cqupt.nmid.headline.utils.animation.SlideInOutBottomItemAnimator;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
@@ -46,7 +46,7 @@ public abstract class BaseFeedFragment extends Fragment implements BaseFragmentC
 
   private boolean isLoadingMore = true;
   private LinearLayoutManager mLayoutManager;
-  private EndlessAdapter adapter;
+  private FeedAdapter adapter;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {

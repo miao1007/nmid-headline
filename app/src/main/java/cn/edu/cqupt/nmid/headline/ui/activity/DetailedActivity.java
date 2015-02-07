@@ -20,16 +20,16 @@ import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.support.pref.WebViewPref;
 import cn.edu.cqupt.nmid.headline.support.task.WebContentGetTask;
 import cn.edu.cqupt.nmid.headline.support.task.callback.WebContentGetTaskCallback;
-import cn.edu.cqupt.nmid.headline.ui.widget.FloatingActionsMenuHidable;
-import cn.edu.cqupt.nmid.headline.ui.widget.observerWebView.ObservableScrollViewCallbacks;
-import cn.edu.cqupt.nmid.headline.ui.widget.observerWebView.ObservableWebView;
-import cn.edu.cqupt.nmid.headline.ui.widget.observerWebView.ScrollState;
 import cn.edu.cqupt.nmid.headline.ui.widget.swipebacklayout.SwipeBackActivity;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import cn.edu.cqupt.nmid.headline.utils.NetworkUtils;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ObservableWebView;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
 
 /**
  * Useful @Link:http://developer.android.com/training/animation/crossfade.html
@@ -44,7 +44,7 @@ public class DetailedActivity extends SwipeBackActivity {
    */
 
   @InjectView(R.id.detailed_webview) ObservableWebView mWebView;
-  @InjectView(R.id.detailed_multiple_actions) FloatingActionsMenuHidable mFloatingActionsMenu;
+  @InjectView(R.id.detailed_multiple_actions) FloatingActionsMenu mFloatingActionsMenu;
   @InjectView(R.id.detailed_progressbar) ViewStub mViewStub;
   @InjectView(R.id.detailed_action_favorite) FloatingActionButton mFloatingActionButton;
 
@@ -156,22 +156,7 @@ public class DetailedActivity extends SwipeBackActivity {
       //当松开touch后，计算相对y
       @Override
       public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-        switch (scrollState) {
-          case STOP:
-            Log.i(TAG, "stop");
-            mFloatingActionsMenu.show(true);
-            break;
-          case UP:
-            Log.i(TAG, "UP");
-            if (mFloatingActionsMenu.isExpanded()) {
-              mFloatingActionsMenu.toggle();
-            }
-            mFloatingActionsMenu.show(false);
-            break;
-          case DOWN:
-            Log.i(TAG, "DOWN");
-            mFloatingActionsMenu.show(true);
-        }
+
       }
     });
 

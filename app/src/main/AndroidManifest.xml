@@ -9,6 +9,8 @@
       android:name="cn.edu.cqupt.nmid.headline.permission.JPUSH_MESSAGE"
       android:protectionLevel="signature"/>
 
+  <!-- 获取logcat日志 -->
+
   <!-- Required  一些系统要求的权限，如访问网络等-->
   <uses-permission android:name="cn.edu.cqupt.nmid.headline.permission.JPUSH_MESSAGE"/>
   <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
@@ -31,12 +33,20 @@
   <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
   <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
 
+  <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+  <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+
+  <!--bugly for tencent-->
+  <uses-permission android:name="android.permission.READ_LOGS"/>
+
+  <uses-feature android:name="android.hardware.camera"></uses-feature>
+
+
   <application
       android:icon="@drawable/ic_launcher"
       android:label="@string/app_name"
       android:theme="@style/AppTheme"
       android:name=".support.GlobalContext">
-
 
 
     <activity
@@ -144,6 +154,29 @@
     <meta-data android:name="JPUSH_APPKEY" android:value="63f03ee839d822d8205389eb"/>
     <!--  </>值来自开发者平台取得的AppKey-->
 
+    <!--sharesdk-->
+    <activity
+        android:name="cn.sharesdk.framework.ShareSDKUIShell"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar"
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateHidden|adjustResize">
+      <intent-filter>
+        <data android:scheme="tencent100371282"/>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
+
+
+    <!--微信分享回调 -->
+    <activity
+        android:name=".ui.activity.wxapi.WXEntryActivity"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar"
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:exported="true"
+        android:screenOrientation="portrait"/>
 
 
     <activity
@@ -170,12 +203,13 @@
       </intent-filter>
     </activity>
     <activity
-        android:name=".ui.activity.FavListActivity"
-        android:label="@string/title_activity_fav_list">
-    </activity>
-    <activity
         android:name=".ui.activity.StreamActivity"
         android:label="@string/title_activity_stream">
     </activity>
+
+    <activity android:name=".ui.activity.UploadActivity"
+        android:label="@string/title_activity_upload"/>
+
+    <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
   </application>
 </manifest>

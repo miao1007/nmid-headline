@@ -1,7 +1,12 @@
 package cn.edu.cqupt.nmid.headline.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import cn.edu.cqupt.nmid.headline.R;
+import cn.edu.cqupt.nmid.headline.ui.widget.ProgressBarCircular;
 
 /**
  * Created by leon on 1/19/15.
@@ -607,4 +612,16 @@ public abstract class HeaderFooterRecyclerViewAdapter
    */
   protected abstract void onBindContentItemViewHolder(RecyclerView.ViewHolder contentViewHolder,
       int position);
+
+
+
+  public static class FooterViewHolder extends RecyclerView.ViewHolder {
+
+    @InjectView(R.id.include_progressbar) ProgressBarCircular mProgressBarCircular;
+
+    public FooterViewHolder(View itemView) {
+      super(itemView);
+      ButterKnife.inject(this, itemView);
+    }
+  }
 }

@@ -17,7 +17,6 @@ import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.api.headline.bean.Datum;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.activity.DetailedActivity;
-import cn.edu.cqupt.nmid.headline.ui.widget.ProgressBarCircular;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
@@ -25,13 +24,13 @@ import java.util.ArrayList;
 /**
  * Created by leon on 1/19/15.
  */
-public class EndlessAdapter extends HeaderFooterRecyclerViewAdapter {
+public class FeedAdapter extends HeaderFooterRecyclerViewAdapter {
 
-  private static final String TAG = LogUtils.makeLogTag(EndlessAdapter.class);
+  private static final String TAG = LogUtils.makeLogTag(FeedAdapter.class);
   private ArrayList<Datum> mNewsBeans;
   private Context mContext;
 
-  public EndlessAdapter(Context mContext, ArrayList<Datum> newsBeans) {
+  public FeedAdapter(Context mContext, ArrayList<Datum> newsBeans) {
     this.mContext = mContext;
     this.mNewsBeans = newsBeans;
   }
@@ -148,14 +147,5 @@ public class EndlessAdapter extends HeaderFooterRecyclerViewAdapter {
     }
   }
 
-  public static class FooterViewHolder extends RecyclerView.ViewHolder {
-
-    @InjectView(R.id.include_progressbar) ProgressBarCircular mProgressBarCircular;
-
-    public FooterViewHolder(View itemView) {
-      super(itemView);
-      ButterKnife.inject(this, itemView);
-    }
-  }
 }
 

@@ -1,4 +1,4 @@
-package cn.edu.cqupt.nmid.headline.utils.animation;
+package cn.edu.cqupt.nmid.headline.utils.picasso;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

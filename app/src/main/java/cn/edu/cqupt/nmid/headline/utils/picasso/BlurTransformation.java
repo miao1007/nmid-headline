@@ -1,4 +1,4 @@
-package cn.edu.cqupt.nmid.headline.utils.animation;
+package cn.edu.cqupt.nmid.headline.utils.picasso;
 
 import android.content.Context;
 import android.graphics.Bitmap;
