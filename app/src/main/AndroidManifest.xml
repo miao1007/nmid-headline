@@ -154,18 +154,20 @@
     <meta-data android:name="JPUSH_APPKEY" android:value="63f03ee839d822d8205389eb"/>
     <!--  </>值来自开发者平台取得的AppKey-->
 
+    <meta-data android:name="TESTIN_APPKEY" android:value="f71f6896f9a4a58c3749de4309145c14"/>
+
     <!--sharesdk-->
     <activity
         android:name="cn.sharesdk.framework.ShareSDKUIShell"
         android:theme="@android:style/Theme.Translucent.NoTitleBar"
         android:configChanges="keyboardHidden|orientation|screenSize"
         android:screenOrientation="portrait"
-        android:windowSoftInputMode="stateHidden|adjustResize">
+        android:windowSoftInputMode="stateHidden|adjustResize" >
       <intent-filter>
-        <data android:scheme="tencent100371282"/>
-        <action android:name="android.intent.action.VIEW"/>
-        <category android:name="android.intent.category.BROWSABLE"/>
-        <category android:name="android.intent.category.DEFAULT"/>
+        <data android:scheme="tencent100371282" />
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <category android:name="android.intent.category.DEFAULT" />
       </intent-filter>
     </activity>
 
@@ -210,6 +212,5 @@
     <activity android:name=".ui.activity.UploadActivity"
         android:label="@string/title_activity_upload"/>
 
-    <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
   </application>
 </manifest>

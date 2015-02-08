@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 
 public class SwipeBackActivity extends ActionBarActivity implements SwipeBackActivityBase {
   private SwipeBackActivityHelper mHelper;
@@ -51,6 +52,7 @@ public class SwipeBackActivity extends ActionBarActivity implements SwipeBackAct
     try {
       setSupportActionBar(mToolbar);
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      mToolbar.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
     } catch (NullPointerException e) {
       Log.e(getClass().getSimpleName(), "toolbar is null!");
     }

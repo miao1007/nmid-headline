@@ -16,18 +16,60 @@
         <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-6ba755e788f3186042c6e07f343ae0a87e3999f7.jar" />
     </item>
     <item
-        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-Wechat-Core-2.5.7.jar"
+        jar="/Users/leon/Documents/oschina/nmid-headline/app/libs/testinagent.jar"
         jumboMode="false"
         revision="21.1.1"
-        sha1="de8398c14e9f17901d2d75956557acc960c15f7b">
-        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/ShareSDK-Wechat-Core-2.5.7-accfd28397bd4c2139bf23e4d905267ae3740206.jar" />
+        sha1="1c656b96c8a071ff6047ab2e0238070bc8fe1270">
+        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/testinagent-07f423481719a8b2a702f34d756383393ea63741.jar" />
     </item>
     <item
-        jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
+        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-QZone-2.5.8.jar"
         jumboMode="false"
         revision="21.1.1"
-        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
-        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/library-2.4.0-715a51ee674a9544062be0705e4542b10f7a44a3.jar" />
+        sha1="edd407115587108a8fbf7f15923253f48a50a9bf">
+        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/ShareSDK-QZone-2.5.8-47cc46cc5f225da294538455a15a3ae5347085ef.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-Wechat-Core-2.5.8.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="d5652d73d70e40370df2fba540f0bafe09549f3f">
+        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/ShareSDK-Wechat-Core-2.5.8-62ddccfa16aa423d6f390354c4606a5acb9d56c1.jar" />
+    </item>
+    <item
+        jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3.1/ecb6e1f8e4b0e84c4b886c2f14a1500caf309757/gson-2.3.1.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/gson-2.3.1-b2fa6462e8e74c88e7928a0f1f74c3f172d4d521.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-SinaWeibo-2.5.8.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="554f929d47197355c2ea672064cd080a7cd128e5">
+        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/ShareSDK-SinaWeibo-2.5.8-9f8fcd5b5d471247ab617164bd6833a4fe11dce8.jar" />
+    </item>
+    <item
+        jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.4.0/f36d2d4e3a36b3259aaf9d004d29b4cdc6c1bfb2/picasso-2.4.0.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="f36d2d4e3a36b3259aaf9d004d29b4cdc6c1bfb2">
+        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/picasso-2.4.0-370b51096b744632bc1407362ee0ffaf8f22ce0a.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/me.drakeet.materialdialog/library/1.2.2/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="8646b1e69dd5d923d8866dc4311859f0fbca456c">
+        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-7d56bc7bccf3c9d41d9251dab5f0e6db6b8ff763.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-Wechat-Moments-2.5.8.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="390e374944794ce82712100dd1eba072e3ceabaa">
+        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/ShareSDK-Wechat-Moments-2.5.8-113bf817b5440ec8749683a373cd0bff3b948a66.jar" />
     </item>
     <item
         jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp-urlconnection/2.0.0/afe8399d352713b66e597e9670c741d1e60ae923/okhttp-urlconnection-2.0.0.jar"
@@ -35,13 +77,6 @@
         revision="21.1.1"
         sha1="afe8399d352713b66e597e9670c741d1e60ae923">
         <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/okhttp-urlconnection-2.0.0-bf24a8aebfbea4595e489f87ac4be053c7fae2f8.jar" />
-    </item>
-    <item
-        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-Core-2.5.7.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="25e67604b25ca1160a50cbd6a1657d11ec0396fb">
-        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/ShareSDK-Core-2.5.7-eed195150d9c3323f0058d4f77c163be66141d4d.jar" />
     </item>
     <item
         jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
@@ -65,27 +100,6 @@
         <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-961c3cb189581fc2ed0020bd598d7427a0bcf8fc.jar" />
     </item>
     <item
-        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-QZone-2.5.7.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="eec402205e45c215154dbf06eb66373f376fc0fd">
-        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/ShareSDK-QZone-2.5.7-fa56e3b3c13d8607265e2a0b65f58f177eceb8a2.jar" />
-    </item>
-    <item
-        jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3.1/ecb6e1f8e4b0e84c4b886c2f14a1500caf309757/gson-2.3.1.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
-        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/gson-2.3.1-b2fa6462e8e74c88e7928a0f1f74c3f172d4d521.jar" />
-    </item>
-    <item
-        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/com.soundcloud.android/android-crop/0.9.10/classes.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="745b8b723976a3ff95ecc84e60d90acbf82130b4">
-        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-59e597a446867201a77b44550210ea81adb62f2b.jar" />
-    </item>
-    <item
         jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit/retrofit/1.9.0/a681c044244d9fc375198588297a39ba78028423/retrofit-1.9.0.jar"
         jumboMode="false"
         revision="21.1.1"
@@ -100,18 +114,18 @@
         <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-ace6b8b1d6eb0885cfb16a87cc832ea5103dc599.jar" />
     </item>
     <item
+        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-Core-2.5.8.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="85f5874b452e076908cb403c1dde38d5f6e1c423">
+        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/ShareSDK-Core-2.5.8-1e26b0d76bc43ae69c2428423f8dd07efaca349e.jar" />
+    </item>
+    <item
         jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife/6.0.0/3a10b25b6820e19102e118711afe6a66c0bae123/butterknife-6.0.0.jar"
         jumboMode="false"
         revision="21.1.1"
         sha1="3a10b25b6820e19102e118711afe6a66c0bae123">
         <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/butterknife-6.0.0-91277092c3f24f1ceb7d0b1d9ddc2499defa0526.jar" />
-    </item>
-    <item
-        jar="/Users/leon/Documents/oschina/nmid-headline/app/libs/bugly_1.1.6_release.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="db42c50ece00d2eff3b177338e11498f089a1be0">
-        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/bugly_1.1.6_release-d437a00a836444e0e2cd2a1506227cf524f98071.jar" />
     </item>
     <item
         jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
@@ -135,18 +149,11 @@
         <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/okhttp-2.0.0-68fc1e0d7881ecee0996108ef317a12b5315a435.jar" />
     </item>
     <item
-        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-QQ-2.5.7.jar"
+        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-Wechat-Favorite-2.5.8.jar"
         jumboMode="false"
         revision="21.1.1"
-        sha1="5695093ba99154d84be4e12132bc384aeb613d73">
-        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/ShareSDK-QQ-2.5.7-d4fb146e2e38701239365cbe5680599523c40a7b.jar" />
-    </item>
-    <item
-        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-Wechat-Moments-2.5.7.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="04b9f4f246636fb6a4bc4148530181bc6c739a5d">
-        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/ShareSDK-Wechat-Moments-2.5.7-25ca5fbe9bc35e6059da86e19e517f7ee39e11ad.jar" />
+        sha1="b8822e298639b1fd1fba6b92397cb36d92f4c711">
+        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/ShareSDK-Wechat-Favorite-2.5.8-fb85c63897fcae37248cd4eb1cc90b069e33e2d5.jar" />
     </item>
     <item
         jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.3/classes.jar"
@@ -156,6 +163,13 @@
         <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-78da0b125a61ec90abb1891442d3c9ae750b773d.jar" />
     </item>
     <item
+        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-QQ-2.5.8.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="ede2b291f6309cb3ebf817cab2924c5516fbf97a">
+        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/ShareSDK-QQ-2.5.8-cc16cb5937281c6bac9f811cfbda11080072bb3e.jar" />
+    </item>
+    <item
         jar="/Users/leon/Documents/oschina/nmid-headline/app/libs/jpush-sdk-release1.7.2.jar"
         jumboMode="false"
         revision="21.1.1"
@@ -163,18 +177,11 @@
         <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/jpush-sdk-release1.7.2-1ba3d864619251ea384a1e96a93b426102eef3a9.jar" />
     </item>
     <item
-        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-Wechat-2.5.7.jar"
+        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-Wechat-2.5.8.jar"
         jumboMode="false"
         revision="21.1.1"
-        sha1="71cbc10d22470e5c162083883fde221f8cb53ae7">
-        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/ShareSDK-Wechat-2.5.7-35afdc6ebe9f30904b2054d094bbee6232097336.jar" />
-    </item>
-    <item
-        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-Wechat-Favorite-2.5.7.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="0ab12e86664b655baa13f495a111cc68be96bd2b">
-        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/ShareSDK-Wechat-Favorite-2.5.7-685b8e5c5a848af0c8bebeacd2b6eccef73576ac.jar" />
+        sha1="ca96a092095683ea13d7bfbbdb720342a0b050b0">
+        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/ShareSDK-Wechat-2.5.8-4bd826f33414aaed44b8ea2295c21fd3a4b9e92a.jar" />
     </item>
     <item
         jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/com.getbase/floatingactionbutton/1.5.1/classes.jar"
@@ -184,32 +191,11 @@
         <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-8ae10e049157f3821f7290520e3cca89583ccf45.jar" />
     </item>
     <item
-        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/com.github.navasmdc/MaterialDesign/1.4/classes.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="87405405e403de68f4057757b8a2e8de02bd65d0">
-        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-aa0a1fbc5c83b4a494157284da335a072d5b9c0b.jar" />
-    </item>
-    <item
         jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/classes.jar"
         jumboMode="false"
         revision="21.1.1"
-        sha1="45cf0b96ab7b09bcfbb02fd2ccafdbf7e98e9473">
+        sha1="399668011085b65322d9d5902c644c0e25f54a0f">
         <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-60ce7afcfbf7769211c3158d966a3f4e4e770c7f.jar" />
-    </item>
-    <item
-        jar="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-SinaWeibo-2.5.7.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="9c2f1f5ae1f59fd6422237cd963a4c72ffd5bea9">
-        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/ShareSDK-SinaWeibo-2.5.7-aea0b594739669b22b07c23e3313629a477d1f9f.jar" />
-    </item>
-    <item
-        jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.4.0/f36d2d4e3a36b3259aaf9d004d29b4cdc6c1bfb2/picasso-2.4.0.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="f36d2d4e3a36b3259aaf9d004d29b4cdc6c1bfb2">
-        <dex dex="/Users/leon/Documents/oschina/nmid-headline/app/build/intermediates/pre-dexed/debug/picasso-2.4.0-370b51096b744632bc1407362ee0ffaf8f22ce0a.jar" />
     </item>
 
 </items>

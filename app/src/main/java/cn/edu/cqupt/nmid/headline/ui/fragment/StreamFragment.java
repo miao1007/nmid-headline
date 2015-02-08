@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,7 +25,7 @@ import cn.edu.cqupt.nmid.headline.ui.activity.UploadActivity;
 import cn.edu.cqupt.nmid.headline.ui.adapter.StreamAdapter;
 import cn.edu.cqupt.nmid.headline.ui.widget.ProgressBarCircular;
 import cn.edu.cqupt.nmid.headline.utils.animation.SlideInOutBottomItemAnimator;
-import com.gc.materialdesign.views.ButtonFloat;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import java.util.ArrayList;
 import retrofit.Callback;
@@ -45,12 +44,12 @@ public class StreamFragment extends Fragment {
   @InjectView(R.id.feed_recyclerview) ObservableRecyclerView mRecyclerview;
   @InjectView(R.id.feed_swiperefreshlayout) SwipeRefreshLayout mSwipeRefreshLayout;
   @InjectView(R.id.include_progressbar) ProgressBarCircular mIncludeProgressbar;
-  @InjectView(R.id.stream_multiple_actions) ButtonFloat mStreamMultipleActions;
+  @InjectView(R.id.stream_multiple_actions) FloatingActionButton mStreamMultipleActions;
 
   @OnClick(R.id.stream_multiple_actions) void stream_action_take_picture() {
     Intent intent = new Intent(getActivity(), UploadActivity.class);
     //    startActivityForResult(intent,REQUEST_TAKE_PICTURE);
-    startActivity(intent);
+    startActivityForResult(intent, 3);
   }
 
   final int REQUEST_TAKE_PICTURE = 1;
@@ -71,18 +70,14 @@ public class StreamFragment extends Fragment {
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_stream, container, false);
     ButterKnife.inject(this, view);
-    mStreamMultipleActions.setDrawableIcon(
-        getResources().getDrawable(R.drawable.ic_camera_grey600_24dp));
-
-    mStreamMultipleActions.setRippleColor(
-        getResources().getColor(ThemePref.getToolbarBackgroundResColor(getActivity())));
 
     mIncludeProgressbar.setVisibility(View.GONE);
     adapter = new StreamAdapter(getActivity(), images);
     mLayoutManager = new LinearLayoutManager(getActivity());
 
     mRecyclerview.setBackgroundResource(ThemePref.getBackgroundResColor(getActivity()));
-
+    mStreamMultipleActions.setColorNormalResId(
+        ThemePref.getToolbarBackgroundResColor(getActivity()));
     mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN);
     mRecyclerview.setAdapter(adapter);
     mRecyclerview.setHasFixedSize(true);
@@ -163,8 +158,10 @@ public class StreamFragment extends Fragment {
     }
   }
 
-  private void dispatchSelectImage() {
-    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-    startActivityForResult(intent, REQUEST_SELECT_IMAGE);
+  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (resultCode == 3 ){
+      loadNewFeeds();
+    }
   }
 }

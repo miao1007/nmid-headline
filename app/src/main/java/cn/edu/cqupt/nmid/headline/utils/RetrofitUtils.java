@@ -1,10 +1,8 @@
 package cn.edu.cqupt.nmid.headline.utils;
 
 import android.content.Context;
-import android.support.v7.app.ActionBarActivity;
 import android.widget.Toast;
 import cn.edu.cqupt.nmid.headline.R;
-import com.gc.materialdesign.widgets.SnackBar;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -55,12 +53,6 @@ public class RetrofitUtils {
   public static void disMsg(Context context, String msg) {
     if (context != null) {
       Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
-    }
-  }
-
-  public static void disSnackMsg(ActionBarActivity context, String msg) {
-    if (context != null) {
-      new SnackBar(context, msg).show();
     }
   }
 }

@@ -71,7 +71,6 @@ public class NavigationDrawerFragment extends Fragment {
   @InjectView(R.id.navigation_drawer_weather_tempeture) TextView mTextWeather;
   @InjectView(R.id.navigation_drawer_weather_title) TextView mTextWeatherTitle;
 
-
   NavigationItemsAdapter mNavigationItemsAdapter;
   private NavigationDrawerCallbacks mCallbacks;
   private ActionBarDrawerToggle mDrawerToggle;
@@ -83,7 +82,7 @@ public class NavigationDrawerFragment extends Fragment {
   @OnClick(R.id.navigation_drawer_avatar) void navigation_drawer_avatar() {
     Platform qzone = ShareSDK.getPlatform(getActivity(), QZone.NAME);
     qzone.setPlatformActionListener(new PlatformActionListener() {
-      @Override public void onComplete(Platform platform, int i, HashMap<String, Object> map) {
+      @Override public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
         fetchUserInfo();
       }
 
@@ -117,8 +116,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
   }
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
+  @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     context = getActivity();
@@ -131,14 +129,12 @@ public class NavigationDrawerFragment extends Fragment {
     }
   }
 
-  @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
+  @Override public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     setHasOptionsMenu(true);
   }
 
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     rootView = inflater.inflate(R.layout.fragment_navigation_drawer, null);
     ButterKnife.inject(this, rootView);
@@ -182,7 +178,6 @@ public class NavigationDrawerFragment extends Fragment {
 
       mUsername.setText(db.getUserName());
     }
-
   }
 
   private void fetchWeather() {
@@ -230,8 +225,7 @@ public class NavigationDrawerFragment extends Fragment {
     mDrawerToggle = new ActionBarDrawerToggle(getActivity(), mDrawerLayout, toolbar, R.string.open,
         R.string.close) {
 
-      @Override
-      public void onDrawerClosed(View drawerView) {
+      @Override public void onDrawerClosed(View drawerView) {
         super.onDrawerClosed(drawerView);
         if (!isAdded()) {
           return;
@@ -240,8 +234,7 @@ public class NavigationDrawerFragment extends Fragment {
         getActivity().invalidateOptionsMenu();
       }
 
-      @Override
-      public void onDrawerOpened(View drawerView) {
+      @Override public void onDrawerOpened(View drawerView) {
         super.onDrawerOpened(drawerView);
         if (!isAdded()) {
           return;
@@ -262,8 +255,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     mDrawerLayout.post(new Runnable() {
-      @Override
-      public void run() {
+      @Override public void run() {
         mDrawerToggle.syncState();
       }
     });
@@ -288,8 +280,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
   }
 
-  @Override
-  public void onAttach(Activity activity) {
+  @Override public void onAttach(Activity activity) {
     super.onAttach(activity);
     try {
       mCallbacks = (NavigationDrawerCallbacks) activity;
@@ -298,26 +289,22 @@ public class NavigationDrawerFragment extends Fragment {
     }
   }
 
-  @Override
-  public void onDetach() {
+  @Override public void onDetach() {
     super.onDetach();
     mCallbacks = null;
   }
 
-  @Override
-  public void onSaveInstanceState(Bundle outState) {
+  @Override public void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
     outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition);
   }
 
-  @Override
-  public void onConfigurationChanged(Configuration newConfig) {
+  @Override public void onConfigurationChanged(Configuration newConfig) {
     super.onConfigurationChanged(newConfig);
     mDrawerToggle.onConfigurationChanged(newConfig);
   }
 
-  @Override
-  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+  @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     if (mDrawerLayout != null && isDrawerOpen()) {
       //inflater.inflate(R.menu.global, menu);
       showGlobalContextActionBar();
@@ -325,16 +312,14 @@ public class NavigationDrawerFragment extends Fragment {
     super.onCreateOptionsMenu(menu, inflater);
   }
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
     if (mDrawerToggle.onOptionsItemSelected(item)) {
       return true;
     }
     return super.onOptionsItemSelected(item);
   }
 
-  @Override
-  public void onDestroyView() {
+  @Override public void onDestroyView() {
     super.onDestroyView();
     ButterKnife.reset(this);
   }

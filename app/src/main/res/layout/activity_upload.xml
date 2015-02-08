@@ -3,42 +3,50 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ui.activity.UploadActivity">
-  <TextView
-      android:id="@+id/activity_main_text"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="this_demo_shows"/>
-  <CheckBox
-      android:id="@+id/activity_main_checkbox"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="save_image_file"/>
 
-  <com.gc.materialdesign.views.ButtonRectangle
-      android:id="@+id/activity_upload_select"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:background="#1E88E5"
-      android:text="pick_image" />
+  <include layout="@layout/include_toolbar"
+      android:id="@+id/upload_toolbar"/>
 
-  <com.gc.materialdesign.views.ButtonRectangle
+  <RelativeLayout android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+      <cn.edu.cqupt.nmid.headline.ui.widget.ProgressBarCircular
+          android:id="@+id/progressBarCircularIndeterminate"
+          android:layout_width="32dp"
+          android:visibility="gone"
+          android:layout_height="32dp"
+          android:background="#1E88E5"/>
+
+      <ImageView
+          android:id="@+id/activity_upload_select"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scaleType="centerCrop"/>
+
+      <ImageView
+          android:id="@+id/ivLike"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scaleType="center"
+          android:src="@drawable/ic_heart_outline_white"/>
+
+    </FrameLayout>
+
+  </RelativeLayout>
+
+
+
+  <Button
       android:id="@+id/activity_upload_upload"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:background="#1E88E5"
-      android:text="select_image" />
+      android:text="select_image"/>
 
-
-  <ImageView
-      android:id="@+id/activity_main_image"
-      android:layout_width="300dip"
-      android:layout_height="300dip"
-      android:layout_alignParentBottom="true"
-      android:src="@drawable/ic_launcher"/>
 
 </LinearLayout>

@@ -1,61 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<view xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    class="android.support.v7.widget.CardView"
+<!-- item_feed.xml -->
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginTop="6dp">
+    android:layout_gravity="center"
+    android:layout_margin="8dp"
+    card_view:cardCornerRadius="4dp">
 
-  <RelativeLayout
-      android:padding="8dp"
+  <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+      android:layout_height="wrap_content"
+      android:padding="8dp"
+      android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/item_nick_name"
+        android:text="NickName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+      <ImageView
+          android:id="@+id/item_stream_imageview"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scaleType="centerCrop"/>
+
+      <ImageView
+          android:id="@+id/ivLike"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scaleType="center"
+          android:src="@drawable/ic_heart_outline_white"/>
+
+    </FrameLayout>
 
     <ImageView
-        android:scaleType="fitStart"
-        android:adjustViewBounds="true"
-        android:src="@drawable/lorempixel"
-        android:id="@+id/item_stream_imageview"
+        android:id="@+id/ivFeedBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <TextView android:layout_width="wrap_content"
-        android:text="Nick Name" android:layout_height="wrap_content"
-        android:id="@+id/item_nick_name"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:layout_marginLeft="8dp"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="8dp" android:layout_alignBottom="@+id/item_stream_imageview"
-        android:layout_toLeftOf="@+id/item_upload_time"
-        android:layout_toStartOf="@+id/item_upload_time"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
 
-    <TextView android:layout_width="wrap_content"
-        android:text="upload time" android:layout_height="wrap_content"
-        android:id="@+id/item_upload_time"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:textColor="@android:color/white"
-        android:layout_alignBottom="@+id/item_stream_imageview"
-        android:layout_alignTop="@+id/item_nick_name"
-        android:layout_toLeftOf="@+id/item_device_info"
-        android:layout_toStartOf="@+id/item_device_info"/>
+      <ImageButton
+          android:id="@+id/btnLike"
+          android:layout_width="48dp"
+          android:layout_height="48dp"
+          android:background="@android:color/transparent"
+          android:src="@drawable/ic_heart_outline_grey"/>
 
+      <ImageButton
+          android:id="@+id/btnComments"
+          android:layout_width="48dp"
+          android:layout_height="48dp"
+          android:background="@drawable/btn_feed_action"
+          android:src="@drawable/ic_comment_outline_grey"/>
 
+      <ImageButton
+          android:id="@+id/btnMore"
+          android:layout_width="48dp"
+          android:layout_height="48dp"
+          android:background="@drawable/btn_feed_action"
+          android:src="@drawable/ic_more_grey"/>
 
-    <TextView android:layout_width="wrap_content"
-        android:theme="@style/TextAppearance.AppCompat.Title"
-        android:textColor="@android:color/white"
-        android:singleLine="true"
-        android:text="HTC FireBall" android:layout_height="wrap_content"
-        android:id="@+id/item_device_info" android:layout_marginRight="32dp"
-        android:layout_marginTop="8dp" android:layout_alignBottom="@+id/item_stream_imageview"
-        android:layout_alignParentRight="true"/>
+      <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:gravity="center_vertical|right">
 
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:id="@+id/item_upload_time"/>
 
-  </RelativeLayout>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:id="@+id/item_device_info"/>
 
+      </LinearLayout>
+    </LinearLayout>
 
-</view>
+  </LinearLayout>
+</android.support.v7.widget.CardView>

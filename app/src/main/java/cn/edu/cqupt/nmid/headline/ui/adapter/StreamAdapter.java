@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.api.stream.bean.Datum;
+import cn.edu.cqupt.nmid.headline.utils.TimeUtils;
 import cn.edu.cqupt.nmid.headline.utils.picasso.GradientTransformation;
 import com.squareup.picasso.Picasso;
 import java.util.List;
@@ -80,7 +81,7 @@ public class StreamAdapter extends HeaderFooterRecyclerViewAdapter {
         .into(viewHolder.image);
     viewHolder.device_info.setText(datum.getDeviceinfo());
     viewHolder.nickName.setText(datum.getNickname());
-    viewHolder.upload_time.setText(datum.getUploadtime());
+    viewHolder.upload_time.setText(TimeUtils.getTimeFormatText(datum.getUploadtime()));
   }
 
   public static class ContentViewHolder extends RecyclerView.ViewHolder {
