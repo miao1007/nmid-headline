@@ -35,15 +35,24 @@ public class JPushReceiver extends BroadcastReceiver {
     Log.d(TAG, printBundle(bundle));
     Intent i = new Intent(context, DetailedActivity.class);
     i.putExtras(bundle);
+    System.out.println("bundle.getString(JPushInterface.EXTRA_EXTRA) = " + bundle.getString(
+        JPushInterface.EXTRA_EXTRA).length());
+    System.out.println(
+        "bundle.getString(JPushInterface.EXTRA_EXTRA).trim().length() = " + bundle.getString(
+            JPushInterface.EXTRA_EXTRA).trim().length());
+    if (bundle.getString(JPushInterface.EXTRA_EXTRA).trim().length() > 3) {
+      JsonObject newObj =
+          new JsonParser().parse(bundle.getString(JPushInterface.EXTRA_EXTRA)).getAsJsonObject();
 
-    JsonObject newObj =
-        new JsonParser().parse(bundle.getString(JPushInterface.EXTRA_EXTRA)).getAsJsonObject();
-    i.putExtra(HeadlineService.ID, newObj.get(HeadlineService.ID).getAsInt());
-    i.putExtra(HeadlineService.CATEGORY, newObj.get(HeadlineService.CATEGORY).getAsInt());
+      i.putExtra(HeadlineService.ID, newObj.get(HeadlineService.ID).getAsInt());
+      i.putExtra(HeadlineService.CATEGORY, newObj.get(HeadlineService.CATEGORY).getAsInt());
 
-    //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    context.startActivity(i);
+      //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      context.startActivity(i);
+    } else {
+      Log.e(TAG, "cn.jpush.android.EXTRA IllegalFormatException");
+    }
   }
 
   // 打印所有的 intent extra 数据
@@ -60,5 +69,4 @@ public class JPushReceiver extends BroadcastReceiver {
     }
     return sb.toString();
   }
-
 }

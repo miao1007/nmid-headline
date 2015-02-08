@@ -23,7 +23,6 @@ import cn.edu.cqupt.nmid.headline.support.task.callback.WebContentGetTaskCallbac
 import cn.edu.cqupt.nmid.headline.ui.widget.swipebacklayout.SwipeBackActivity;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import cn.edu.cqupt.nmid.headline.utils.NetworkUtils;
-import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -59,27 +58,10 @@ public class DetailedActivity extends SwipeBackActivity {
 
   @OnClick(R.id.detailed_action_share) void detailed_action_share() {
     mFloatingActionsMenu.toggle();
-    OnekeyShare oks;
-    ShareSDK.initSDK(this);
-    oks = new OnekeyShare();
-    // 分享时Notification的图标和文字
-    oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
-    // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-    oks.setTitle(title);
-    // text是分享文本，所有平台都需要这个字段
-    oks.setText(excerpt);
-    // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-    oks.setComment("我在通信头条分享了文章");
-    // site是分享此内容的网站名称，仅在QQ空间使用
-    oks.setSite(getString(R.string.app_name));
-    // url仅在微信（包括好友和朋友圈）中使用
-    oks.setUrl(url);
-    // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-    oks.setSiteUrl(url);
-    // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-    oks.setTitleUrl(url);
-    oks.show(this);
+
+    dispatchOneKeyShare();
   }
+
 
   @OnClick(R.id.detailed_action_favorite) void detailed_action_favorite(View v) {
 
@@ -204,5 +186,31 @@ public class DetailedActivity extends SwipeBackActivity {
       mFloatingActionsMenu.toggle();
     }
     return super.onKeyUp(keyCode, event);
+  }
+
+  private void dispatchOneKeyShare() {
+    OnekeyShare oks = new OnekeyShare();
+    //关闭sso授权
+    oks.disableSSOWhenAuthorize();
+
+    // 分享时Notification的图标和文字
+    oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
+    // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+    oks.setTitle(title);
+    // text是分享文本，所有平台都需要这个字段
+    oks.setText(excerpt);
+    // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+    oks.setComment("我在通信头条分享了文章");
+    // site是分享此内容的网站名称，仅在QQ空间使用
+    oks.setSite(getString(R.string.app_name));
+    // url仅在微信（包括好友和朋友圈）中使用
+    oks.setUrl(url);
+    // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+    oks.setSiteUrl(url);
+    // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+    oks.setTitleUrl(url);
+
+    // 启动分享GUI
+    oks.show(this);
   }
 }

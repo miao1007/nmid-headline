@@ -124,6 +124,8 @@ public class FeedAdapter extends HeaderFooterRecyclerViewAdapter {
         Intent intent = new Intent(mContext, DetailedActivity.class);
         intent.putExtra("id", newsBean.getId());
         intent.putExtra("category", newsBean.getCategory());
+        intent.putExtra("title", newsBean.getTitle());
+        intent.putExtra("excerpt", newsBean.getSimpleContent());
         mContext.startActivity(intent);
       }
     });
@@ -146,6 +148,5 @@ public class FeedAdapter extends HeaderFooterRecyclerViewAdapter {
       ButterKnife.inject(this, itemView);
     }
   }
-
 }
 

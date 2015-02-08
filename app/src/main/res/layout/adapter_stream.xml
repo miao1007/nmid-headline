@@ -31,13 +31,6 @@
           android:layout_height="match_parent"
           android:scaleType="centerCrop"/>
 
-      <ImageView
-          android:id="@+id/ivLike"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:scaleType="center"
-          android:src="@drawable/ic_heart_outline_white"/>
-
     </FrameLayout>
 
     <ImageView

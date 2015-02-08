@@ -38,7 +38,7 @@ import cn.sharesdk.framework.utils.UIHandler;
 /**
  * 快捷分享的入口
  * <p>
- * 通过不同的setter设置参数，然后调用{@link #show(android.content.Context)}方法启动快捷分享
+ * 通过不同的setter设置参数，然后调用{@link #show(Context)}方法启动快捷分享
  */
 public class OnekeyShare implements PlatformActionListener, Callback {
 	private static final int MSG_TOAST = 1;

@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -47,15 +46,12 @@ public class UploadActivity extends SwipeBackActivity {
   @InjectView(R.id.upload_toolbar) Toolbar mToolbar;
   @InjectView(R.id.activity_upload_select) ImageView mActivityUploadSelect;
   @InjectView(R.id.ivLike) ImageView mIvLike;
-  @InjectView(R.id.activity_upload_upload) Button mActivityUploadUpload;
 
   @OnClick(R.id.activity_upload_select) void click() {
     dispatchSelectImage();
   }
 
-  @OnClick(R.id.activity_upload_upload) void upload() {
-    tryUploadFrimUri(outputFileUri);
-  }
+
 
   private static Uri outputFileUri;
   private Bitmap bmp;
@@ -143,7 +139,7 @@ public class UploadActivity extends SwipeBackActivity {
                     RetrofitUtils.disMsg(UploadActivity.this, "upload failed!");
                   }
                   bmp.recycle();
-                  UploadActivity.this.finishActivity(3);
+                  UploadActivity.this.finish();
                 }
 
                 @Override public void failure(RetrofitError error) {

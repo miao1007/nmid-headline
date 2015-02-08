@@ -24,8 +24,11 @@ public class GlobalContext extends Application {
     //JPushInterface.setDebugMode(true);
     //JPushInterface.init(this);
     if (PushPref.isPushFeeds(this)){
-      JPushInterface.init(this);
+
     }
+
+    JPushInterface.init(this);
+    JPushInterface.setDebugMode(true);
 
     //sharesdk
     ShareSDK.initSDK(this);
