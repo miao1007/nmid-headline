@@ -181,16 +181,20 @@ public class NavigationDrawerFragment extends Fragment {
   }
 
   private void fetchWeather() {
+
     new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
         .build()
         .create(WeatherService.class)
         .getWeatherService(new Callback<Weather>() {
           @Override public void success(Weather weather, Response response) {
-            Picasso.with(context)
-                .load(weather.getData().getDaypictureurl())
-                .fit()
-                .transform(new CircleTransformation())
-                .into(mImageWeather);
+            //null point at device MT6575
+            if (weather.getData().getDaypictureurl() != null) {
+              Picasso.with(context)
+                  .load(weather.getData().getDaypictureurl())
+                  .fit()
+                  .transform(new CircleTransformation())
+                  .into(mImageWeather);
+            }
             mTextWeather.setText(weather.getData().getTemperature());
             mTextWeatherTitle.setText(weather.getData().getTitle());
           }

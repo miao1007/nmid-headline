@@ -9,7 +9,7 @@
             <!--android:title="@string/settings_night_mode" />-->
 
         <ListPreference
-            android:defaultValue="100"
+            android:defaultValue="115"
             android:dialogTitle="@string/settings_font_size"
             android:entries="@array/settings_entries_font_sizes"
             android:entryValues="@array/settings_entry_values_font_sizes"

@@ -169,7 +169,10 @@ public class FeedFragment extends Fragment {
           .create(HeadlineService.class)
           .getFreshFeeds(feed_cate, 0, feed_limit, new Callback<HeadJson>() {
             @Override public void success(HeadJson headJson, Response response) {
-              mSwipeRefreshLayout.setRefreshing(false);
+              //fix Null point exception at samsung SM-G3812
+              if (mSwipeRefreshLayout != null){
+                mSwipeRefreshLayout.setRefreshing(false);
+              }
               newsBeans.clear();
 
               if (headJson.getStatus() == 1) {
@@ -187,7 +190,9 @@ public class FeedFragment extends Fragment {
             }
 
             @Override public void failure(RetrofitError error) {
-              mSwipeRefreshLayout.setRefreshing(false);
+              if (mSwipeRefreshLayout != null){
+                mSwipeRefreshLayout.setRefreshing(false);
+              }
             }
           });
     }

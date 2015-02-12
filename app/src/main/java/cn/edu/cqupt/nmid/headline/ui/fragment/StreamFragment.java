@@ -121,8 +121,11 @@ public class StreamFragment extends Fragment {
               isLoadingMore = false;
               mSwipeRefreshLayout.setRefreshing(false);
               images.clear();
-              images.addAll(imageStream.getData());
-              adapter.notifyDataSetChanged();
+              //bug fix when server return null
+              if (imageStream.getStatus() == 1) {
+                images.addAll(imageStream.getData());
+                adapter.notifyDataSetChanged();
+              }
             }
 
             @Override public void failure(RetrofitError error) {
@@ -146,8 +149,11 @@ public class StreamFragment extends Fragment {
             @Override public void success(ImageStream imageStream, Response response) {
               isLoadingMore = false;
               mSwipeRefreshLayout.setRefreshing(false);
-              images.addAll(imageStream.getData());
-              adapter.notifyDataSetChanged();
+              //bug fix when server return null
+              if (imageStream.getStatus() == 1) {
+                images.addAll(imageStream.getData());
+                adapter.notifyDataSetChanged();
+              }
             }
 
             @Override public void failure(RetrofitError error) {
@@ -160,7 +166,7 @@ public class StreamFragment extends Fragment {
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == 3 ){
+    if (resultCode == 3) {
       loadNewFeeds();
     }
   }
