@@ -8,19 +8,23 @@ import cn.edu.cqupt.nmid.headline.support.GlobalContext;
 public class DatabaseHelper extends SQLiteOpenHelper {
   private static final int DATABASE_VERSION = 1;
   private static final String DATABASE_NAME = "headline.db";
-  private static DatabaseHelper singleton = null;
+  private static volatile DatabaseHelper singleton = null;
 
-  public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory,
+  private DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory,
       int version) {
     super(context, name, factory, version);
   }
 
-  // Use the application context, which will ensure that you
-  // don't accidentally leak an Activity's context.
-  // See this article for more information: http://bit.ly/6LRzfx
-  public synchronized static DatabaseHelper getInstance() {
+  //double-checked locking
+  //useful links at http://devbean.blog.51cto.com/448512/203501/
+  public static DatabaseHelper getInstance() {
     if (singleton == null) {
-      singleton = new DatabaseHelper(GlobalContext.getInstance(), DATABASE_NAME, null, DATABASE_VERSION);
+      synchronized (DatabaseHelper.class) {
+        if (singleton == null) {
+          singleton = new DatabaseHelper(GlobalContext.getInstance(), DATABASE_NAME, null,
+              DATABASE_VERSION);
+        }
+      }
     }
     return singleton;
   }
@@ -35,6 +39,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     db.execSQL(SQL.DELETE_TABLE_BASE);
     onCreate(db);
   }
-
-
 }

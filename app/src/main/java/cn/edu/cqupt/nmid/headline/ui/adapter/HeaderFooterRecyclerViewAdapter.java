@@ -8,9 +8,6 @@ import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.ui.widget.ProgressBarCircular;
 
-/**
- * Created by leon on 1/19/15.
- */
 public abstract class HeaderFooterRecyclerViewAdapter
     extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

@@ -1,6 +1,7 @@
 package cn.edu.cqupt.nmid.headline.support;
 
 import android.app.Application;
+import android.util.Log;
 import cn.edu.cqupt.nmid.headline.support.pref.DebugPref;
 import cn.edu.cqupt.nmid.headline.support.pref.PushPref;
 import cn.jpush.android.api.JPushInterface;
@@ -20,7 +21,7 @@ public class GlobalContext extends Application {
     super.onCreate();
     globalContext = this;
 
-    isDebug = DebugPref.isPushFeeds(this);
+    isDebug = DebugPref.isDebug(this);
 
     //start JPush service
     if (PushPref.isPushFeeds(this)) {
@@ -28,12 +29,17 @@ public class GlobalContext extends Application {
       JPushInterface.init(this);
       JPushInterface.setDebugMode(isDebug);
     }
+    //bugly.qq.com
+    String appId = "1104137422";
 
-    String appId = "1104137422";   //上Bugly(bugly.qq.com)注册产品获取的AppId
-
-    CrashReport.initCrashReport(this, appId, isDebug);  //初始化SDK
+    CrashReport.initCrashReport(this, appId, isDebug);
     //sharesdk
     ShareSDK.initSDK(this);
+  }
+
+  @Override public void onTerminate() {
+    super.onTerminate();
+    Log.d("GlobalContext","onTerminate");
   }
 
   public static GlobalContext getInstance() {

@@ -1,5 +1,6 @@
 #nmid-headline
 --------
+[中文用户点这里！](note/readme_chs.md)
 
 This is a android news client for CQUPT. And it's a material design demonstrate as well :)
 
@@ -7,6 +8,13 @@ This is a android news client for CQUPT. And it's a material design demonstrate 
 ####Features
 * Full Material Design
 * RESTful API Design
+* Translucent mode supported for kitkat
+* Local CSS used in webview
+* Night mode supported
+
+####Download
+[availible on myapp](http://sj.qq.com/myapp/detail.htm?apkName=cn.edu.cqupt.nmid.headline)
+
 
 ####Open Source Components
 ######maven dependencies

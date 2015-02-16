@@ -1,5 +1,6 @@
 package cn.edu.cqupt.nmid.headline.support.api.headline.bean;
 
+import com.google.gson.annotations.SerializedName;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,11 +9,13 @@ public class Datum {
   private int id;
   private int category;
   private String title;
-  private String simple_content;
+  @SerializedName("simple_content")
+  private String simpleContent;
   private String image1;
   private String image2;
   private String image3;
-  private String time_release;
+  @SerializedName("time_release")
+  private String timeRelease;
   private int isCollect;
   private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -70,14 +73,14 @@ public class Datum {
    * @return The simpleContent
    */
   public String getSimpleContent() {
-    return simple_content;
+    return simpleContent;
   }
 
   /**
-   * @param simpleContent The simple_content
+   * @param simpleContent The simpleContent
    */
   public void setSimpleContent(String simpleContent) {
-    this.simple_content = simpleContent;
+    this.simpleContent = simpleContent;
   }
 
   /**
@@ -126,14 +129,14 @@ public class Datum {
    * @return The timeRelease
    */
   public String getTimeRelease() {
-    return time_release;
+    return timeRelease;
   }
 
   /**
-   * @param timeRelease The time_release
+   * @param timeRelease The timeRelease
    */
   public void setTimeRelease(String timeRelease) {
-    this.time_release = timeRelease;
+    this.timeRelease = timeRelease;
   }
 
   public Map<String, Object> getAdditionalProperties() {

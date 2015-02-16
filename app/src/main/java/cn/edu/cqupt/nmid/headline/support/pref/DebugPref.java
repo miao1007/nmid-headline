@@ -8,7 +8,7 @@ import cn.edu.cqupt.nmid.headline.utils.PreferenceUtils;
  * Created by leon on 2/12/15.
  */
 public class DebugPref {
-  public static boolean isPushFeeds(Context context) {
+  public static boolean isDebug(Context context) {
     String DBkey = context.getString(R.string.setting_debug);
     return PreferenceUtils.getPrefBoolean(context, DBkey, false);
   }
