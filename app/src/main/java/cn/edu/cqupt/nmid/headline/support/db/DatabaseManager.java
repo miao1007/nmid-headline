@@ -8,6 +8,7 @@ import cn.edu.cqupt.nmid.headline.support.api.headline.bean.Datum;
 import cn.edu.cqupt.nmid.headline.support.db.tables.BaseTable;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by leon on 1/27/15.
@@ -55,19 +56,23 @@ public class DatabaseManager {
     }
 
     clear(BaseTable.TABLE_NAME, category);
-    Log.d(TAG, datumArrayList.size() + "");
-    for (Datum news : datumArrayList) {
-      ContentValues values = new ContentValues();
-      values.put(BaseTable.COLUMN_NAME_ID, news.getId());
-      values.put(BaseTable.COLUMN_NAME_CATEGORY, news.getCategory());
-      values.put(BaseTable.COLUMN_NAME_TITLE, news.getTitle());
-      values.put(BaseTable.COLUMN_NAME_SIMPLE_CONTENT, news.getSimpleContent());
-      values.put(BaseTable.COLUMN_NAME_IMAGE1, news.getImage1());
-      values.put(BaseTable.COLUMN_NAME_IMAGE2, news.getImage2());
-      values.put(BaseTable.COLUMN_NAME_IMAGE3, news.getImage3());
-      values.put(BaseTable.COLUMN_NAME_TIME_RELEASE, news.getTimeRelease());
-      values.put(BaseTable.COLUMN_NAME_ISCOLLECT, false);
-      getWsd().insert(BaseTable.TABLE_NAME, BaseTable.COLUMN_NAME_ID, values);
+    Log.d(TAG, "size" + datumArrayList.size() + "");
+    Iterator<Datum> iterator = datumArrayList.iterator();
+    synchronized (iterator) {
+      while (iterator.hasNext()) {
+        Datum news = iterator.next();
+        ContentValues values = new ContentValues();
+        values.put(BaseTable.COLUMN_NAME_ID, news.getId());
+        values.put(BaseTable.COLUMN_NAME_CATEGORY, news.getCategory());
+        values.put(BaseTable.COLUMN_NAME_TITLE, news.getTitle());
+        values.put(BaseTable.COLUMN_NAME_SIMPLE_CONTENT, news.getSimpleContent());
+        values.put(BaseTable.COLUMN_NAME_IMAGE1, news.getImage1());
+        values.put(BaseTable.COLUMN_NAME_IMAGE2, news.getImage2());
+        values.put(BaseTable.COLUMN_NAME_IMAGE3, news.getImage3());
+        values.put(BaseTable.COLUMN_NAME_TIME_RELEASE, news.getTimeRelease());
+        values.put(BaseTable.COLUMN_NAME_ISCOLLECT, false);
+        getWsd().insert(BaseTable.TABLE_NAME, BaseTable.COLUMN_NAME_ID, values);
+      }
     }
   }
 

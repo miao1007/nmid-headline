@@ -17,6 +17,13 @@
   <PreferenceScreen
       android:title="清除缓存"
       android:summary="清除程序产生的缓存"/>
+  <PreferenceScreen
+      android:title="给个好评">
+    <intent
+        android:action="android.intent.action.VIEW"
+        android:data="market://details?id=cn.edu.cqupt.nmid.headline"/>
+
+  </PreferenceScreen>
   <SwitchPreference
       android:defaultValue="true"
       android:key="@string/setting_debug"

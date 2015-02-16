@@ -168,29 +168,36 @@ public class FeedFragment extends Fragment {
           .build()
           .create(HeadlineService.class)
           .getFreshFeeds(feed_cate, 0, feed_limit, new Callback<HeadJson>() {
-            @Override public void success(HeadJson headJson, Response response) {
+            @Override public void success(final HeadJson headJson, Response response) {
               //fix Null point exception at samsung SM-G3812
-              if (mSwipeRefreshLayout != null){
+              if (mSwipeRefreshLayout != null) {
                 mSwipeRefreshLayout.setRefreshing(false);
               }
-              newsBeans.clear();
 
               if (headJson.getStatus() == 1) {
-                newsBeans.addAll(headJson.getData());
-                adapter.notifyDataSetChanged();
-
-                new Thread(new Runnable() {
-                  @Override public void run() {
-                    DatabaseManager.update(newsBeans, feed_cate);
-                  }
-                }).start();
-                Log.d(TAG, "Last id is" + newsBeans.get(0).getId());
+                if (newsBeans.isEmpty()) {
+                  newsBeans.clear();
+                  newsBeans.addAll(headJson.getData());
+                  adapter.notifyDataSetChanged();
+                  return;
+                }
+                if (newsBeans.get(0).getId() == headJson.getData().get(0).getId()) {
+                  Log.d(TAG, "Ignore update" + newsBeans.get(0).getId());
+                } else {
+                  new Thread(new Runnable() {
+                    @Override public void run() {
+                      DatabaseManager.update(newsBeans, feed_cate);
+                    }
+                  }).start();
+                  newsBeans.clear();
+                  newsBeans.addAll(headJson.getData());
+                  adapter.notifyDataSetChanged();
+                }
               }
-
             }
 
             @Override public void failure(RetrofitError error) {
-              if (mSwipeRefreshLayout != null){
+              if (mSwipeRefreshLayout != null) {
                 mSwipeRefreshLayout.setRefreshing(false);
               }
             }

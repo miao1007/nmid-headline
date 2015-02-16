@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,6 +38,7 @@ import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.activity.SettingsActivity;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationItemsAdapter;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationSecondaryItemsAdapter;
+import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import cn.edu.cqupt.nmid.headline.utils.PreferenceUtils;
 import cn.edu.cqupt.nmid.headline.utils.picasso.BlurTransformation;
 import cn.edu.cqupt.nmid.headline.utils.picasso.CircleTransformation;
@@ -56,6 +58,7 @@ public class NavigationDrawerFragment extends Fragment {
 
   private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
   private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
+  public static final String TAG = LogUtils.makeLogTag(NavigationDrawerFragment.class);
 
   View rootView;
   Context context;
@@ -82,7 +85,9 @@ public class NavigationDrawerFragment extends Fragment {
   @OnClick(R.id.navigation_drawer_avatar) void navigation_drawer_avatar() {
     Platform qzone = ShareSDK.getPlatform(getActivity(), QZone.NAME);
     qzone.setPlatformActionListener(new PlatformActionListener() {
+
       @Override public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+        Log.d(TAG, "onComplete");
         fetchUserInfo();
       }
 
@@ -93,8 +98,7 @@ public class NavigationDrawerFragment extends Fragment {
       @Override public void onCancel(Platform platform, int i) {
 
       }
-    });
-    qzone.authorize();
+    }); qzone.authorize();
     if (mDrawerLayout != null) {
       mDrawerLayout.closeDrawer(Gravity.START);
     }
@@ -164,11 +168,10 @@ public class NavigationDrawerFragment extends Fragment {
   public void fetchUserInfo() {
     PlatformDb db = ShareSDK.getPlatform(getActivity(), QZone.NAME).getDb();
     if (db.isValid()) {
-
+      Log.d(TAG, "db.isValid() ,load avatar");
       Picasso.with(context)
           .load(db.getUserIcon())
           .transform(new BlurTransformation(context))
-          .placeholder(R.drawable.ic_avater)
           .into(mAvatarBg);
       Picasso.with(context)
           .load(db.getUserIcon())
