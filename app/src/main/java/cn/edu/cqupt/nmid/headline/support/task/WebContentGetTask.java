@@ -13,7 +13,6 @@ import java.io.IOException;
 public class WebContentGetTask extends AsyncTask<String, Void, String> {
 
   private WebContentGetTaskCallback mCallback;
-  private String url;
 
   public WebContentGetTask(WebContentGetTaskCallback mCallback) {
     this.mCallback = mCallback;
@@ -53,9 +52,6 @@ public class WebContentGetTask extends AsyncTask<String, Void, String> {
     }
   }
 
-  void setUrl(String url) {
-    this.url = url;
-  }
 
   public void executeSerial() {
     execute();

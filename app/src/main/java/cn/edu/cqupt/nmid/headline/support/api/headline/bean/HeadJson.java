@@ -9,7 +9,7 @@ import java.util.Map;
 public class HeadJson {
 
     private int status;
-    private List<Datum> data = new ArrayList<Datum>();
+    private List<Feed> data = new ArrayList<Feed>();
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
@@ -35,7 +35,7 @@ public class HeadJson {
      * @return
      *     The data
      */
-    public List<Datum> getData() {
+    public List<Feed> getData() {
         return data;
     }
 
@@ -44,7 +44,7 @@ public class HeadJson {
      * @param data
      *     The data
      */
-    public void setData(List<Datum> data) {
+    public void setData(List<Feed> data) {
         this.data = data;
     }
 

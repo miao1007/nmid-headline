@@ -1,44 +1,61 @@
 package cn.edu.cqupt.nmid.headline.support.api.headline.bean;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.SerializedName;
 import java.util.HashMap;
 import java.util.Map;
+@Table(name="basetable")
+public class Feed extends Model{
+  //do not use `id` because it has been defined in Model
+  @Column(name = "idMember")
+  @SerializedName(value="id")
+  private int idMember;
 
-public class Datum {
-
-  private int id;
+  @Column(name = "category")
   private int category;
+
+  @Column(name = "title")
   private String title;
+
+  @Column(name = "simpleContent")
   @SerializedName("simple_content")
   private String simpleContent;
+
+  @Column(name = "image1")
   private String image1;
+
+  @Column(name = "image2")
   private String image2;
+
+  @Column(name = "image3")
   private String image3;
+
+  @Column(name = "timeRelease")
   @SerializedName("time_release")
   private String timeRelease;
-  private int isCollect;
+
+  @Column(name = "isCollect")
+  private boolean isCollect;
+
+
   private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-  public int getIsCollect() {
+  public boolean isCollect() {
     return isCollect;
   }
 
-  public void setIsCollect(int isCollect) {
+  public void setCollect(boolean isCollect) {
     this.isCollect = isCollect;
   }
 
-  /**
-   * @return The id
-   */
-  public int getId() {
-    return id;
+  public int getIdMember() {
+    return idMember;
   }
 
-  /**
-   * @param id The id
-   */
-  public void setId(int id) {
-    this.id = id;
+  public void setIdMember(int idMember) {
+    this.idMember = idMember;
   }
 
   /**
