@@ -20,11 +20,12 @@ public class FileUtils {
 
 		// Find the dir to save cached images
 		if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
-			path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/GalleryCameraDemo/images";
+			path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/headline";
 		} else {
 			path = context.getCacheDir().getAbsolutePath();
 		}
 	}
+
 
 	public static String getPath(String folderName) {
 		return path + folderName + "/";

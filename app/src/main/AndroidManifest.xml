@@ -211,5 +211,13 @@
     <activity android:name=".ui.activity.UploadActivity"
         android:label="@string/title_activity_upload"/>
 
+
+    <receiver android:name=".support.receiver.DownloadCompleteReceiver" android:enabled="true">
+
+      <intent-filter>
+        <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
+      </intent-filter>
+    </receiver>
+
   </application>
 </manifest>
