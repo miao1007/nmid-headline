@@ -14,7 +14,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
-import cn.edu.cqupt.nmid.headline.support.api.headline.bean.Datum;
+import cn.edu.cqupt.nmid.headline.support.api.headline.bean.Feed;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.activity.DetailedActivity;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
@@ -27,10 +27,10 @@ import java.util.ArrayList;
 public class FeedAdapter extends HeaderFooterRecyclerViewAdapter {
 
   private static final String TAG = LogUtils.makeLogTag(FeedAdapter.class);
-  private ArrayList<Datum> mNewsBeans;
+  private ArrayList<Feed> mNewsBeans;
   private Context mContext;
 
-  public FeedAdapter(Context mContext, ArrayList<Datum> newsBeans) {
+  public FeedAdapter(Context mContext, ArrayList<Feed> newsBeans) {
     this.mContext = mContext;
     this.mNewsBeans = newsBeans;
   }
@@ -89,7 +89,7 @@ public class FeedAdapter extends HeaderFooterRecyclerViewAdapter {
 
     holder_typed.mCardView.setCardBackgroundColor(
         mContext.getResources().getColor(ThemePref.getItemBackgroundResColor(mContext)));
-    final Datum newsBean = mNewsBeans.get(position);
+    final Feed newsBean = mNewsBeans.get(position);
     holder_typed.title.setText(newsBean.getTitle());
     holder_typed.time.setText(newsBean.getTimeRelease());
     holder_typed.excerpt.setText(newsBean.getSimpleContent());
@@ -122,7 +122,7 @@ public class FeedAdapter extends HeaderFooterRecyclerViewAdapter {
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         Intent intent = new Intent(mContext, DetailedActivity.class);
-        intent.putExtra("id", newsBean.getId());
+        intent.putExtra("id", newsBean.getIdMember());
         intent.putExtra("category", newsBean.getCategory());
         intent.putExtra("title", newsBean.getTitle());
         intent.putExtra("excerpt", newsBean.getSimpleContent());

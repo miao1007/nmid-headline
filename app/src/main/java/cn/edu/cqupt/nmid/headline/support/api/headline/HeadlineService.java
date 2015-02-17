@@ -22,6 +22,9 @@ public interface HeadlineService {
   public int CATE_TELECOMMUNICATION = 3;
   public int CATE_ALUMNUS = 4;
 
+  int STATUS_OK = 1;
+  int STATUS_ERR = 0;
+
   public String CATEGORY = "category";
 
   //关键字	类型	含义	说明

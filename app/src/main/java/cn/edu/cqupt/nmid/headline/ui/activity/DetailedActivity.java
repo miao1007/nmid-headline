@@ -12,10 +12,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
-import cn.edu.cqupt.nmid.headline.support.db.tasks.GetIsFavoriteFeedFromDbTask;
-import cn.edu.cqupt.nmid.headline.support.db.tasks.SetIfLikeTheFeedIntoDbTask;
-import cn.edu.cqupt.nmid.headline.support.db.tasks.callback.GetIsFavoriteFeedFromDbTaskCallback;
-import cn.edu.cqupt.nmid.headline.support.db.tasks.callback.SetIfLikeTheFeedIntoDbTaskCallback;
+import cn.edu.cqupt.nmid.headline.support.api.headline.bean.Feed;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.support.pref.WebViewPref;
 import cn.edu.cqupt.nmid.headline.support.task.WebContentGetTask;
@@ -24,6 +21,7 @@ import cn.edu.cqupt.nmid.headline.ui.widget.swipebacklayout.SwipeBackActivity;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import cn.edu.cqupt.nmid.headline.utils.NetworkUtils;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import com.activeandroid.query.Select;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
@@ -51,7 +49,7 @@ public class DetailedActivity extends SwipeBackActivity {
   /**
    * Intent extra uesd for ShareSDK
    */
-  private int id;
+  private int idMember;
   private int category;
   private String title;
   private String excerpt;
@@ -62,15 +60,13 @@ public class DetailedActivity extends SwipeBackActivity {
     dispatchOneKeyShare();
   }
 
-
   @OnClick(R.id.detailed_action_favorite) void detailed_action_favorite(View v) {
-
-    new SetIfLikeTheFeedIntoDbTask(id, new SetIfLikeTheFeedIntoDbTaskCallback() {
-      @Override public void onRefreshData(Boolean b) {
-        Log.d(TAG, "onRefreshData + " + b);
-        mFloatingActionButton.setColorNormalResId(b ? R.color.holo_red_dark : R.color.icons);
-      }
-    }).execute();
+    Feed feed = new Select().from(Feed.class).where("idMember = ?", idMember).executeSingle();
+    Log.d(TAG,feed.isCollect() + "");
+    feed.setCollect(!feed.isCollect());
+    feed.save();
+    Log.d(TAG,feed.isCollect() + "");
+    mFloatingActionButton.setColorNormalResId(feed.isCollect()? R.color.holo_red_dark : R.color.icons);
     mFloatingActionsMenu.toggle();
   }
 
@@ -85,16 +81,15 @@ public class DetailedActivity extends SwipeBackActivity {
     setContentView(R.layout.activity_detailed);
     ButterKnife.inject(this);
     tryGetIntent();
-    new GetIsFavoriteFeedFromDbTask(id, new GetIsFavoriteFeedFromDbTaskCallback() {
-      @Override public void onComplete(Boolean b) {
-        mFloatingActionButton.setColorNormalResId(b ? R.color.holo_red_dark : R.color.icons);
-      }
-    }).execute();
+
+    Feed feed = new Select().from(Feed.class).where("idMember = ?", idMember).orderBy("idMember desc").executeSingle();
+    Log.d(TAG,feed.isCollect() + "");
+    mFloatingActionButton.setColorNormalResId(feed.isCollect() ? R.color.holo_red_dark : R.color.icons);
     trySetupWebview();
   }
 
   private void tryGetIntent() {
-    id = getIntent().getIntExtra("id", 1);
+    idMember = getIntent().getIntExtra("id", 1);
     category = getIntent().getIntExtra("category", HeadlineService.CATE_ALUMNUS);
     title = getIntent().getStringExtra("title");
     excerpt = getIntent().getStringExtra("excerpt");
@@ -102,7 +97,7 @@ public class DetailedActivity extends SwipeBackActivity {
 
   private void trySetupWebview() {
 
-    url = HeadlineService.END_POINT + "/api/android/newscontent?id=" + id + "&category=" + category;
+    url = HeadlineService.END_POINT + "/api/android/newscontent?id=" + idMember + "&category=" + category;
 
     WebSettings settings = mWebView.getSettings();
 
