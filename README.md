@@ -12,6 +12,7 @@ This is a android news client for CQUPT. And it's a material design demonstrate 
 * Local CSS used in webview
 * Night mode supported
 
+![screenshot](screenshot/screenshot.png)
 ####Download
 [availible on myapp](http://sj.qq.com/myapp/detail.htm?apkName=cn.edu.cqupt.nmid.headline)
 
