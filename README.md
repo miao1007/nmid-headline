@@ -2,7 +2,7 @@
 --------
 [中文用户点这里！](note/readme_chs.md)
 
-This is a android news client for CQUPT. And it's a material design demonstrate as well :)
+This is a android feeds client for CQUPT. And it's a material design demonstrate as well :)
 
 
 ####Features
@@ -13,7 +13,10 @@ This is a android news client for CQUPT. And it's a material design demonstrate 
 * Night mode supported
 
 ![screenshot](screenshot/screenshot.png)
+
 ####Download
+![screenshot](screenshot/lyyb2.png)
+
 [availible on myapp](http://sj.qq.com/myapp/detail.htm?apkName=cn.edu.cqupt.nmid.headline)
 
 
