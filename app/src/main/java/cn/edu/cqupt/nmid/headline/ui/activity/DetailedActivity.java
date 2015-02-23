@@ -62,11 +62,12 @@ public class DetailedActivity extends SwipeBackActivity {
 
   @OnClick(R.id.detailed_action_favorite) void detailed_action_favorite(View v) {
     Feed feed = new Select().from(Feed.class).where("idMember = ?", idMember).executeSingle();
-    Log.d(TAG,feed.isCollect() + "");
+    Log.d(TAG, feed.isCollect() + "");
     feed.setCollect(!feed.isCollect());
     feed.save();
-    Log.d(TAG,feed.isCollect() + "");
-    mFloatingActionButton.setColorNormalResId(feed.isCollect()? R.color.holo_red_dark : R.color.icons);
+    Log.d(TAG, feed.isCollect() + "");
+    mFloatingActionButton.setColorNormalResId(
+        feed.isCollect() ? R.color.holo_red_dark : R.color.icons);
     mFloatingActionsMenu.toggle();
   }
 
@@ -82,22 +83,32 @@ public class DetailedActivity extends SwipeBackActivity {
     ButterKnife.inject(this);
     tryGetIntent();
 
-    Feed feed = new Select().from(Feed.class).where("idMember = ?", idMember).orderBy("idMember desc").executeSingle();
-    Log.d(TAG,feed.isCollect() + "");
-    mFloatingActionButton.setColorNormalResId(feed.isCollect() ? R.color.holo_red_dark : R.color.icons);
+    Feed feed = new Select().from(Feed.class)
+        .where("idMember = ?", idMember)
+        .orderBy("idMember desc")
+        .executeSingle();
+    Log.d(TAG, feed.isCollect() + "");
+    mFloatingActionButton.setColorNormalResId(
+        feed.isCollect() ? R.color.holo_red_dark : R.color.icons);
     trySetupWebview();
   }
 
   private void tryGetIntent() {
-    idMember = getIntent().getIntExtra("id", 1);
-    category = getIntent().getIntExtra("category", HeadlineService.CATE_ALUMNUS);
-    title = getIntent().getStringExtra("title");
-    excerpt = getIntent().getStringExtra("excerpt");
+    Feed feed = getIntent().getExtras().getParcelable("key");
+
+    idMember = feed.getIdMember();
+    category = feed.getCategory();
+    title = feed.getTitle();
+    excerpt = feed.getSimpleContent();
   }
 
   private void trySetupWebview() {
 
-    url = HeadlineService.END_POINT + "/api/android/newscontent?id=" + idMember + "&category=" + category;
+    url = HeadlineService.END_POINT
+        + "/api/android/newscontent?id="
+        + idMember
+        + "&category="
+        + category;
 
     WebSettings settings = mWebView.getSettings();
 

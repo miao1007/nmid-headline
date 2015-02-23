@@ -1,46 +1,34 @@
 package cn.edu.cqupt.nmid.headline.support.api.headline.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.SerializedName;
-import java.util.HashMap;
-import java.util.Map;
-@Table(name="basetable")
-public class Feed extends Model{
+
+@Table(name = "basetable")
+public class Feed extends Model implements Parcelable {
   //do not use `id` because it has been defined in Model
-  @Column(name = "idMember")
-  @SerializedName(value="id")
-  private int idMember;
+  @Column(name = "idMember") @SerializedName(value = "id") int idMember;
 
-  @Column(name = "category")
-  private int category;
+  @Column(name = "category") int category;
 
-  @Column(name = "title")
-  private String title;
+  @Column(name = "title") String title;
 
-  @Column(name = "simpleContent")
-  @SerializedName("simple_content")
-  private String simpleContent;
+  @Column(name = "simpleContent") @SerializedName("simple_content") String simpleContent;
 
-  @Column(name = "image1")
-  private String image1;
+  @Column(name = "image1") String image1;
 
-  @Column(name = "image2")
-  private String image2;
+  @Column(name = "image2") String image2;
 
-  @Column(name = "image3")
-  private String image3;
+  @Column(name = "image3") String image3;
 
-  @Column(name = "timeRelease")
-  @SerializedName("time_release")
-  private String timeRelease;
+  @Column(name = "timeRelease") @SerializedName("time_release") String timeRelease;
 
-  @Column(name = "isCollect")
-  private boolean isCollect;
+  @Column(name = "isCollect") boolean isCollect;
 
 
-  private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
   public boolean isCollect() {
     return isCollect;
@@ -156,11 +144,44 @@ public class Feed extends Model{
     this.timeRelease = timeRelease;
   }
 
-  public Map<String, Object> getAdditionalProperties() {
-    return this.additionalProperties;
+  @Override public int describeContents() {
+    return 0;
   }
 
-  public void setAdditionalProperty(String name, Object value) {
-    this.additionalProperties.put(name, value);
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeInt(this.idMember);
+    dest.writeInt(this.category);
+    dest.writeString(this.title);
+    dest.writeString(this.simpleContent);
+    dest.writeString(this.image1);
+    dest.writeString(this.image2);
+    dest.writeString(this.image3);
+    dest.writeString(this.timeRelease);
+    dest.writeByte(isCollect ? (byte) 1 : (byte) 0);
   }
+
+  public Feed() {
+  }
+
+  private Feed(Parcel in) {
+    this.idMember = in.readInt();
+    this.category = in.readInt();
+    this.title = in.readString();
+    this.simpleContent = in.readString();
+    this.image1 = in.readString();
+    this.image2 = in.readString();
+    this.image3 = in.readString();
+    this.timeRelease = in.readString();
+    this.isCollect = in.readByte() != 0;
+  }
+
+  public static final Parcelable.Creator<Feed> CREATOR = new Parcelable.Creator<Feed>() {
+    public Feed createFromParcel(Parcel source) {
+      return new Feed(source);
+    }
+
+    public Feed[] newArray(int size) {
+      return new Feed[size];
+    }
+  };
 }

@@ -4,7 +4,7 @@
     tools:context=".HomeActivity">
   <item
       android:id="@+id/action_night_mode"
-      android:title="@string/settings_night_mode"/>
+      android:title="@string/settings_night_mode_night"/>
 
   <item
       android:id="@+id/action_settings"

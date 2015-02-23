@@ -66,7 +66,7 @@ public class FileUtils {
 		Bitmap bitmap = null;
 		File file = new File(path + "/" + IMAGE_FILE);
 		try {
-			bitmap = ImageUtils.getThumbnail(context, uri, 500);
+			bitmap = BitmapUtils.getThumbnail(context, uri, 500);
 
 			fOut = new FileOutputStream(file);
 			bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fOut);

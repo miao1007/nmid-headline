@@ -122,10 +122,7 @@ public class FeedAdapter extends HeaderFooterRecyclerViewAdapter {
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         Intent intent = new Intent(mContext, DetailedActivity.class);
-        intent.putExtra("id", newsBean.getIdMember());
-        intent.putExtra("category", newsBean.getCategory());
-        intent.putExtra("title", newsBean.getTitle());
-        intent.putExtra("excerpt", newsBean.getSimpleContent());
+        intent.putExtra("key",newsBean);
         mContext.startActivity(intent);
       }
     });

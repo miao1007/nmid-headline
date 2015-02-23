@@ -8,9 +8,10 @@ This is a android feeds client for CQUPT. And it's a material design demonstrate
 ####Features
 * Full Material Design
 * RESTful API Design
-* Translucent mode supported for kitkat
-* Local CSS used in webview
+* Translucent mode for kitkat or higher
+* Local CSS in WebView
 * Night mode supported
+* Check for update supported
 
 ![screenshot](screenshot/screenshot.png)
 
@@ -37,8 +38,10 @@ dependencies {
   compile 'com.android.support:cardview-v7:21.0.3'
   compile 'com.github.ksoichiro:android-observablescrollview:1.5.0'
   compile 'me.drakeet.materialdialog:library:1.2.2'
+  compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
   compile project(':onekeyshare')
 }
+
 ```
 
 ###### Widget And Drawable Resources

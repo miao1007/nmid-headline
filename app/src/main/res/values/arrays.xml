@@ -26,9 +26,9 @@
 
 
     <string-array name="settings_entries_load_images">
-        <item>不加载</item>
-        <item>加载</item>
-        <item>仅WiFi加载</item>
+        <item>不加载任何图片</item>
+        <item>加载图片</item>
+        <item>仅WiFi情况下加载图片</item>
     </string-array>
 
     <string-array name="settings_entry_values_load_images">

@@ -19,8 +19,8 @@ import cn.edu.cqupt.nmid.headline.support.api.stream.UploadImageService;
 import cn.edu.cqupt.nmid.headline.support.api.stream.bean.UploadResult;
 import cn.edu.cqupt.nmid.headline.ui.widget.ProgressBarCircular;
 import cn.edu.cqupt.nmid.headline.ui.widget.swipebacklayout.SwipeBackActivity;
+import cn.edu.cqupt.nmid.headline.utils.BitmapUtils;
 import cn.edu.cqupt.nmid.headline.utils.FileUtils;
-import cn.edu.cqupt.nmid.headline.utils.ImageUtils;
 import cn.edu.cqupt.nmid.headline.utils.RetrofitUtils;
 import cn.edu.cqupt.nmid.headline.utils.picasso.BlurTransformation;
 import cn.sharesdk.framework.ShareSDK;
@@ -82,7 +82,7 @@ public class UploadActivity extends SwipeBackActivity {
           if (data != null) {
             outputFileUri = data.getData();
           }
-          bmp = ImageUtils.getThumbnail(this, outputFileUri, THUMBNAIL_SIZE);
+          bmp = BitmapUtils.getThumbnail(this, outputFileUri, THUMBNAIL_SIZE);
           outputFileUri = FileUtils.saveImageFile(this, outputFileUri);
           Picasso.with(this)
               .load(outputFileUri)

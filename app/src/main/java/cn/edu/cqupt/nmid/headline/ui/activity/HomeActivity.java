@@ -77,6 +77,11 @@ public class HomeActivity extends ActionBarActivity
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.menu_home, menu);
+    if (ThemePref.isNightMode(this)) {
+      menu.getItem(0).setTitle(R.string.settings_night_mode_day);
+    } else {
+      menu.getItem(0).setTitle(R.string.settings_night_mode_night);
+    }
     return super.onCreateOptionsMenu(menu);
   }
 

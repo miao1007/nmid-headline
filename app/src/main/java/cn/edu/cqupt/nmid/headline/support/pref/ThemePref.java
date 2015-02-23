@@ -11,13 +11,13 @@ public class ThemePref {
 
   public static boolean isNightMode(Context context) {
 
-    String DBkey = context.getString(R.string.settings_night_mode);
+    String DBkey = context.getString(R.string.settings_night_mode_night);
     return PreferenceUtils.getPrefBoolean(context, DBkey, false);
   }
 
   public static void setNightMode(Context context, boolean isNightMode) {
 
-    String DBkey = context.getString(R.string.settings_night_mode);
+    String DBkey = context.getString(R.string.settings_night_mode_night);
     PreferenceUtils.setPrefBoolean(context, DBkey, isNightMode);
   }
 

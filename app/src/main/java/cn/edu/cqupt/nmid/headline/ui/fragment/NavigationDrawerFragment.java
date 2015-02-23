@@ -88,7 +88,8 @@ public class NavigationDrawerFragment extends Fragment {
 
       @Override public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
         Log.d(TAG, "onComplete");
-        fetchUserInfo();
+        Log.d(TAG,hashMap.toString());
+        fetchUserInfoFromDb(platform);
       }
 
       @Override public void onError(Platform platform, int i, Throwable throwable) {
@@ -158,29 +159,37 @@ public class NavigationDrawerFragment extends Fragment {
     mSecondaryListView.setAdapter(mNavSecondaryItemsAdapter);
     mSecondaryListView.getLayoutParams().height = mNavSecondaryItemsAdapter.getListViewHeight();
 
-    fetchUserInfo();
+    fetchUserInfoFromDb(ShareSDK.getPlatform(getActivity(), QZone.NAME));
     fetchWeather();
     selectItem(mCurrentSelectedPosition);
 
     return rootView;
   }
 
-  public void fetchUserInfo() {
-    PlatformDb db = ShareSDK.getPlatform(getActivity(), QZone.NAME).getDb();
-    if (db.isValid()) {
-      Log.d(TAG, "db.isValid() ,load avatar");
-      Picasso.with(context)
-          .load(db.getUserIcon())
-          .transform(new BlurTransformation(context))
-          .into(mAvatarBg);
-      Picasso.with(context)
-          .load(db.getUserIcon())
-          .fit()
-          .transform(new CircleTransformation())
-          .into(mAvatar);
-
-      mUsername.setText(db.getUserName());
+  public void fetchUserInfoFromDb(Platform platform) {
+    String avatar;
+    String name;
+    
+    if (!platform.isValid()){
+      return;
     }
+    PlatformDb db = platform.getDb();
+    
+    if (!db.isValid()){
+      return;
+    }
+    Log.d(TAG, "db.isValid() ,load avatar");
+    Picasso.with(context)
+        .load(db.getUserIcon())
+        .transform(new BlurTransformation(context))
+        .into(mAvatarBg);
+    Picasso.with(context)
+        .load(db.getUserIcon())
+        .fit()
+        .transform(new CircleTransformation())
+        .into(mAvatar);
+
+    mUsername.setText(db.getUserName());
   }
 
   private void fetchWeather() {
