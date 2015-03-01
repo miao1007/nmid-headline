@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     class="android.support.v7.widget.Toolbar"
     android:paddingTop="@dimen/nav_drawer_status_bar_offset"
+    android:elevation="@dimen/default_elevation"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     android:minHeight="?attr/actionBarSize"

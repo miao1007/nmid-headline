@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="阅读设置">
+  <PreferenceCategory android:title="阅读设置">
 
-        <!--<SwitchPreference-->
-            <!--android:defaultValue="false"-->
-            <!--android:key="@string/settings_night_mode"-->
-            <!--android:title="@string/settings_night_mode" />-->
+    <ListPreference
+        android:defaultValue="115"
+        android:dialogTitle="@string/settings_font_size"
+        android:layout="@layout/preference_item"
+        android:entries="@array/settings_entries_font_sizes"
+        android:entryValues="@array/settings_entry_values_font_sizes"
+        android:key="@string/settings_font_size"
+        android:title="@string/settings_font_size"/>
 
-        <ListPreference
-            android:defaultValue="115"
-            android:dialogTitle="@string/settings_font_size"
-            android:entries="@array/settings_entries_font_sizes"
-            android:entryValues="@array/settings_entry_values_font_sizes"
-            android:key="@string/settings_font_size"
-            android:title="@string/settings_font_size" />
+    <ListPreference
+        android:defaultValue="1"
+        android:dialogTitle="@string/settings_data_usage_control"
+        android:layout="@layout/preference_item"
+        android:entries="@array/settings_entries_load_images"
+        android:entryValues="@array/settings_entry_values_load_images"
+        android:key="@string/settings_data_usage_control"
+        android:title="@string/settings_data_usage_control"/>
+  </PreferenceCategory>
 
-        <ListPreference
-            android:defaultValue="1"
-            android:dialogTitle="@string/settings_data_usage_control"
-            android:entries="@array/settings_entries_load_images"
-            android:entryValues="@array/settings_entry_values_load_images"
-            android:key="@string/settings_data_usage_control"
-            android:title="@string/settings_data_usage_control" />
-    </PreferenceCategory>
+  <PreferenceCategory android:title="其它">
+    <PreferenceScreen android:title="高级"
+        android:layout="@layout/preference_item">
+      <intent android:action=".ui.activity.SettingsMoreActivity"/>
 
-    <PreferenceCategory android:title="其它">
-        <PreferenceScreen android:title="高级">
-            <intent android:action=".ui.activity.SettingsMoreActivity" />
-
-        </PreferenceScreen>
-        <PreferenceScreen android:title="关于">
-            <intent android:action=".ui.activity.AboutActivity" />
-        </PreferenceScreen>
-    </PreferenceCategory>
+    </PreferenceScreen>
+    <PreferenceScreen android:title="关于"
+        android:layout="@layout/preference_item">
+      <intent android:action=".ui.activity.AboutActivity"/>
+    </PreferenceScreen>
+  </PreferenceCategory>
 </PreferenceScreen>

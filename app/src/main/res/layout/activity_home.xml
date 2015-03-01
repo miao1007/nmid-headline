@@ -12,9 +12,16 @@
       android:id="@+id/home_content_layout"
       android:layout_width="match_parent">
 
-    <include
+    <view xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        class="android.support.v7.widget.Toolbar"
         android:id="@+id/toolbar"
-        layout="@layout/include_toolbar"/>
+        android:paddingTop="@dimen/nav_drawer_status_bar_offset"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
 
     <FrameLayout
         android:background="@color/icons"

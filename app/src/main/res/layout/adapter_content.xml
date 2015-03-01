@@ -2,16 +2,20 @@
 
 
 <view xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     class="android.support.v7.widget.CardView"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="8dp"
-    android:id="@+id/item_card_holder"
-    android:layout_marginRight="8dp"
     android:layout_marginTop="6dp"
-    android:theme="@style/CardView.Dark">
+    android:layout_height="wrap_content"
+    android:id="@+id/item_card_holder"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="@dimen/cardview_default_radius"
+    android:theme="@style/CardView.Light">
 
   <LinearLayout
+      android:paddingTop="6dp"
+      android:paddingLeft="8dp"
+      android:paddingRight="8dp"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical">

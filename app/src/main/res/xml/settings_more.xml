@@ -3,11 +3,13 @@
 
   <SwitchPreference
       android:defaultValue="true"
+      android:layout="@layout/preference_item"
       android:key="@string/settings_push_feeds"
       android:summary="推送学院最新动态"
       android:title="@string/settings_push_feeds"/>
   <ListPreference
       android:defaultValue="15"
+      android:layout="@layout/preference_item"
       android:dialogTitle="@string/settings_more_query_limit"
       android:entries="@array/settings_entries_feeds_count"
       android:entryValues="@array/settings_entry_values_feeds_count"
@@ -15,19 +17,24 @@
       android:summary="@string/settings_more_query_limit"
       android:title="@string/settings_refresh"/>
   <PreferenceScreen
+      android:layout="@layout/preference_item"
       android:title="清除缓存"
       android:summary="清除程序产生的缓存"/>
   <PreferenceScreen
-      android:title="给个好评">
+      android:layout="@layout/preference_item"
+      android:title="喜欢通信头条"
+      android:summary="若你觉得通信头条很赞的话，麻烦点击此处到应用商店给个好评">>
     <intent
         android:action="android.intent.action.VIEW"
         android:data="market://details?id=cn.edu.cqupt.nmid.headline"/>
 
   </PreferenceScreen>
   <SwitchPreference
+      android:layout="@layout/preference_item"
       android:defaultValue="true"
       android:key="@string/setting_debug"
-      android:summary="显示调试日志"
+      android:summaryOff="显示调试日志"
+      android:summaryOn="不显示显示调试日志"
       android:title="@string/setting_debug"/>
 
 </PreferenceScreen>

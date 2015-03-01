@@ -51,8 +51,6 @@ public class UploadActivity extends SwipeBackActivity {
     dispatchSelectImage();
   }
 
-
-
   private static Uri outputFileUri;
   private Bitmap bmp;
   private MaterialDialog mMaterialDialog;
@@ -76,41 +74,46 @@ public class UploadActivity extends SwipeBackActivity {
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    try {
-      if (resultCode == Activity.RESULT_OK) {
-        if (requestCode == YOUR_SELECT_PICTURE_REQUEST_CODE) {
-          if (data != null) {
-            outputFileUri = data.getData();
-          }
-          bmp = BitmapUtils.getThumbnail(this, outputFileUri, THUMBNAIL_SIZE);
-          outputFileUri = FileUtils.saveImageFile(this, outputFileUri);
-          Picasso.with(this)
-              .load(outputFileUri)
-              .transform(new BlurTransformation(this))
-              .into(mActivityUploadSelect);
-          mMaterialDialog = new MaterialDialog(this);
-          mMaterialDialog.setCanceledOnTouchOutside(false);
-          mMaterialDialog.setTitle("是否上传？")
-              .setMessage("请确认内容符合相关规定")
-              .setPositiveButton("OK", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                  tryUploadFrimUri(outputFileUri);
-                }
-              })
-              .setNegativeButton("CANCEL", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                  mMaterialDialog.dismiss();
-                }
-              });
 
-          mMaterialDialog.show();
-        }
-      }
-    } catch (IOException e) {
-      System.out.println(e.getMessage());
+    if (resultCode != Activity.RESULT_OK) {
+      return;
     }
+
+    if (requestCode == YOUR_SELECT_PICTURE_REQUEST_CODE) {
+      //Used for pick from gallery
+      if (data != null) {
+        outputFileUri = data.getData();
+      }
+      try {
+        bmp = BitmapUtils.getThumbnail(this, outputFileUri, THUMBNAIL_SIZE);
+        outputFileUri = FileUtils.saveImageFile(this, outputFileUri);
+        Picasso.with(this)
+            .load(outputFileUri)
+            .transform(new BlurTransformation(this))
+            .into(mActivityUploadSelect);
+        mMaterialDialog = new MaterialDialog(this);
+        mMaterialDialog.setCanceledOnTouchOutside(false);
+        mMaterialDialog.setTitle("是否上传？")
+            .setMessage("请确认内容符合相关规定")
+            .setPositiveButton("OK", new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                tryUploadFrimUri(outputFileUri);
+              }
+            })
+            .setNegativeButton("CANCEL", new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                mMaterialDialog.dismiss();
+              }
+            });
+
+        mMaterialDialog.show();
+      } catch (IOException e) {
+        System.out.println(e.getMessage());
+      }
+    }
+
   }
 
   private void tryUploadFrimUri(Uri mImageUri) {
