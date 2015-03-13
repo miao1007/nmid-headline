@@ -6,14 +6,13 @@
     tools:context="cn.edu.cqupt.nmid.headline.ui.activity.base.BaseFragmentActivity">
 
 
-    <include
+  <include
+      android:id="@+id/base_frag_toolbar"
+      layout="@layout/include_toolbar"/>
 
-        android:id="@+id/toolbar"
-        layout="@layout/include_toolbar" />
-
-    <FrameLayout
-        android:id="@+id/base_fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+  <FrameLayout
+      android:id="@+id/base_fragment_container"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
 
 </LinearLayout>

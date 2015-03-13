@@ -6,10 +6,6 @@
     android:orientation="vertical"
     tools:context="cn.edu.cqupt.nmid.headline.ui.activity.AboutActivity">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/include_toolbar" />
-
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
@@ -26,7 +22,6 @@
         android:id="@+id/about_nexus_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"

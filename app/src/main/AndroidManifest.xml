@@ -203,10 +203,6 @@
         <action android:name=".ui.activity.SettingsMoreActivity"/>
       </intent-filter>
     </activity>
-    <activity
-        android:name=".ui.activity.StreamActivity"
-        android:label="@string/title_activity_stream">
-    </activity>
 
     <activity android:name=".ui.activity.UploadActivity"
         android:label="@string/title_activity_upload"/>

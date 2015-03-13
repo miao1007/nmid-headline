@@ -3,6 +3,7 @@ package cn.edu.cqupt.nmid.headline.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -38,10 +39,8 @@ public class DetailedActivity extends ActionBarActivity {
   static final String MIME_TYPE = "text/html";
   static final String ENCODING = "utf-8";
   String url;
-  /**
-   * Activity views
-   */
 
+  @InjectView(R.id.detailed_toolbar) Toolbar mToolbar;
   @InjectView(R.id.detailed_webview) ObservableWebView mWebView;
   @InjectView(R.id.detailed_multiple_actions) FloatingActionsMenu mFloatingActionsMenu;
   @InjectView(R.id.detailed_progressbar) ViewStub mViewStub;
@@ -88,7 +87,12 @@ public class DetailedActivity extends ActionBarActivity {
     setContentView(R.layout.activity_detailed);
     ButterKnife.inject(this);
     tryGetIntent();
+    trySetupFAB();
+    trySetupWebview();
+    trySetupToolbar();
+  }
 
+  private void trySetupFAB() {
     Feed feed = new Select().from(Feed.class)
         .where("idMember = ?", idMember)
         .orderBy("idMember desc")
@@ -96,7 +100,14 @@ public class DetailedActivity extends ActionBarActivity {
     Log.d(TAG, feed.isCollect() + "");
     mFloatingActionButton.setColorNormalResId(
         feed.isCollect() ? R.color.holo_red_dark : R.color.icons);
-    trySetupWebview();
+  }
+
+  private void trySetupToolbar() {
+    setSupportActionBar(mToolbar);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    if (ThemePref.isNightMode(this)) {
+      mToolbar.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
+    }
   }
 
   private void tryGetIntent() {
@@ -109,6 +120,8 @@ public class DetailedActivity extends ActionBarActivity {
   }
 
   private void trySetupWebview() {
+
+    mWebView.setPadding(0, mToolbar.getHeight(), 0, 0);
 
     url = HeadlineService.END_POINT
         + "/api/android/newscontent?id="
