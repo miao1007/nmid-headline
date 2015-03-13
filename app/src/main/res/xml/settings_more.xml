@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <SwitchPreference
+  <CheckBoxPreference
       android:defaultValue="true"
       android:layout="@layout/preference_item"
       android:key="@string/settings_push_feeds"
@@ -20,6 +20,7 @@
       android:layout="@layout/preference_item"
       android:title="清除缓存"
       android:summary="清除程序产生的缓存"/>
+
   <PreferenceScreen
       android:layout="@layout/preference_item"
       android:title="喜欢通信头条"
@@ -29,12 +30,12 @@
         android:data="market://details?id=cn.edu.cqupt.nmid.headline"/>
 
   </PreferenceScreen>
-  <SwitchPreference
+  <CheckBoxPreference
       android:layout="@layout/preference_item"
       android:defaultValue="true"
       android:key="@string/setting_debug"
-      android:summaryOff="显示调试日志"
-      android:summaryOn="不显示显示调试日志"
+      android:summaryOff="关闭调试日志"
+      android:summaryOn="打开调试日志"
       android:title="@string/setting_debug"/>
 
 </PreferenceScreen>
