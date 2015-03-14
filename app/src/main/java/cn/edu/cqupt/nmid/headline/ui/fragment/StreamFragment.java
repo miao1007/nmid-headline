@@ -17,9 +17,9 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
-import cn.edu.cqupt.nmid.headline.support.api.stream.UploadImageService;
-import cn.edu.cqupt.nmid.headline.support.api.stream.bean.Datum;
-import cn.edu.cqupt.nmid.headline.support.api.stream.bean.ImageStream;
+import cn.edu.cqupt.nmid.headline.support.api.image.ImageService;
+import cn.edu.cqupt.nmid.headline.support.api.image.bean.ImageInfo;
+import cn.edu.cqupt.nmid.headline.support.api.image.bean.ImageStream;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.activity.UploadActivity;
 import cn.edu.cqupt.nmid.headline.ui.adapter.StreamAdapter;
@@ -59,7 +59,7 @@ public class StreamFragment extends Fragment {
 
   StreamAdapter adapter;
   LinearLayoutManager mLayoutManager;
-  ArrayList<Datum> images = new ArrayList<>();
+  ArrayList<ImageInfo> images = new ArrayList<>();
   private int lastid = 0;
 
   private boolean isLoadingMore = false;
@@ -72,7 +72,7 @@ public class StreamFragment extends Fragment {
     ButterKnife.inject(this, view);
 
     mIncludeProgressbar.setVisibility(View.GONE);
-    adapter = new StreamAdapter(getActivity(), images);
+    adapter = new StreamAdapter(images);
     mLayoutManager = new LinearLayoutManager(getActivity());
 
     mRecyclerview.setBackgroundResource(ThemePref.getBackgroundResColor(getActivity()));
@@ -108,6 +108,11 @@ public class StreamFragment extends Fragment {
     return view;
   }
 
+  @Override public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    getActivity().setTitle(R.string.iiem_camera);
+  }
+
   void loadNewFeeds() {
     if (isLoadingMore) {
       Log.d(TAG, "ignore manually update");
@@ -115,7 +120,7 @@ public class StreamFragment extends Fragment {
       new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
           .setLogLevel(RestAdapter.LogLevel.BASIC)
           .build()
-          .create(UploadImageService.class)
+          .create(ImageService.class)
           .getRefreshImage(0, 15, new Callback<ImageStream>() {
             @Override public void success(ImageStream imageStream, Response response) {
               isLoadingMore = false;
@@ -144,7 +149,7 @@ public class StreamFragment extends Fragment {
       new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
           .setLogLevel(RestAdapter.LogLevel.BASIC)
           .build()
-          .create(UploadImageService.class)
+          .create(ImageService.class)
           .getROldImage(lastid, 15, new Callback<ImageStream>() {
             @Override public void success(ImageStream imageStream, Response response) {
               isLoadingMore = false;

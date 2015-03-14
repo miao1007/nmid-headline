@@ -1,4 +1,4 @@
-package cn.edu.cqupt.nmid.headline.support.api.stream.bean;
+package cn.edu.cqupt.nmid.headline.support.api.image.bean;
 
 /**
  * Created by leon on 2/2/15.

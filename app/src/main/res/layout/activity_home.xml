@@ -15,7 +15,7 @@
     <view xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         class="android.support.v7.widget.Toolbar"
-        android:id="@+id/toolbar"
+        android:id="@+id/image_comment_toolbar"
         android:paddingTop="@dimen/nav_drawer_status_bar_offset"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"

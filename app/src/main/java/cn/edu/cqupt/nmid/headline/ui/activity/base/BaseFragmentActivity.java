@@ -7,7 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.Optional;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import com.hannesdorfmann.swipeback.Position;
@@ -18,7 +17,7 @@ import com.hannesdorfmann.swipeback.SwipeBack;
  */
 public abstract class BaseFragmentActivity extends ActionBarActivity {
 
-  @Optional
+
   @InjectView(R.id.base_frag_toolbar) Toolbar mToolbar;
 
   @Override
@@ -47,8 +46,5 @@ public abstract class BaseFragmentActivity extends ActionBarActivity {
     }
   }
 
-  @Override public void onBackPressed() {
-    overridePendingTransition(R.anim.swipeback_stack_to_front, R.anim.swipeback_stack_right_out);
 
-  }
 }

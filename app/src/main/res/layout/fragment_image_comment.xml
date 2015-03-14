@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CommentsActivity">
+
+  <LinearLayout
+      android:id="@+id/contentRoot"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@id/image_comment_toolbar"
+      android:background="@color/bg_comments"
+      android:elevation="@dimen/default_elevation"
+      android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/rvComments"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scrollbars="none"/>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/llAddComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_comments"
+        android:elevation="@dimen/default_elevation"
+        android:gravity="center_vertical"
+        android:paddingBottom="4dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp">
+
+      <EditText
+          android:id="@+id/etComment"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:textColor="#555555"
+          android:textSize="14sp"/>
+
+      <io.github.froger.instamaterial.ui.view.SendCommentButton
+          android:id="@+id/btnSendComment"
+          android:layout_width="72dp"
+          android:layout_height="match_parent"
+          android:layout_marginBottom="2dp"
+          android:layout_marginLeft="8dp"
+          android:background="@drawable/btn_send_comment"
+          android:elevation="4dp"
+          android:orientation="vertical"/>
+
+    </LinearLayout>
+  </LinearLayout>
+</RelativeLayout>

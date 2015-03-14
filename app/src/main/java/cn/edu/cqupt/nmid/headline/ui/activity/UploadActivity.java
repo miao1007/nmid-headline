@@ -15,8 +15,8 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
-import cn.edu.cqupt.nmid.headline.support.api.stream.UploadImageService;
-import cn.edu.cqupt.nmid.headline.support.api.stream.bean.UploadResult;
+import cn.edu.cqupt.nmid.headline.support.api.image.ImageService;
+import cn.edu.cqupt.nmid.headline.support.api.image.bean.UploadResult;
 import cn.edu.cqupt.nmid.headline.ui.widget.ProgressBarCircular;
 import cn.edu.cqupt.nmid.headline.ui.widget.swipebacklayout.SwipeBackActivity;
 import cn.edu.cqupt.nmid.headline.utils.BitmapUtils;
@@ -129,7 +129,7 @@ public class UploadActivity extends SwipeBackActivity {
       new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
           .setLogLevel(RestAdapter.LogLevel.FULL)
           .build()
-          .create(UploadImageService.class)
+          .create(ImageService.class)
           .updateImage(new TypedFile("image/*", new File(mImageUri.getPath())),
               new TypedString(nickname), new TypedString(Build.MODEL),
               new Callback<UploadResult>() {

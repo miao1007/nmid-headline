@@ -28,7 +28,7 @@ import cn.jpush.android.api.JPushInterface;
 public class HomeActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    @InjectView(R.id.toolbar)
+    @InjectView(R.id.image_comment_toolbar)
     Toolbar mToolbar;
     @InjectView(R.id.home_drawer_layout)
     DrawerLayout mDrawerLayout;

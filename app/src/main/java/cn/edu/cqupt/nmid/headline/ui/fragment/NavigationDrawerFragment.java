@@ -31,9 +31,6 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 import cn.edu.cqupt.nmid.headline.R;
-import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
-import cn.edu.cqupt.nmid.headline.support.api.weather.WeatherService;
-import cn.edu.cqupt.nmid.headline.support.api.weather.bean.Weather;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.activity.SettingsActivity;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationItemsAdapter;
@@ -49,10 +46,6 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.tencent.qzone.QZone;
 import com.squareup.picasso.Picasso;
 import java.util.HashMap;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class NavigationDrawerFragment extends Fragment {
 
@@ -70,9 +63,6 @@ public class NavigationDrawerFragment extends Fragment {
   @InjectView(R.id.navigation_drawer_profile) FrameLayout mProfile;
   @InjectView(R.id.navigation_drawer_list_main) ListView mMainListView;
   @InjectView(R.id.navigation_drawer_list_secondary) ListView mSecondaryListView;
-  @InjectView(R.id.navigation_drawer_weather_img) ImageView mImageWeather;
-  @InjectView(R.id.navigation_drawer_weather_tempeture) TextView mTextWeather;
-  @InjectView(R.id.navigation_drawer_weather_title) TextView mTextWeatherTitle;
 
   NavigationItemsAdapter mNavigationItemsAdapter;
   private NavigationDrawerCallbacks mCallbacks;
@@ -88,7 +78,8 @@ public class NavigationDrawerFragment extends Fragment {
 
       @Override public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
         Log.d(TAG, "onComplete");
-        Log.d(TAG,hashMap.toString());
+        System.out.printf(hashMap.toString());
+
         fetchUserInfoFromDb(platform);
       }
 
@@ -99,7 +90,9 @@ public class NavigationDrawerFragment extends Fragment {
       @Override public void onCancel(Platform platform, int i) {
 
       }
-    }); qzone.authorize();
+    });
+
+    qzone.authorize();
     if (mDrawerLayout != null) {
       mDrawerLayout.closeDrawer(Gravity.START);
     }
@@ -160,22 +153,20 @@ public class NavigationDrawerFragment extends Fragment {
     mSecondaryListView.getLayoutParams().height = mNavSecondaryItemsAdapter.getListViewHeight();
 
     fetchUserInfoFromDb(ShareSDK.getPlatform(getActivity(), QZone.NAME));
-    fetchWeather();
     selectItem(mCurrentSelectedPosition);
-
     return rootView;
   }
 
   public void fetchUserInfoFromDb(Platform platform) {
     String avatar;
     String name;
-    
-    if (!platform.isValid()){
+
+    if (!platform.isValid()) {
       return;
     }
     PlatformDb db = platform.getDb();
-    
-    if (!db.isValid()){
+
+    if (!db.isValid()) {
       return;
     }
     Log.d(TAG, "db.isValid() ,load avatar");
@@ -190,31 +181,6 @@ public class NavigationDrawerFragment extends Fragment {
         .into(mAvatar);
 
     mUsername.setText(db.getUserName());
-  }
-
-  private void fetchWeather() {
-
-    new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
-        .build()
-        .create(WeatherService.class)
-        .getWeatherService(new Callback<Weather>() {
-          @Override public void success(Weather weather, Response response) {
-            //null point at device MT6575
-            if (weather.getData().getDaypictureurl() != null) {
-              Picasso.with(context)
-                  .load(weather.getData().getDaypictureurl())
-                  .fit()
-                  .transform(new CircleTransformation())
-                  .into(mImageWeather);
-            }
-            mTextWeather.setText(weather.getData().getTemperature());
-            mTextWeatherTitle.setText(weather.getData().getTitle());
-          }
-
-          @Override public void failure(RetrofitError error) {
-
-          }
-        });
   }
 
   public boolean isDrawerOpen() {

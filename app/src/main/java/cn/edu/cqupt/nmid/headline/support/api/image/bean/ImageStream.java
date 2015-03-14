@@ -1,5 +1,5 @@
 
-package cn.edu.cqupt.nmid.headline.support.api.stream.bean;
+package cn.edu.cqupt.nmid.headline.support.api.image.bean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +9,7 @@ import java.util.Map;
 public class ImageStream {
 
     private int status;
-    private List<Datum> data = new ArrayList<Datum>();
+    private List<ImageInfo> data = new ArrayList<ImageInfo>();
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
@@ -35,7 +35,7 @@ public class ImageStream {
      * @return
      *     The data
      */
-    public List<Datum> getData() {
+    public List<ImageInfo> getData() {
         return data;
     }
 
@@ -44,7 +44,7 @@ public class ImageStream {
      * @param data
      *     The data
      */
-    public void setData(List<Datum> data) {
+    public void setData(List<ImageInfo> data) {
         this.data = data;
     }
 
