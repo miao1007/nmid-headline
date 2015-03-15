@@ -218,6 +218,12 @@
             android:name=".ui.activity.ImageCommentActivity"
             android:label="@string/title_activity_image_comment" >
         </activity>
+        <activity
+            android:name=".ui.activity.PhotoViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_photo_view"
+            android:theme="@style/FullscreenTheme" >
+        </activity>
     </application>
 
 </manifest>

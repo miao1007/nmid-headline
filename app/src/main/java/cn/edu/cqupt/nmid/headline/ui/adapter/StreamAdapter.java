@@ -23,6 +23,7 @@ import cn.edu.cqupt.nmid.headline.support.api.image.ImageService;
 import cn.edu.cqupt.nmid.headline.support.api.image.bean.ImageInfo;
 import cn.edu.cqupt.nmid.headline.support.api.image.bean.ImageLikeResult;
 import cn.edu.cqupt.nmid.headline.ui.activity.ImageCommentActivity;
+import cn.edu.cqupt.nmid.headline.ui.activity.PhotoViewActivity;
 import cn.edu.cqupt.nmid.headline.utils.RetrofitUtils;
 import cn.edu.cqupt.nmid.headline.utils.TimeUtils;
 import cn.edu.cqupt.nmid.headline.utils.picasso.GradientTransformation;
@@ -95,7 +96,7 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
                   RetrofitUtils.disMsg(v.getContext(), "Success!");
                   int currentLike = imageInfo.getCount_praise() + 1;
                   viewHolder.likesCount.setText(currentLike + "人 觉得赞");
-                  updateHeartButton(viewHolder,true);
+                  updateHeartButton(viewHolder, true);
                 }
               }
 
@@ -103,6 +104,14 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
                 RetrofitUtils.disErr(v.getContext(), error);
               }
             });
+      }
+    });
+    viewHolder.image.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        Intent intent = new Intent(v.getContext(), PhotoViewActivity.class);
+        intent.putExtra(PhotoViewActivity.IMAGE_SIEZ_FULL, imageInfo.getImageurl());
+        intent.putExtra(PhotoViewActivity.IMAGE_SIEZ_PREVIOUS, imageInfo.getPrevirousurl());
+        v.getContext().startActivity(intent);
       }
     });
   }

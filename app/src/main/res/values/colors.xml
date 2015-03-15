@@ -23,4 +23,6 @@
   <color name="background_item_material_dark">#ff141414</color>
   <color name="background_item_material_light">#ffffffff</color>
 
+  <color name="black_overlay">#66000000</color>
+
 </resources>

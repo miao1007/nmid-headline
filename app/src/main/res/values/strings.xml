@@ -59,5 +59,9 @@
   <string name="title_activity_image_comment">ImageCommentActivity</string>
   <string name="hello_world">Hello world!</string>
 
+  <string name="title_activity_photo_view">PhotoViewActivity</string>
+  <string name="dummy_button">Dummy Button</string>
+  <string name="dummy_content">DUMMY\nCONTENT</string>
+
 
 </resources>
