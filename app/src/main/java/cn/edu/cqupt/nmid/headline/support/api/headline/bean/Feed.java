@@ -2,33 +2,27 @@ package cn.edu.cqupt.nmid.headline.support.api.headline.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.SerializedName;
 
-@Table(name = "basetable")
-public class Feed extends Model implements Parcelable {
+public class Feed implements Parcelable {
   //do not use `id` because it has been defined in Model
-  @Column(name = "idMember") @SerializedName(value = "id") int idMember;
+  @SerializedName(value = "id") int idMember;
 
-  @Column(name = "category") int category;
+  int category;
 
-  @Column(name = "title") String title;
+  String title;
 
-  @Column(name = "simpleContent") @SerializedName("simple_content") String simpleContent;
+  @SerializedName("simple_content") String simpleContent;
 
-  @Column(name = "image1") String image1;
+  String image1;
 
-  @Column(name = "image2") String image2;
+  String image2;
 
-  @Column(name = "image3") String image3;
+  String image3;
 
-  @Column(name = "timeRelease") @SerializedName("time_release") String timeRelease;
+  @SerializedName("time_release") String timeRelease;
 
-  @Column(name = "isCollect") boolean isCollect;
-
-
+  boolean isCollect;
 
   public boolean isCollect() {
     return isCollect;
@@ -161,6 +155,19 @@ public class Feed extends Model implements Parcelable {
   }
 
   public Feed() {
+  }
+
+  public Feed(int idMember, int category, String title, String simpleContent, String image1,
+      String image2, String image3, String timeRelease, boolean isCollect) {
+    this.idMember = idMember;
+    this.category = category;
+    this.title = title;
+    this.simpleContent = simpleContent;
+    this.image1 = image1;
+    this.image2 = image2;
+    this.image3 = image3;
+    this.timeRelease = timeRelease;
+    this.isCollect = isCollect;
   }
 
   private Feed(Parcel in) {

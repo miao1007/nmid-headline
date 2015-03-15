@@ -21,7 +21,6 @@ import cn.edu.cqupt.nmid.headline.support.pref.HttpPref;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.adapter.FeedAdapter;
 import cn.edu.cqupt.nmid.headline.utils.animation.SlideInOutBottomItemAnimator;
-import com.activeandroid.query.Select;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
@@ -148,7 +147,7 @@ public class FeedFragment extends Fragment {
       }
     });
 
-    loadDbFeeds();
+    //loadDbFeeds();
     //loadNewFeeds();
     return view;
   }
@@ -209,9 +208,9 @@ public class FeedFragment extends Fragment {
     //} finally {
     //  ActiveAndroid.endTransaction();
     //}
-    for (Feed feed : feeds) {
-      feed.save();
-    }
+    //for (Feed feed : feeds) {
+    //  feed.save();
+    //}
   }
 
   void loadOldNews() {
@@ -241,31 +240,6 @@ public class FeedFragment extends Fragment {
         });
   }
 
-  void loadDbFeeds() {
-    List<Feed> feeds;
-    if (isFavorite) {
-      feeds = new Select().from(Feed.class)
-          .where("iscollect = ?", true)
-          .orderBy("idMember desc")
-          .limit(feed_limit)
-          .execute();
-      newsBeans.addAll(feeds);
-      adapter.notifyDataSetChanged();
-    } else {
-      feeds = new Select().from(Feed.class)
-          .where("category = ?", feed_category)
-          .orderBy("idMember desc")
-          .limit(feed_limit)
-          .execute();
-      Log.d(TAG, "loadDbFeeds,size = " + feeds.size());
-      if (feeds.isEmpty()) {
-        loadNewFeeds();
-      } else {
-        newsBeans.addAll(feeds);
-        adapter.notifyDataSetChanged();
-      }
-    }
-  }
 
 
   @Override

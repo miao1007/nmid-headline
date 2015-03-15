@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewStub;
@@ -22,7 +21,6 @@ import cn.edu.cqupt.nmid.headline.support.task.callback.WebContentGetTaskCallbac
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import cn.edu.cqupt.nmid.headline.utils.NetworkUtils;
 import cn.sharesdk.onekeyshare.OnekeyShare;
-import com.activeandroid.query.Select;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
@@ -62,14 +60,15 @@ public class DetailedActivity extends ActionBarActivity {
   }
 
   @OnClick(R.id.detailed_action_favorite) void detailed_action_favorite(View v) {
-    Feed feed = new Select().from(Feed.class).where("idMember = ?", idMember).executeSingle();
-    Log.d(TAG, feed.isCollect() + "");
-    feed.setCollect(!feed.isCollect());
-    feed.save();
-    Log.d(TAG, feed.isCollect() + "");
-    mFloatingActionButton.setColorNormalResId(
-        feed.isCollect() ? R.color.holo_red_dark : R.color.icons);
-    mFloatingActionsMenu.toggle();
+    //Feed feed = Select.from(Feed.class).where(Condition.prop("idMember").eq(idMember)).first();
+    //
+    //Log.d(TAG, feed.isCollect() + "");
+    //feed.setCollect(!feed.isCollect());
+    //feed.save();
+    //Log.d(TAG, feed.isCollect() + "");
+    //mFloatingActionButton.setColorNormalResId(
+    //    feed.isCollect() ? R.color.holo_red_dark : R.color.icons);
+    //mFloatingActionsMenu.toggle();
   }
 
   @OnClick(R.id.detailed_action_settings) void detailed_action_settings() {
@@ -93,13 +92,9 @@ public class DetailedActivity extends ActionBarActivity {
   }
 
   private void trySetupFAB() {
-    Feed feed = new Select().from(Feed.class)
-        .where("idMember = ?", idMember)
-        .orderBy("idMember desc")
-        .executeSingle();
-    Log.d(TAG, feed.isCollect() + "");
-    mFloatingActionButton.setColorNormalResId(
-        feed.isCollect() ? R.color.holo_red_dark : R.color.icons);
+    //Log.d(TAG, feed.isCollect() + "");
+    //mFloatingActionButton.setColorNormalResId(
+    //    feed.isCollect() ? R.color.holo_red_dark : R.color.icons);
   }
 
   private void trySetupToolbar() {
