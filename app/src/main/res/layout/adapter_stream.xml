@@ -61,20 +61,6 @@
           android:background="@drawable/btn_feed_action"
           android:src="@drawable/ic_heart_outline_grey"/>
 
-      <ImageButton
-          android:id="@+id/stream_btnComments"
-          android:layout_width="48dp"
-          android:layout_height="48dp"
-          android:background="@drawable/btn_feed_action"
-          android:src="@drawable/ic_comment_outline_grey"/>
-
-      <ImageButton
-          android:id="@+id/btnMore"
-          android:layout_width="48dp"
-          android:layout_height="48dp"
-          android:background="@drawable/btn_feed_action"
-          android:src="@drawable/ic_more_grey"/>
-
       <LinearLayout
           android:layout_width="0dp"
           android:layout_height="match_parent"

@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,6 @@ import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
 import cn.edu.cqupt.nmid.headline.support.api.image.ImageService;
 import cn.edu.cqupt.nmid.headline.support.api.image.bean.ImageInfo;
 import cn.edu.cqupt.nmid.headline.support.api.image.bean.ImageLikeResult;
-import cn.edu.cqupt.nmid.headline.ui.activity.ImageCommentActivity;
 import cn.edu.cqupt.nmid.headline.ui.activity.PhotoViewActivity;
 import cn.edu.cqupt.nmid.headline.utils.RetrofitUtils;
 import cn.edu.cqupt.nmid.headline.utils.TimeUtils;
@@ -136,7 +136,14 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
         .load(imageInfo.getAvatar())
         .transform(new CircleTransformation())
         .into(viewHolder.mIv_avater);
+    if (imageInfo.isHaveClickLike()){
+      Log.d("StreamAdapter","isHaveClickLike");
+      viewHolder.mBtn_like.setImageResource(R.drawable.ic_heart_red);
+    } else {
 
+      Log.d("StreamAdapter","!isHaveClickLike");
+      viewHolder.mBtn_like.setImageResource(R.drawable.ic_heart_outline_grey);
+    }
     disPatchOnClick(viewHolder, position, imageInfo);
   }
 
@@ -145,22 +152,23 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
 
     viewHolder.mBtn_like.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(final View v) {
+
         RestAdapter adapter = new RestAdapter.Builder().setLogLevel(RestAdapter.LogLevel.FULL)
             .setEndpoint(HeadlineService.END_POINT)
             .build();
         adapter.create(ImageService.class)
-            .likeImage(knoImageList.get(position).getIdmember(), imageInfo.isLike() ? 1 : 0,
+            .likeImage(knoImageList.get(position).getIdmember(), imageInfo.isHaveClickLike() ? 0 : 1,
                 new Callback<ImageLikeResult>() {
                   @Override
                   public void success(ImageLikeResult imageLikeResult, Response response) {
                     if (imageLikeResult.status == 1) {
                       RetrofitUtils.disMsg(v.getContext(),
-                          imageInfo.isLike() ? "Success!" : "取消成功");
+                          !imageInfo.isHaveClickLike() ? "Success!" : "取消成功");
                       int currentLike =
-                          imageInfo.getCount_like() + (imageInfo.isLike() ? (1) : (0));
+                          imageInfo.getCount_like() + (imageInfo.isHaveClickLike() ? (0) : (1));
                       viewHolder.likesCount.setText(currentLike + "人 觉得赞");
-                      updateHeartButton(viewHolder, true, imageInfo.isLike());
-                      imageInfo.setIsLike(!imageInfo.isLike());
+                      updateHeartButton(viewHolder, true, !imageInfo.isHaveClickLike());
+                      imageInfo.setIsLike(!imageInfo.isHaveClickLike());
                     }
                   }
 
@@ -180,14 +188,7 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
       }
     });
 
-    viewHolder.mBtn_comments.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        Intent intent;
-        intent = new Intent(v.getContext(), ImageCommentActivity.class);
-        intent.putExtra(ImageCommentActivity.ID, knoImageList.get(position).getIdmember());
-        v.getContext().startActivity(intent);
-      }
-    });
+
   }
 
   @Override public int getItemCount() {
@@ -199,7 +200,6 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
     @InjectView(R.id.item_stream_imageview) ImageView mIv_stream_previous;
     @InjectView(R.id.item_stream_likes_count) TextView likesCount;
     @InjectView(R.id.item_stream_nick_name) TextView nickName;
-    @InjectView(R.id.stream_btnComments) ImageButton mBtn_comments;
     @InjectView(R.id.stream_btnLike) ImageButton mBtn_like;
     @InjectView(R.id.iv_stream_avatar) ImageView mIv_avater;
 

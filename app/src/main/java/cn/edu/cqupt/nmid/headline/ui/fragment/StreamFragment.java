@@ -107,7 +107,7 @@ public class StreamFragment extends Fragment {
       @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
         int visibleItems = mLayoutManager.findLastVisibleItemPosition();
-        if (dy > 0 && visibleItems == adapter.getItemCount() - 1 && !isLoadingMore) {
+        if (dy > 0 && visibleItems == adapter.getItemCount() - 3 && !isLoadingMore) {
           mSwipeRefreshLayout.setRefreshing(true);
           loadOldImage();
           Log.d(TAG, "loadNewFeeds");

@@ -15,14 +15,14 @@ public class ImageInfo {
   private int count_like;
   private String avatar;
 
-  @Expose(serialize = false) private boolean isLike;
+  @Expose(serialize = false) private boolean isHaveClickLike = false;
 
-  public boolean isLike() {
-    return isLike;
+  public boolean isHaveClickLike() {
+    return isHaveClickLike;
   }
 
   public void setIsLike(boolean isLike) {
-    this.isLike = isLike;
+    this.isHaveClickLike = isLike;
   }
 
   public String getAvatar() {
