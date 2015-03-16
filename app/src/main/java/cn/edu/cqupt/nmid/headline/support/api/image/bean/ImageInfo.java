@@ -5,41 +5,41 @@ import java.util.Map;
 
 public class ImageInfo {
 
-  private int id;
+  private int idmember;
   private String imageurl;
   private String previrousurl;
   private String nickname;
   private String deviceinfo;
   private String uploadtime;
-  private int count_praise;
+  private int count_like;
+  private String avatar;
 
-  public int getCount_praise() {
-    return count_praise;
+  public String getAvatar() {
+    return avatar;
   }
 
-  public void setCount_praise(int count_praise) {
-    this.count_praise = count_praise;
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
+  }
+
+  public int getCount_like() {
+    return count_like;
+  }
+
+  public void setCount_like(int count_like) {
+    this.count_like = count_like;
   }
 
   private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-  /**
-   * @return The id
-   */
-  public int getId() {
-    return id;
+  public int getIdmember() {
+    return idmember;
   }
 
-  /**
-   * @param id The id
-   */
-  public void setId(int id) {
-    this.id = id;
+  public void setIdmember(int idmember) {
+    this.idmember = idmember;
   }
 
-  /**
-   * @return The imageurl
-   */
   public String getImageurl() {
     return imageurl;
   }

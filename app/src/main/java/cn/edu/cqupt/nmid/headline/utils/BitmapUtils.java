@@ -17,8 +17,7 @@ public class BitmapUtils {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public static Bitmap getThumbnail(Context context, Uri uri, int thumbnailSize) throws
-      FileNotFoundException, IOException {
+	public static Bitmap getThumbnail(Context context, Uri uri, int thumbnailSize) throws IOException {
 		InputStream input = context.getContentResolver().openInputStream(uri);
 
 		BitmapFactory.Options onlyBoundsOptions = new BitmapFactory.Options();
@@ -56,5 +55,6 @@ public class BitmapUtils {
 		else
 			return k;
 	}
+
 	
 }

@@ -9,6 +9,6 @@ import retrofit.http.Query;
 public interface UpdateService {
 
   String END_POINT = "http://115.29.139.53";
-  @GET("/apk/checkforupdate.php") UpdateResult checkforupdate(@Query("applicationid") String applicationid,
+  @GET("/apk/checkforupdate.php") UpdateResult checkforupdate(
       @Query("versionname") String versionname);
 }

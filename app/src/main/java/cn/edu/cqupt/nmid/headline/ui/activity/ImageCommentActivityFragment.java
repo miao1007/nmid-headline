@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import cn.edu.cqupt.nmid.headline.support.api.image.bean.ImageLikeResult;
 import cn.edu.cqupt.nmid.headline.utils.RetrofitUtils;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.tencent.qzone.QZone;
+import com.squareup.picasso.Picasso;
 import io.github.froger.instamaterial.ui.view.SendCommentButton;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,8 @@ import retrofit.client.Response;
  */
 public class ImageCommentActivityFragment extends Fragment
     implements SendCommentButton.OnSendClickListener {
+
+  public static final String TAG = "ImageCommentFragment";
 
   @InjectView(R.id.rvComments) RecyclerView rvComments;
   @InjectView(R.id.etComment) EditText etComment;
@@ -82,16 +86,21 @@ public class ImageCommentActivityFragment extends Fragment
 
   @Override public void onSendClickListener(final View v) {
 
+    Log.d(TAG, "onSendClickListener");
     if (!validateComment()) {
+      Log.e(TAG, "validateComment faid");
       return;
     }
     btnSendComment.setCurrentState(SendCommentButton.STATE_SEND);
-    RestAdapter restAdapter =
-        new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT).build();
+    RestAdapter restAdapter = new RestAdapter.Builder().setLogLevel(RestAdapter.LogLevel.FULL)
+        .setEndpoint(HeadlineService.END_POINT)
+        .build();
     restAdapter.create(ImageService.class)
         .commentImage(id, ShareSDK.getPlatform(v.getContext().getApplicationContext(), QZone.NAME)
             .getDb()
-            .getUserName(), etComment.getText().toString(), new Callback<ImageLikeResult>() {
+            .getUserName(), ShareSDK.getPlatform(v.getContext().getApplicationContext(), QZone.NAME)
+            .getDb()
+            .getUserIcon(), etComment.getText().toString(), new Callback<ImageLikeResult>() {
           @Override public void success(ImageLikeResult imageLikeResult, Response response) {
             if (imageLikeResult.status == 1) {
               RetrofitUtils.disMsg(v.getContext(), "success!");
@@ -131,6 +140,9 @@ public class ImageCommentActivityFragment extends Fragment
 
     @Override public void onBindViewHolder(CommentsViewHolder holder, int position) {
       holder.mTv_comment.setText(imageComments.get(position).getComment());
+      Picasso.with(holder.mIv_user_avater.getContext())
+          .load(imageComments.get(position).getAvatar())
+          .into(holder.mIv_user_avater);
     }
 
     @Override public int getItemCount() {
@@ -140,8 +152,8 @@ public class ImageCommentActivityFragment extends Fragment
 
   public static class CommentsViewHolder extends RecyclerView.ViewHolder {
 
-    @InjectView(R.id.imagecomment_users_avater) ImageView mIv_user_avater;
-    @InjectView(R.id.imagecomment_commet) TextView mTv_comment;
+    @InjectView(R.id.iv_imagecomment_users_avater) ImageView mIv_user_avater;
+    @InjectView(R.id.tv_imagecomment_commet) TextView mTv_comment;
 
     public CommentsViewHolder(View itemView) {
       super(itemView);

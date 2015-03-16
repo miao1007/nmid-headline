@@ -62,6 +62,7 @@
   <string name="title_activity_photo_view">PhotoViewActivity</string>
   <string name="dummy_button">Dummy Button</string>
   <string name="dummy_content">DUMMY\nCONTENT</string>
+  <string name="title_activity_publish">PublishActivity</string>
 
 
 </resources>

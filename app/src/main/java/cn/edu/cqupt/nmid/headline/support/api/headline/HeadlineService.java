@@ -9,23 +9,24 @@ import retrofit.http.Query;
  * Created by leon on 12/27/14.
  */
 public interface HeadlineService {
-  //http://115.29.139.53:8080/api/android/newscontent?id=10&category=1
-  public String END_POINT = "http://115.29.139.53:8080/";
+
+
+  String END_POINT = "http://202.202.43.205:8086/";
 
   //1	int	学院新闻
   //2	int	科研动态
   //3	int	青春通信
   //4	int	校友新闻
   //required
-  public int CATE_SCHOOL = 1;
-  public int CATE_TECHNOLOGY = 2;
-  public int CATE_TELECOMMUNICATION = 3;
-  public int CATE_ALUMNUS = 4;
+  int CATE_SCHOOL = 1;
+  int CATE_TECHNOLOGY = 2;
+  int CATE_TELECOMMUNICATION = 3;
+  int CATE_ALUMNUS = 4;
 
   int STATUS_OK = 1;
   int STATUS_ERR = 0;
 
-  public String CATEGORY = "category";
+  String CATEGORY = "category";
 
   //关键字	类型	含义	说明
   //自然数	int	设置刷新新闻起始id
@@ -44,6 +45,4 @@ public interface HeadlineService {
 
   @GET("/api/android/newscontent") void getNewsContent(@Query(CATEGORY) int category,
       @Query(ID) int id, Callback<Void> callback);
-
-
 }

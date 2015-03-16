@@ -33,8 +33,7 @@ public class AboutFragment extends Fragment {
             .setLogLevel(RestAdapter.LogLevel.FULL)
             .build();
 
-        return adapter.create(UpdateService.class)
-            .checkforupdate(BuildConfig.APPLICATION_ID, BuildConfig.VERSION_NAME);
+        return adapter.create(UpdateService.class).checkforupdate(BuildConfig.VERSION_NAME);
       }
 
       @Override protected void onPreExecute() {
@@ -53,7 +52,8 @@ public class AboutFragment extends Fragment {
           RetrofitUtils.disMsg(getActivity(), "Network Error!");
           return;
         }
-        if (updateResult.getStatus() == 1) {
+        if (updateResult.getStatus() == 1
+            && Float.valueOf(BuildConfig.VERSION_NAME) > Float.valueOf(updateResult.getVersion())) {
           dialog.setMessage("Update available, update now?")
               .setPositiveButton("OK", new View.OnClickListener() {
                 @Override public void onClick(View v) {
@@ -106,5 +106,4 @@ public class AboutFragment extends Fragment {
     });
     return view;
   }
-
 }

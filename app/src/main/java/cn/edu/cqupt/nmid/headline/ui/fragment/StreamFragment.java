@@ -1,9 +1,11 @@
 package cn.edu.cqupt.nmid.headline.ui.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,12 +23,13 @@ import cn.edu.cqupt.nmid.headline.support.api.image.ImageService;
 import cn.edu.cqupt.nmid.headline.support.api.image.bean.ImageInfo;
 import cn.edu.cqupt.nmid.headline.support.api.image.bean.ImageStream;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
-import cn.edu.cqupt.nmid.headline.ui.activity.UploadActivity;
 import cn.edu.cqupt.nmid.headline.ui.adapter.StreamAdapter;
 import cn.edu.cqupt.nmid.headline.ui.widget.ProgressBarCircular;
+import cn.edu.cqupt.nmid.headline.utils.FileUtils;
 import cn.edu.cqupt.nmid.headline.utils.animation.SlideInOutBottomItemAnimator;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
+import java.io.File;
 import java.util.ArrayList;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -38,6 +41,9 @@ import static cn.edu.cqupt.nmid.headline.utils.LogUtils.makeLogTag;
 public class StreamFragment extends Fragment {
 
   String TAG = makeLogTag(StreamFragment.class);
+  public final static int REQUEST_IMAGE_CAPTURE = 1;
+  Uri outputFileUri;
+
   /**
    * Injected Vies
    */
@@ -47,15 +53,12 @@ public class StreamFragment extends Fragment {
   @InjectView(R.id.stream_multiple_actions) FloatingActionButton mStreamMultipleActions;
 
   @OnClick(R.id.stream_multiple_actions) void stream_action_take_picture() {
-    Intent intent = new Intent(getActivity(), UploadActivity.class);
-    //    startActivityForResult(intent,REQUEST_TAKE_PICTURE);
-    startActivityForResult(intent, 3);
+    File file = FileUtils.createImageFile();
+    outputFileUri = Uri.fromFile(file);
+    Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+    startActivityForResult(captureIntent, REQUEST_IMAGE_CAPTURE);
   }
-
-  final int REQUEST_TAKE_PICTURE = 1;
-  final int REQUEST_SELECT_IMAGE = 2;
-
-  private Uri mImageUri;
 
   StreamAdapter adapter;
   LinearLayoutManager mLayoutManager;
@@ -64,8 +67,7 @@ public class StreamFragment extends Fragment {
 
   private boolean isLoadingMore = false;
 
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_stream, container, false);
@@ -92,8 +94,7 @@ public class StreamFragment extends Fragment {
     });
     //Endless RecyclerView
     mRecyclerview.setOnScrollListener(new RecyclerView.OnScrollListener() {
-      @Override
-      public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+      @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
         int visibleItems = mLayoutManager.findLastVisibleItemPosition();
         if (dy > 0 && visibleItems == adapter.getItemCount() - 1 && !isLoadingMore) {
@@ -171,8 +172,60 @@ public class StreamFragment extends Fragment {
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == 3) {
-      loadNewFeeds();
+    if (resultCode != Activity.RESULT_OK) {
+      Log.d(TAG, "canceled or other exception!");
+      return;
+    }
+
+    if (requestCode == REQUEST_IMAGE_CAPTURE) {
+      Log.d(TAG, "onActivityResult: REQUEST_IMAGE_CAPTURE");
+      //TODO:Use the Uri
+
+      mRecyclerview.smoothScrollToPosition(0);
+      adapter.showLoadingView();
     }
   }
+  //
+  //private void tryUploadFrimUri(Context context, Uri mImageUri) {
+  //
+  //  final Bitmap bmp;
+  //  try {
+  //
+  //    bmp = BitmapUtils.getThumbnail(context, mImageUri, 300);
+  //  } catch (IOException e) {
+  //    e.printStackTrace();
+  //  }
+  //
+  //  if (mImageUri != null) {
+  //    String nickname;
+  //    if (ShareSDK.getPlatform(QZone.NAME).isValid()) {
+  //      nickname = ShareSDK.getPlatform(QZone.NAME).getDb().getUserName();
+  //    } else {
+  //      nickname = "手机用户";
+  //    }
+  //    String avatar = ShareSDK.getPlatform(context, QZone.NAME).getDb().getUserIcon();
+  //    new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
+  //        .setLogLevel(RestAdapter.LogLevel.FULL)
+  //        .build()
+  //        .create(ImageService.class)
+  //        .updateImage(new TypedFile("image/*", new File(mImageUri.getPath())),
+  //            new TypedString(nickname), new TypedString(Build.MODEL), new TypedString(avatar),
+  //            new Callback<UploadResult>() {
+  //              @Override public void success(UploadResult uploadResult, Response response) {
+  //                if (uploadResult.getStatus() == 1) {
+  //                  Log.d(TAG, "upload successfully!");
+  //                } else {
+  //                  Log.e(TAG, "upload failed!");
+  //                }
+  //                bmp.recycle();
+  //              }
+  //
+  //              @Override public void failure(RetrofitError error) {
+  //                bmp.recycle();
+  //              }
+  //            });
+  //  } else {
+  //    bmp.recycle();
+  //  }
+  //}
 }

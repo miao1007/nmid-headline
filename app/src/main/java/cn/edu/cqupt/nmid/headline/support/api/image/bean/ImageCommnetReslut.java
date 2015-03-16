@@ -6,6 +6,8 @@ import java.util.List;
 
 public class ImageCommnetReslut {
 
+
+
   @Expose private int status;
   @Expose private List<ImageComment> data = new ArrayList<ImageComment>();
 

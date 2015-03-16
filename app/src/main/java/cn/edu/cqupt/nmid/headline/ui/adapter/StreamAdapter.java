@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
@@ -26,8 +27,10 @@ import cn.edu.cqupt.nmid.headline.ui.activity.ImageCommentActivity;
 import cn.edu.cqupt.nmid.headline.ui.activity.PhotoViewActivity;
 import cn.edu.cqupt.nmid.headline.utils.RetrofitUtils;
 import cn.edu.cqupt.nmid.headline.utils.TimeUtils;
+import cn.edu.cqupt.nmid.headline.utils.picasso.CircleTransformation;
 import cn.edu.cqupt.nmid.headline.utils.picasso.GradientTransformation;
 import com.squareup.picasso.Picasso;
+import io.github.froger.instamaterial.ui.view.SendingProgressView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +46,7 @@ import retrofit.client.Response;
 public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamViewHolder> {
 
   List<ImageInfo> knoImageList;
+  boolean showLoadingView = false;
 
   private final Map<RecyclerView.ViewHolder, AnimatorSet> likeAnimations = new HashMap<>();
   private final ArrayList<Integer> likedPositions = new ArrayList<>();
@@ -52,6 +56,11 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
   private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR =
       new AccelerateInterpolator();
   private static final OvershootInterpolator OVERSHOOT_INTERPOLATOR = new OvershootInterpolator(4);
+
+  private static final int VIEW_TYPE_DEFAULT = 1;
+  private static final int VIEW_TYPE_UPLOADING = 2;
+
+  private boolean isLike = true;
 
   public StreamAdapter(List<ImageInfo> knoImageList) {
 
@@ -67,50 +76,108 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
   }
 
   @Override public void onBindViewHolder(final StreamViewHolder viewHolder, final int position) {
+
+    bindLoadingFeedItem(viewHolder, position);
+    //if (getItemViewType(position) == VIEW_TYPE_UPLOADING){
+    //  setUpUploadingAnimation(viewHolder);
+    //}
+  }
+
+  private void setUpUploadingAnimation(final StreamViewHolder holder) {
+    holder.vSendingProgress.getViewTreeObserver()
+        .addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+          @Override public boolean onPreDraw() {
+            holder.vSendingProgress.getViewTreeObserver().removeOnPreDrawListener(this);
+            holder.vSendingProgress.simulateProgress();
+            return true;
+          }
+        });
+    holder.vSendingProgress.setOnLoadingFinishedListener(
+        new SendingProgressView.OnLoadingFinishedListener() {
+          @Override public void onLoadingFinished() {
+            holder.vSendingProgress.animate()
+                .scaleY(0)
+                .scaleX(0)
+                .setDuration(200)
+                .setStartDelay(100);
+            holder.vProgressBg.animate()
+                .alpha(0.f)
+                .setDuration(200)
+                .setStartDelay(100)
+                .setListener(new AnimatorListenerAdapter() {
+                  @Override public void onAnimationEnd(Animator animation) {
+                    holder.vSendingProgress.setScaleX(1);
+                    holder.vSendingProgress.setScaleY(1);
+                    holder.vProgressBg.setAlpha(1);
+                    showLoadingView = false;
+                    notifyItemChanged(0);
+                  }
+                })
+                .start();
+          }
+        });
+  }
+
+  private void bindLoadingFeedItem(StreamViewHolder viewHolder, int position) {
     final ImageInfo imageInfo = knoImageList.get(position);
-    Picasso.with(viewHolder.image.getContext())
+    Picasso.with(viewHolder.mIv_stream_previous.getContext())
         .load(imageInfo.getPrevirousurl())
         .placeholder(R.drawable.lorempixel)
         .transform(new GradientTransformation())
-        .into(viewHolder.image);
-    viewHolder.likesCount.setText(imageInfo.getCount_praise() + "人 觉得赞");
+        .into(viewHolder.mIv_stream_previous);
+    viewHolder.likesCount.setText(imageInfo.getCount_like() + "人 觉得赞");
     viewHolder.nickName.setText(
         imageInfo.getNickname() + " 发表于 " + TimeUtils.getTimeFormatText(imageInfo.getUploadtime()));
-    viewHolder.upload_time.setText(TimeUtils.getTimeFormatText(imageInfo.getUploadtime()));
-    viewHolder.mBtn_comments.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        Intent intent;
-        intent = new Intent(v.getContext(), ImageCommentActivity.class);
-        intent.putExtra("id", knoImageList.get(position).getId());
-        v.getContext().startActivity(intent);
-      }
-    });
+    Picasso.with(viewHolder.mIv_avater.getContext())
+        .load(imageInfo.getAvatar())
+        .transform(new CircleTransformation())
+        .into(viewHolder.mIv_avater);
+    disPatchOnClick(viewHolder, position, imageInfo);
+  }
+
+  private void disPatchOnClick(final StreamViewHolder viewHolder, final int position,
+      final ImageInfo imageInfo) {
+
     viewHolder.mBtn_like.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(final View v) {
-        RestAdapter adapter =
-            new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT).build();
+        RestAdapter adapter = new RestAdapter.Builder().setLogLevel(RestAdapter.LogLevel.FULL)
+            .setEndpoint(HeadlineService.END_POINT)
+            .build();
         adapter.create(ImageService.class)
-            .likeImage(knoImageList.get(position).getId(), new Callback<ImageLikeResult>() {
-              @Override public void success(ImageLikeResult imageLikeResult, Response response) {
-                if (imageLikeResult.status == 1) {
-                  RetrofitUtils.disMsg(v.getContext(), "Success!");
-                  int currentLike = imageInfo.getCount_praise() + 1;
-                  viewHolder.likesCount.setText(currentLike + "人 觉得赞");
-                  updateHeartButton(viewHolder, true);
-                }
-              }
+            .likeImage(knoImageList.get(position).getIdmember(), isLike ? 1 : 0,
+                new Callback<ImageLikeResult>() {
+                  @Override
+                  public void success(ImageLikeResult imageLikeResult, Response response) {
+                    if (imageLikeResult.status == 1) {
+                      RetrofitUtils.disMsg(v.getContext(), isLike ? "Success!" : "取消成功");
+                      int currentLike = imageInfo.getCount_like() + (isLike ? (1) : (0));
+                      viewHolder.likesCount.setText(currentLike + "人 觉得赞");
+                      updateHeartButton(viewHolder, true, isLike);
+                      isLike = !isLike;
+                    }
+                  }
 
-              @Override public void failure(RetrofitError error) {
-                RetrofitUtils.disErr(v.getContext(), error);
-              }
-            });
+                  @Override public void failure(RetrofitError error) {
+                    RetrofitUtils.disErr(v.getContext(), error);
+                  }
+                });
       }
     });
-    viewHolder.image.setOnClickListener(new View.OnClickListener() {
+
+    viewHolder.mIv_stream_previous.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         Intent intent = new Intent(v.getContext(), PhotoViewActivity.class);
         intent.putExtra(PhotoViewActivity.IMAGE_SIEZ_FULL, imageInfo.getImageurl());
         intent.putExtra(PhotoViewActivity.IMAGE_SIEZ_PREVIOUS, imageInfo.getPrevirousurl());
+        v.getContext().startActivity(intent);
+      }
+    });
+
+    viewHolder.mBtn_comments.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        Intent intent;
+        intent = new Intent(v.getContext(), ImageCommentActivity.class);
+        intent.putExtra(ImageCommentActivity.ID, knoImageList.get(position).getIdmember());
         v.getContext().startActivity(intent);
       }
     });
@@ -122,12 +189,15 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
 
   public static class StreamViewHolder extends RecyclerView.ViewHolder {
 
-    @InjectView(R.id.item_stream_imageview) ImageView image;
+    @InjectView(R.id.item_stream_imageview) ImageView mIv_stream_previous;
     @InjectView(R.id.item_stream_likes_count) TextView likesCount;
     @InjectView(R.id.item_stream_nick_name) TextView nickName;
-    @InjectView(R.id.item_stream_upload_time) TextView upload_time;
     @InjectView(R.id.stream_btnComments) ImageButton mBtn_comments;
     @InjectView(R.id.stream_btnLike) ImageButton mBtn_like;
+    @InjectView(R.id.iv_stream_avatar) ImageView mIv_avater;
+
+    SendingProgressView vSendingProgress;
+    View vProgressBg;
 
     public StreamViewHolder(View itemView) {
       super(itemView);
@@ -135,7 +205,8 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
     }
   }
 
-  private void updateHeartButton(final StreamViewHolder holder, boolean animated) {
+  private void updateHeartButton(final StreamViewHolder holder, boolean animated,
+      final boolean isLike) {
     if (animated) {
       if (!likeAnimations.containsKey(holder)) {
         AnimatorSet animatorSet = new AnimatorSet();
@@ -155,7 +226,11 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
         bounceAnimY.setInterpolator(OVERSHOOT_INTERPOLATOR);
         bounceAnimY.addListener(new AnimatorListenerAdapter() {
           @Override public void onAnimationStart(Animator animation) {
-            holder.mBtn_like.setImageResource(R.drawable.ic_heart_red);
+            if (isLike) {
+              holder.mBtn_like.setImageResource(R.drawable.ic_heart_red);
+            } else {
+              holder.mBtn_like.setImageResource(R.drawable.ic_heart_outline_grey);
+            }
           }
         });
 
@@ -177,6 +252,19 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
         holder.mBtn_like.setImageResource(R.drawable.ic_heart_outline_grey);
       }
     }
+  }
+
+  @Override public int getItemViewType(int position) {
+    if (showLoadingView && position == 0) {
+      return VIEW_TYPE_UPLOADING;
+    } else {
+      return VIEW_TYPE_DEFAULT;
+    }
+  }
+
+  public void showLoadingView() {
+    showLoadingView = true;
+    notifyItemChanged(0);
   }
 
   private void resetLikeAnimationState(StreamViewHolder holder) {

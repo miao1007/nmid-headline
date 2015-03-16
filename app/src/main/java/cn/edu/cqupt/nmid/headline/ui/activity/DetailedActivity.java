@@ -16,8 +16,6 @@ import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
 import cn.edu.cqupt.nmid.headline.support.api.headline.bean.Feed;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.support.pref.WebViewPref;
-import cn.edu.cqupt.nmid.headline.support.task.WebContentGetTask;
-import cn.edu.cqupt.nmid.headline.support.task.callback.WebContentGetTaskCallback;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import cn.edu.cqupt.nmid.headline.utils.NetworkUtils;
 import cn.sharesdk.onekeyshare.OnekeyShare;
@@ -28,6 +26,10 @@ import com.github.ksoichiro.android.observablescrollview.ObservableWebView;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.hannesdorfmann.swipeback.Position;
 import com.hannesdorfmann.swipeback.SwipeBack;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Useful @Link:http://developer.android.com/training/animation/crossfade.html
@@ -159,13 +161,22 @@ public class DetailedActivity extends ActionBarActivity {
       }
     });
 
-    new WebContentGetTask(new WebContentGetTaskCallback() {
-      @Override public void onPreExcute() {
-        mViewStub.inflate();
-      }
-
-      @Override public void onSuccess(Object o) {
-        mViewStub.setVisibility(View.GONE);
+    //new WebContentGetTask(new WebContentGetTaskCallback() {
+    //  @Override public void onPreExcute() {
+    //    mViewStub.inflate();
+    //  }
+    //
+    //  @Override public void onSuccess(Object o) {
+    //    mViewStub.setVisibility(View.GONE);
+    //    String htmlData;
+    //
+    //  }
+    //}).execute(url);
+    RestAdapter adapter = new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT).setLogLevel(
+        RestAdapter.LogLevel.FULL).build();
+    adapter.create(HeadlineService.class).getNewsContent(category, idMember, new Callback<Void>() {
+      @Override public void success(Void aVoid, Response response) {
+        String o = response.getBody().toString();
         String htmlData;
         if (ThemePref.isNightMode(DetailedActivity.this)) {
           // Webview will use asserts/style_night.css
@@ -183,7 +194,11 @@ public class DetailedActivity extends ActionBarActivity {
 
         mWebView.loadDataWithBaseURL("file:///android_asset/", htmlData, MIME_TYPE, ENCODING, null);
       }
-    }).execute(url);
+
+      @Override public void failure(RetrofitError error) {
+
+      }
+    });
   }
 
   @Override public void onBackPressed() {

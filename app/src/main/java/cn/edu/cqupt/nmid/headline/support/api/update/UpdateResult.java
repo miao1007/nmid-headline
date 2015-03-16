@@ -6,6 +6,24 @@ package cn.edu.cqupt.nmid.headline.support.api.update;
 public class UpdateResult {
   private int status;
   private String url;
+  private byte force;
+  private String version;
+
+  public byte getForce() {
+    return force;
+  }
+
+  public void setForce(byte force) {
+    this.force = force;
+  }
+
+  public String getVersion() {
+    return version;
+  }
+
+  public void setVersion(String version) {
+    this.version = version;
+  }
 
   public int getStatus() {
     return status;
