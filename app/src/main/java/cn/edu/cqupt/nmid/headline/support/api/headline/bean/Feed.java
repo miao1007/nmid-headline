@@ -5,8 +5,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 public class Feed implements Parcelable {
-  //do not use `id` because it has been defined in Model
-  @SerializedName(value = "id") int idMember;
+
+  int idmember;
 
   int category;
 
@@ -32,12 +32,12 @@ public class Feed implements Parcelable {
     this.isCollect = isCollect;
   }
 
-  public int getIdMember() {
-    return idMember;
+  public int getIdmember() {
+    return idmember;
   }
 
-  public void setIdMember(int idMember) {
-    this.idMember = idMember;
+  public void setIdmember(int idmember) {
+    this.idmember = idmember;
   }
 
   /**
@@ -143,7 +143,7 @@ public class Feed implements Parcelable {
   }
 
   @Override public void writeToParcel(Parcel dest, int flags) {
-    dest.writeInt(this.idMember);
+    dest.writeInt(this.idmember);
     dest.writeInt(this.category);
     dest.writeString(this.title);
     dest.writeString(this.simpleContent);
@@ -157,9 +157,9 @@ public class Feed implements Parcelable {
   public Feed() {
   }
 
-  public Feed(int idMember, int category, String title, String simpleContent, String image1,
+  public Feed(int idmember, int category, String title, String simpleContent, String image1,
       String image2, String image3, String timeRelease, boolean isCollect) {
-    this.idMember = idMember;
+    this.idmember = idmember;
     this.category = category;
     this.title = title;
     this.simpleContent = simpleContent;
@@ -171,7 +171,7 @@ public class Feed implements Parcelable {
   }
 
   private Feed(Parcel in) {
-    this.idMember = in.readInt();
+    this.idmember = in.readInt();
     this.category = in.readInt();
     this.title = in.readString();
     this.simpleContent = in.readString();

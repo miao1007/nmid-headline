@@ -1,5 +1,6 @@
 package cn.edu.cqupt.nmid.headline.support.api.image.bean;
 
+import com.google.gson.annotations.Expose;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +14,16 @@ public class ImageInfo {
   private String uploadtime;
   private int count_like;
   private String avatar;
+
+  @Expose(serialize = false) private boolean isLike;
+
+  public boolean isLike() {
+    return isLike;
+  }
+
+  public void setIsLike(boolean isLike) {
+    this.isLike = isLike;
+  }
 
   public String getAvatar() {
     return avatar;

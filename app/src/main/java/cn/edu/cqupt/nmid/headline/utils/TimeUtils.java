@@ -52,7 +52,7 @@ public class TimeUtils {
       return getTimeFormatDate(date.parse(yyyy_MM_dd_HH_mm_ss));
     } catch (Exception e){
       e.printStackTrace();
-      return "时间格式错误";
+      return "刚刚";
     }
   }
 }

@@ -1,9 +1,12 @@
 package cn.edu.cqupt.nmid.headline.ui.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -22,19 +25,26 @@ import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
 import cn.edu.cqupt.nmid.headline.support.api.image.ImageService;
 import cn.edu.cqupt.nmid.headline.support.api.image.bean.ImageInfo;
 import cn.edu.cqupt.nmid.headline.support.api.image.bean.ImageStream;
+import cn.edu.cqupt.nmid.headline.support.api.image.bean.UploadResult;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.adapter.StreamAdapter;
 import cn.edu.cqupt.nmid.headline.ui.widget.ProgressBarCircular;
+import cn.edu.cqupt.nmid.headline.utils.BitmapUtils;
 import cn.edu.cqupt.nmid.headline.utils.FileUtils;
 import cn.edu.cqupt.nmid.headline.utils.animation.SlideInOutBottomItemAnimator;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.tencent.qzone.QZone;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedFile;
+import retrofit.mime.TypedString;
 
 import static cn.edu.cqupt.nmid.headline.utils.LogUtils.makeLogTag;
 
@@ -179,53 +189,53 @@ public class StreamFragment extends Fragment {
 
     if (requestCode == REQUEST_IMAGE_CAPTURE) {
       Log.d(TAG, "onActivityResult: REQUEST_IMAGE_CAPTURE");
-      //TODO:Use the Uri
-
       mRecyclerview.smoothScrollToPosition(0);
-      adapter.showLoadingView();
+      tryUploadFrimUri(getActivity(),outputFileUri);
     }
   }
-  //
-  //private void tryUploadFrimUri(Context context, Uri mImageUri) {
-  //
-  //  final Bitmap bmp;
-  //  try {
-  //
-  //    bmp = BitmapUtils.getThumbnail(context, mImageUri, 300);
-  //  } catch (IOException e) {
-  //    e.printStackTrace();
-  //  }
-  //
-  //  if (mImageUri != null) {
-  //    String nickname;
-  //    if (ShareSDK.getPlatform(QZone.NAME).isValid()) {
-  //      nickname = ShareSDK.getPlatform(QZone.NAME).getDb().getUserName();
-  //    } else {
-  //      nickname = "手机用户";
-  //    }
-  //    String avatar = ShareSDK.getPlatform(context, QZone.NAME).getDb().getUserIcon();
-  //    new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
-  //        .setLogLevel(RestAdapter.LogLevel.FULL)
-  //        .build()
-  //        .create(ImageService.class)
-  //        .updateImage(new TypedFile("image/*", new File(mImageUri.getPath())),
-  //            new TypedString(nickname), new TypedString(Build.MODEL), new TypedString(avatar),
-  //            new Callback<UploadResult>() {
-  //              @Override public void success(UploadResult uploadResult, Response response) {
-  //                if (uploadResult.getStatus() == 1) {
-  //                  Log.d(TAG, "upload successfully!");
-  //                } else {
-  //                  Log.e(TAG, "upload failed!");
-  //                }
-  //                bmp.recycle();
-  //              }
-  //
-  //              @Override public void failure(RetrofitError error) {
-  //                bmp.recycle();
-  //              }
-  //            });
-  //  } else {
-  //    bmp.recycle();
-  //  }
-  //}
+
+  private void tryUploadFrimUri(Context context, Uri mImageUri) {
+
+    final Bitmap bmp;
+    try {
+
+      bmp = BitmapUtils.getThumbnail(context, mImageUri, 300);
+      if (mImageUri != null) {
+        String nickname;
+        if (ShareSDK.getPlatform(QZone.NAME).isValid()) {
+          nickname = ShareSDK.getPlatform(QZone.NAME).getDb().getUserName();
+        } else {
+          nickname = "手机用户";
+        }
+        String avatar = ShareSDK.getPlatform(context, QZone.NAME).getDb().getUserIcon();
+        new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
+            .setLogLevel(RestAdapter.LogLevel.FULL)
+            .build()
+            .create(ImageService.class)
+            .updateImage(
+                new TypedFile("image/*", new File(mImageUri.getPath())),
+                new TypedString(nickname),
+                new TypedString(Build.MODEL),
+                new TypedString(avatar),
+                new Callback<UploadResult>() {
+                  @Override public void success(UploadResult uploadResult, Response response) {
+                    if (uploadResult.getStatus() == 1) {
+                      Log.d(TAG, "upload successfully!");
+                    } else {
+                      Log.e(TAG, "upload failed!");
+                    }
+                    bmp.recycle();
+                  }
+
+                  @Override public void failure(RetrofitError error) {
+                    bmp.recycle();
+                  }
+                });
+      } else {
+        bmp.recycle();
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 }

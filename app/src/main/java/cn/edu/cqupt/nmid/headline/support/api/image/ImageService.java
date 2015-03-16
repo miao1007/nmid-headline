@@ -25,8 +25,10 @@ public interface ImageService {
   String LIMIT = "limit";
 
   //upload image file
-  @Multipart @POST("/api/android/upload") void updateImage(@Part(IMAGE) TypedFile photo,
-      @Part(NICKNAME) TypedString description, @Part(DEVICE_INFO) TypedString deviceinfo,
+  @Multipart @POST("/api/android/upload") void updateImage(
+      @Part(IMAGE) TypedFile photo,
+      @Part(NICKNAME) TypedString description,
+      @Part(DEVICE_INFO) TypedString deviceinfo,
       @Part(AVATAR) TypedString avatar, Callback<UploadResult> callback);
 
   //get image list
@@ -48,6 +50,6 @@ public interface ImageService {
 
 
   @GET("/api/android/imagecomment") void commentImage(@Query("id") int id,
-      @Query("nickname") String namename,@Query("avatar") String avatar, @Query("comment") String comment,
+      @Query("nickname") String namename,@Query("avatar") String avatar, @Query("comment") String comment,@Query("command")int cmd,
       Callback<ImageLikeResult> resultCallback);
 }

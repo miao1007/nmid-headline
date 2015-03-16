@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,6 +24,8 @@ import cn.edu.cqupt.nmid.headline.support.api.image.bean.ImageComment;
 import cn.edu.cqupt.nmid.headline.support.api.image.bean.ImageCommnetReslut;
 import cn.edu.cqupt.nmid.headline.support.api.image.bean.ImageLikeResult;
 import cn.edu.cqupt.nmid.headline.utils.RetrofitUtils;
+import cn.edu.cqupt.nmid.headline.utils.TimeUtils;
+import cn.edu.cqupt.nmid.headline.utils.picasso.CircleTransformation;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.tencent.qzone.QZone;
 import com.squareup.picasso.Picasso;
@@ -86,12 +89,17 @@ public class ImageCommentActivityFragment extends Fragment
 
   @Override public void onSendClickListener(final View v) {
 
+    doComment(v, true);
+  }
+
+  private void doComment(final View v, boolean isComment) {
+    int cmd = isComment ? 1 : 0;
     Log.d(TAG, "onSendClickListener");
     if (!validateComment()) {
       Log.e(TAG, "validateComment faid");
       return;
     }
-    btnSendComment.setCurrentState(SendCommentButton.STATE_SEND);
+    ((SendCommentButton) v).setCurrentState(SendCommentButton.STATE_SEND);
     RestAdapter restAdapter = new RestAdapter.Builder().setLogLevel(RestAdapter.LogLevel.FULL)
         .setEndpoint(HeadlineService.END_POINT)
         .build();
@@ -100,21 +108,27 @@ public class ImageCommentActivityFragment extends Fragment
             .getDb()
             .getUserName(), ShareSDK.getPlatform(v.getContext().getApplicationContext(), QZone.NAME)
             .getDb()
-            .getUserIcon(), etComment.getText().toString(), new Callback<ImageLikeResult>() {
+            .getUserIcon(), etComment.getText().toString(), cmd, new Callback<ImageLikeResult>() {
           @Override public void success(ImageLikeResult imageLikeResult, Response response) {
             if (imageLikeResult.status == 1) {
               RetrofitUtils.disMsg(v.getContext(), "success!");
               ImageComment imageComment = new ImageComment();
               imageComment.setComment(etComment.getText().toString());
-              imageComments.add(imageComment);
-              mCommentAdapter.notifyDataSetChanged();
+              imageComment.setAvatar(
+                  ShareSDK.getPlatform(v.getContext().getApplicationContext(), QZone.NAME)
+                      .getDb()
+                      .getUserIcon());
+              imageComment.setIsCancelable(true);
+              imageComments.add(0, imageComment);
+              mCommentAdapter.notifyItemInserted(0);
               etComment.setText(null);
-              btnSendComment.setCurrentState(SendCommentButton.STATE_DONE);
             }
+            ((SendCommentButton) v).setCurrentState(SendCommentButton.STATE_DONE);
           }
 
           @Override public void failure(RetrofitError error) {
             RetrofitUtils.disErr(v.getContext(), error);
+            ((SendCommentButton) v).setCurrentState(SendCommentButton.STATE_DONE);
           }
         });
   }
@@ -138,11 +152,36 @@ public class ImageCommentActivityFragment extends Fragment
       return new CommentsViewHolder(view);
     }
 
-    @Override public void onBindViewHolder(CommentsViewHolder holder, int position) {
+    @Override public void onBindViewHolder(CommentsViewHolder holder, final int position) {
+      final ImageComment comment = imageComments.get(position);
       holder.mTv_comment.setText(imageComments.get(position).getComment());
       Picasso.with(holder.mIv_user_avater.getContext())
-          .load(imageComments.get(position).getAvatar())
+          .load(comment.getAvatar())
+          .transform(new CircleTransformation())
           .into(holder.mIv_user_avater);
+      holder.mTv_imagecomment_release_time.setText(TimeUtils.getTimeFormatText(comment.getTime()));
+      if (comment.isCancelable()) {
+        holder.mIb_imagecomment_commet_cancel.setVisibility(View.VISIBLE);
+        holder.mIb_imagecomment_commet_cancel.setOnClickListener(new View.OnClickListener() {
+          @Override public void onClick(View v) {
+            new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
+                .build()
+                .create(ImageService.class)
+                .commentImage(comment.getCommentId(), "", "", "", 0,
+                    new Callback<ImageLikeResult>() {
+                      @Override
+                      public void success(ImageLikeResult imageLikeResult, Response response) {
+                        imageComments.remove(0);
+                        notifyItemRemoved(position);
+                      }
+
+                      @Override public void failure(RetrofitError error) {
+
+                      }
+                    });
+          }
+        });
+      }
     }
 
     @Override public int getItemCount() {
@@ -154,6 +193,8 @@ public class ImageCommentActivityFragment extends Fragment
 
     @InjectView(R.id.iv_imagecomment_users_avater) ImageView mIv_user_avater;
     @InjectView(R.id.tv_imagecomment_commet) TextView mTv_comment;
+    @InjectView(R.id.ib_imagecomment_commet_cancel) ImageButton mIb_imagecomment_commet_cancel;
+    @InjectView(R.id.tv_imagecomment_release_time) TextView mTv_imagecomment_release_time;
 
     public CommentsViewHolder(View itemView) {
       super(itemView);

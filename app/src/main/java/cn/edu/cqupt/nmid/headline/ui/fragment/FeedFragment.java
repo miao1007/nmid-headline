@@ -84,8 +84,7 @@ public class FeedFragment extends Fragment {
     loadNewFeeds();
   }
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
+  @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     Log.d(TAG, "onCreate");
     getArgsAndPrefs();
@@ -102,8 +101,7 @@ public class FeedFragment extends Fragment {
     feed_limit = HttpPref.getQueryFeedsLimit();
   }
 
-  @Override
-  public View onCreateView(LayoutInflater inflater, final ViewGroup container,
+  @Override public View onCreateView(LayoutInflater inflater, final ViewGroup container,
       Bundle savedInstanceState) {
     Log.d(TAG, "onCreateView");
     View view = inflater.inflate(R.layout.fragment_feed, container, false);
@@ -117,7 +115,7 @@ public class FeedFragment extends Fragment {
     mFloatingActionButton.setIcon(R.drawable.ic_reload_48dp);
 
     mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN);
-    adapter = new FeedAdapter(getActivity(), newsBeans);
+    adapter = new FeedAdapter(newsBeans);
     mRecyclerview.setAdapter(adapter);
     mRecyclerview.setHasFixedSize(true);
     mLayoutManager = new LinearLayoutManager(getActivity());
@@ -132,8 +130,7 @@ public class FeedFragment extends Fragment {
     });
     //Endless RecyclerView
     mRecyclerview.setOnScrollListener(new RecyclerView.OnScrollListener() {
-      @Override
-      public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+      @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
         int lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
         int totalItemCount = mLayoutManager.getItemCount();
@@ -179,7 +176,7 @@ public class FeedFragment extends Fragment {
                   cacheToDb(newsBeans);
                   return;
                 }
-                if (newsBeans.get(0).getIdMember() == headJson.getData().get(0).getIdMember()) {
+                if (newsBeans.get(0).getIdmember() == headJson.getData().get(0).getIdmember()) {
                   Log.d(TAG, "Same data, Ignore cacheToDb");
                   return;
                 }
@@ -215,7 +212,7 @@ public class FeedFragment extends Fragment {
 
   void loadOldNews() {
     isLoadingMore = true;
-    feed_id = newsBeans.get(newsBeans.size() - 1).getIdMember();
+    feed_id = newsBeans.get(newsBeans.size() - 1).getIdmember();
     new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
         .build()
         .create(HeadlineService.class)
@@ -240,10 +237,7 @@ public class FeedFragment extends Fragment {
         });
   }
 
-
-
-  @Override
-  public void onDestroyView() {
+  @Override public void onDestroyView() {
     super.onDestroyView();
     LOGD(TAG, "onDestroyView");
     ButterKnife.reset(this);

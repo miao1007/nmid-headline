@@ -43,6 +43,7 @@ import retrofit.client.Response;
 /**
  * Created by leon on 2/2/15.
  */
+
 public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamViewHolder> {
 
   List<ImageInfo> knoImageList;
@@ -126,12 +127,16 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
         .transform(new GradientTransformation())
         .into(viewHolder.mIv_stream_previous);
     viewHolder.likesCount.setText(imageInfo.getCount_like() + "人 觉得赞");
-    viewHolder.nickName.setText(
-        imageInfo.getNickname() + " 发表于 " + TimeUtils.getTimeFormatText(imageInfo.getUploadtime()));
+    if (imageInfo.getUploadtime() != null) {
+
+      viewHolder.nickName.setText(imageInfo.getNickname() + " 发表于 " + TimeUtils.getTimeFormatText(
+          imageInfo.getUploadtime()));
+    }
     Picasso.with(viewHolder.mIv_avater.getContext())
         .load(imageInfo.getAvatar())
         .transform(new CircleTransformation())
         .into(viewHolder.mIv_avater);
+
     disPatchOnClick(viewHolder, position, imageInfo);
   }
 
@@ -144,16 +149,18 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
             .setEndpoint(HeadlineService.END_POINT)
             .build();
         adapter.create(ImageService.class)
-            .likeImage(knoImageList.get(position).getIdmember(), isLike ? 1 : 0,
+            .likeImage(knoImageList.get(position).getIdmember(), imageInfo.isLike() ? 1 : 0,
                 new Callback<ImageLikeResult>() {
                   @Override
                   public void success(ImageLikeResult imageLikeResult, Response response) {
                     if (imageLikeResult.status == 1) {
-                      RetrofitUtils.disMsg(v.getContext(), isLike ? "Success!" : "取消成功");
-                      int currentLike = imageInfo.getCount_like() + (isLike ? (1) : (0));
+                      RetrofitUtils.disMsg(v.getContext(),
+                          imageInfo.isLike() ? "Success!" : "取消成功");
+                      int currentLike =
+                          imageInfo.getCount_like() + (imageInfo.isLike() ? (1) : (0));
                       viewHolder.likesCount.setText(currentLike + "人 觉得赞");
-                      updateHeartButton(viewHolder, true, isLike);
-                      isLike = !isLike;
+                      updateHeartButton(viewHolder, true, imageInfo.isLike());
+                      imageInfo.setIsLike(!imageInfo.isLike());
                     }
                   }
 
@@ -220,7 +227,6 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
         ObjectAnimator bounceAnimX = ObjectAnimator.ofFloat(holder.mBtn_like, "scaleX", 0.2f, 1f);
         bounceAnimX.setDuration(300);
         bounceAnimX.setInterpolator(OVERSHOOT_INTERPOLATOR);
-
         ObjectAnimator bounceAnimY = ObjectAnimator.ofFloat(holder.mBtn_like, "scaleY", 0.2f, 1f);
         bounceAnimY.setDuration(300);
         bounceAnimY.setInterpolator(OVERSHOOT_INTERPOLATOR);

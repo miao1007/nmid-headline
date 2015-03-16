@@ -24,7 +24,7 @@
 
   <!-- Retrofit Error -->
   <string name="NETWORK">无法访问服务器地址，请检查你的网络！ :</string>
-  <string name="CONVERSION">你是否未登陆了ChinaNet?</string>
+  <string name="CONVERSION">服务器解析错误！</string>
   <string name="HTTP">服务器内部出错啦 :</string>
   <string name="HTTP_500">请联系开发者！</string>
   <string name="HTTP_404">界面未找到, 请尝试登陆网页版!</string>

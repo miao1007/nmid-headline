@@ -3,35 +3,47 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:paddingBottom="8dp"
+      android:paddingTop="8dp">
+
+    <ImageView
+        android:id="@+id/iv_imagecomment_users_avater"
+        android:layout_width="@dimen/comment_avatar_size"
+        android:layout_height="@dimen/comment_avatar_size"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/ic_avater"/>
+
+    <TextView
+        android:id="@+id/tv_imagecomment_commet"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp">
-
-        <ImageView
-            android:id="@+id/iv_imagecomment_users_avater"
-            android:layout_width="@dimen/comment_avatar_size"
-            android:layout_height="@dimen/comment_avatar_size"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:background="@drawable/ic_avater" />
-
-        <TextView
-            android:id="@+id/tv_imagecomment_commet"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="16dp"
-            android:layout_weight="1"
-            android:text="Lorem ipsum dolor sit amet" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_marginRight="16dp"
+        android:layout_weight="1"
+        android:text="Lorem ipsum dolor sit amet"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginLeft="88dp"
-        android:background="#cccccc" />
+        android:layout_marginRight="8dp"
+        android:text="刚刚"
+        android:id="@+id/tv_imagecomment_release_time"/>
+    <ImageButton android:layout_width="32dp" android:layout_height="32dp"
+        android:layout_margin="8dp"
+        android:id="@+id/ib_imagecomment_commet_cancel"
+        android:layout_gravity="center_vertical"
+        android:visibility="gone"
+        android:src="@drawable/img_cancel"/>
+  </LinearLayout>
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:layout_gravity="bottom"
+      android:layout_marginLeft="88dp"
+      android:background="#cccccc"/>
 </FrameLayout>
