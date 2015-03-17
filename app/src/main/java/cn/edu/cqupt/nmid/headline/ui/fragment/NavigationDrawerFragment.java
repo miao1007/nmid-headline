@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -43,11 +45,13 @@ import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.PlatformDb;
 import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.framework.utils.UIHandler;
 import cn.sharesdk.tencent.qzone.QZone;
 import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 
-public class NavigationDrawerFragment extends Fragment {
+public class NavigationDrawerFragment extends Fragment
+    implements PlatformActionListener, Handler.Callback {
 
   private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
   private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
@@ -73,29 +77,49 @@ public class NavigationDrawerFragment extends Fragment {
   private boolean mUserLearnedDrawer;
 
   @OnClick(R.id.navigation_drawer_avatar) void navigation_drawer_avatar() {
-    Platform qzone = ShareSDK.getPlatform(getActivity(), QZone.NAME);
-    qzone.setPlatformActionListener(new PlatformActionListener() {
 
-      @Override public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-        Log.d(TAG, "onComplete");
-        System.out.printf(hashMap.toString());
-
-        fetchUserInfoFromDb(platform);
-      }
-
-      @Override public void onError(Platform platform, int i, Throwable throwable) {
-
-      }
-
-      @Override public void onCancel(Platform platform, int i) {
-
-      }
-    });
-
+    ShareSDK.initSDK(getActivity());
+    Platform qzone = ShareSDK.getPlatform(getActivity().getApplicationContext(), QZone.NAME);
+    qzone.SSOSetting(false);
+    qzone.setPlatformActionListener(this);
     qzone.authorize();
     if (mDrawerLayout != null) {
       mDrawerLayout.closeDrawer(Gravity.START);
     }
+  }
+
+  @Override
+  public void onComplete(final Platform platform, int action, HashMap<String, Object> res) {
+    Log.d(TAG, "onComplete");
+
+    //WTF! Callback not called in UI thread!
+    Message message = new Message();
+    message.what = 1;
+    message.obj = platform;
+    UIHandler.sendMessage(message, this);
+
+    mCallbacks.onLoginSuccess();
+    Log.d(TAG, platform.getDb().getUserName());
+    Log.d(TAG, platform.getDb().getUserId());
+  }
+
+  @Override public void onError(Platform platform, int i, Throwable throwable) {
+
+  }
+
+  @Override public void onCancel(Platform platform, int i) {
+
+  }
+
+  @Override public boolean handleMessage(Message msg) {
+    switch (msg.what) {
+      case 1:
+        fetchUserInfoFromDb(((Platform) msg.obj));
+        break;
+      default:
+        break;
+    }
+    return false;
   }
 
   @OnItemClick(R.id.navigation_drawer_list_main) void navigation_drawer_list_main(int position) {
@@ -158,18 +182,23 @@ public class NavigationDrawerFragment extends Fragment {
   }
 
   public void fetchUserInfoFromDb(Platform platform) {
-    String avatar;
-    String name;
 
     if (!platform.isValid()) {
+
+      Log.e(TAG, "platform unvalid");
       return;
     }
     PlatformDb db = platform.getDb();
 
     if (!db.isValid()) {
+
+      Log.e(TAG, "db unvalid");
       return;
     }
     Log.d(TAG, "db.isValid() ,load avatar");
+
+    Log.d(TAG, db.getUserIcon());
+
     Picasso.with(context)
         .load(db.getUserIcon())
         .transform(new BlurTransformation(context))
@@ -311,7 +340,9 @@ public class NavigationDrawerFragment extends Fragment {
     if (activity != null) activity.getSupportActionBar().setTitle(getString(R.string.app_name));
   }
 
-  public static interface NavigationDrawerCallbacks {
+  public interface NavigationDrawerCallbacks {
     void onNavigationDrawerItemSelected(int position);
+
+    void onLoginSuccess();
   }
 }

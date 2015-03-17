@@ -6,6 +6,7 @@ import cn.edu.cqupt.nmid.headline.support.pref.DebugPref;
 import cn.edu.cqupt.nmid.headline.support.pref.PushPref;
 import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.ShareSDK;
+import com.activeandroid.ActiveAndroid;
 
 /**
  * Created by leon on 1/27/15.
@@ -34,6 +35,8 @@ public class GlobalContext extends Application {
     //CrashReport.initCrashReport(this, appId, isDebug);
     //sharesdk
     ShareSDK.initSDK(this);
+    // Here you start using the ActiveAndroid library.
+    ActiveAndroid.initialize(this);
 
 
   }
@@ -41,6 +44,7 @@ public class GlobalContext extends Application {
   @Override public void onTerminate() {
     super.onTerminate();
     Log.d("GlobalContext","onTerminate");
+    ActiveAndroid.dispose();
   }
 
   public static GlobalContext getInstance() {

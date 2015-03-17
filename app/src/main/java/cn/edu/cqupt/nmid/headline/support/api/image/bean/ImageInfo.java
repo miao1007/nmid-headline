@@ -11,7 +11,7 @@ public class ImageInfo {
   private String previrousurl;
   private String nickname;
   private String deviceinfo;
-  private String uploadtime;
+  private long uploadtime;
   private int count_like;
   private String avatar;
 
@@ -107,14 +107,14 @@ public class ImageInfo {
   /**
    * @return The uploadtime
    */
-  public String getUploadtime() {
+  public long getUploadtime() {
     return uploadtime;
   }
 
   /**
    * @param uploadtime The uploadtime
    */
-  public void setUploadtime(String uploadtime) {
+  public void setUploadtime(long uploadtime) {
     this.uploadtime = uploadtime;
   }
 

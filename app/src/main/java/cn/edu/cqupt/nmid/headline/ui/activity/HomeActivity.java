@@ -26,106 +26,100 @@ import cn.jpush.android.api.JPushInterface;
  *
  */
 public class HomeActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+    implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    @InjectView(R.id.image_comment_toolbar)
-    Toolbar mToolbar;
-    @InjectView(R.id.home_drawer_layout)
-    DrawerLayout mDrawerLayout;
-    @InjectView(R.id.home_content_layout)
-    LinearLayout mLinearLayout;
+  @InjectView(R.id.image_comment_toolbar) Toolbar mToolbar;
+  @InjectView(R.id.home_drawer_layout) DrawerLayout mDrawerLayout;
+  @InjectView(R.id.home_content_layout) LinearLayout mLinearLayout;
 
-    NavigationDrawerFragment mNavigationDrawerFragment;
-    private String TAG = LogUtils.makeLogTag(HomeActivity.class);
+  NavigationDrawerFragment mNavigationDrawerFragment;
+  private String TAG = LogUtils.makeLogTag(HomeActivity.class);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        ButterKnife.inject(this);
-        Log.d(TAG, "onCreate");
-        mToolbar.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
-        mLinearLayout.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
-        trySetupToolbar();
+  @Override protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_home);
+    ButterKnife.inject(this);
+    Log.d(TAG, "onCreate");
+    mToolbar.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
+    mLinearLayout.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
+    trySetupToolbar();
+  }
+
+  private void trySetupToolbar() {
+
+    setSupportActionBar(mToolbar);
+    mNavigationDrawerFragment =
+        (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(
+            R.id.navigation_drawer);
+
+    mNavigationDrawerFragment.setUp(mDrawerLayout, mToolbar);
+  }
+
+  @Override public void onNavigationDrawerItemSelected(int position) {
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    Fragment fragment = null;
+    switch (position) {
+      case 0:
+        fragment = new FeedsFragment();
+        break;
+      case 1:
+        fragment = new StreamFragment();
+        break;
+      case 2:
+        fragment = FeedFragment.newFavInstance();
+        break;
     }
 
-    private void trySetupToolbar() {
-
-        setSupportActionBar(mToolbar);
-        mNavigationDrawerFragment =
-                (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(
-                        R.id.navigation_drawer);
-
-        mNavigationDrawerFragment.setUp(mDrawerLayout, mToolbar);
+    if (fragment != null) {
+      fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
+  }
 
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = null;
-        switch (position) {
-            case 0:
-                fragment = new FeedsFragment();
-                break;
-            case 1:
-                fragment = new StreamFragment();
-                break;
-            case 2:
-                fragment = FeedFragment.newFavInstance();
-                break;
-        }
-
-        if (fragment != null) {
-            fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
-        }
+  @Override public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu_home, menu);
+    if (ThemePref.isNightMode(this)) {
+      menu.getItem(0).setTitle(R.string.settings_night_mode_day);
+    } else {
+      menu.getItem(0).setTitle(R.string.settings_night_mode_night);
     }
+    return super.onCreateOptionsMenu(menu);
+  }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_home, menu);
-        if (ThemePref.isNightMode(this)) {
-            menu.getItem(0).setTitle(R.string.settings_night_mode_day);
-        } else {
-            menu.getItem(0).setTitle(R.string.settings_night_mode_night);
-        }
-        return super.onCreateOptionsMenu(menu);
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.action_night_mode:
+        ThemePref.setNightMode(this, !ThemePref.isNightMode(this));
+
+        Intent intent = new Intent(this, this.getClass());
+        startActivity(intent);
+        finish();
+
+        break;
+      case R.id.action_settings:
+        startActivity(new Intent(this, SettingsActivity.class));
+        break;
+      default:
+        break;
     }
+    return super.onOptionsItemSelected(item);
+  }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_night_mode:
-                ThemePref.setNightMode(this, !ThemePref.isNightMode(this));
+  @Override protected void onResume() {
+    super.onResume();
+    JPushInterface.onResume(this);
+  }
 
-                Intent intent = new Intent(this, this.getClass());
-                startActivity(intent);
-                finish();
+  @Override protected void onPause() {
+    super.onPause();
+    JPushInterface.onPause(this);
+  }
 
-                break;
-            case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
-                break;
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+  @Override protected void onRestart() {
+    super.onRestart();
+    Log.d(TAG, "onRestart");
+  }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        JPushInterface.onResume(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        JPushInterface.onPause(this);
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d(TAG, "onRestart");
-    }
+  @Override public void onLoginSuccess() {
+    getSupportFragmentManager().findFragmentById(R.id.container);
+  }
 }

@@ -2,27 +2,23 @@ package cn.edu.cqupt.nmid.headline.support.api.headline.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.SerializedName;
 
-public class Feed implements Parcelable {
+@Table(name = "basetable") public class Feed extends Model implements Parcelable {
+  @Column(name = "idMember") int idmember;
+  @Column(name = "category") int category;
+  @Column(name = "title") String title;
 
-  int idmember;
-
-  int category;
-
-  String title;
-
-  @SerializedName("simple_content") String simpleContent;
-
-  String image1;
-
-  String image2;
-
-  String image3;
+  @SerializedName("simple_content") @Column(name = "simple_content") String simpleContent;
+  @Column(name = "image1") String image1;
+  @Column(name = "image2") String image2;
+  @Column(name = "image3") String image3;
 
   @SerializedName("time_release") String timeRelease;
-
-  boolean isCollect;
+  @Column(name = "isCollect") boolean isCollect;
 
   public boolean isCollect() {
     return isCollect;

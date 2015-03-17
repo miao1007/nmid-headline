@@ -39,6 +39,7 @@ import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -53,6 +54,7 @@ public class StreamFragment extends Fragment {
   String TAG = makeLogTag(StreamFragment.class);
   public final static int REQUEST_IMAGE_CAPTURE = 1;
   Uri outputFileUri;
+  MaterialDialog dialog;
 
   /**
    * Injected Vies
@@ -63,6 +65,26 @@ public class StreamFragment extends Fragment {
   @InjectView(R.id.stream_multiple_actions) FloatingActionButton mStreamMultipleActions;
 
   @OnClick(R.id.stream_multiple_actions) void stream_action_take_picture() {
+    if (!ShareSDK.getPlatform(getActivity().getApplicationContext(), QZone.NAME).isValid()) {
+      dialog = new MaterialDialog(getActivity()).setTitle("Login Reqired")
+          .setMessage("请先登录账号，这样才可以上传哦！")
+          .setNegativeButton("CANCEL", new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              dialog.dismiss();
+            }
+          })
+          .setPositiveButton("OK", new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              dialog.dismiss();
+            }
+          });
+      dialog.show();
+    } else {
+      tryUploadImage();
+    }
+  }
+
+  private void tryUploadImage() {
     File file = FileUtils.createImageFile();
     outputFileUri = Uri.fromFile(file);
     Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -121,7 +143,6 @@ public class StreamFragment extends Fragment {
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    getActivity().setTitle(R.string.iiem_camera);
   }
 
   void loadNewFeeds() {
@@ -190,7 +211,7 @@ public class StreamFragment extends Fragment {
     if (requestCode == REQUEST_IMAGE_CAPTURE) {
       Log.d(TAG, "onActivityResult: REQUEST_IMAGE_CAPTURE");
       mRecyclerview.smoothScrollToPosition(0);
-      tryUploadFrimUri(getActivity(),outputFileUri);
+      tryUploadFrimUri(getActivity(), outputFileUri);
     }
   }
 
@@ -212,11 +233,8 @@ public class StreamFragment extends Fragment {
             .setLogLevel(RestAdapter.LogLevel.FULL)
             .build()
             .create(ImageService.class)
-            .updateImage(
-                new TypedFile("image/*", new File(mImageUri.getPath())),
-                new TypedString(nickname),
-                new TypedString(Build.MODEL),
-                new TypedString(avatar),
+            .updateImage(new TypedFile("image/*", new File(mImageUri.getPath())),
+                new TypedString(nickname), new TypedString(Build.MODEL), new TypedString(avatar),
                 new Callback<UploadResult>() {
                   @Override public void success(UploadResult uploadResult, Response response) {
                     if (uploadResult.getStatus() == 1) {

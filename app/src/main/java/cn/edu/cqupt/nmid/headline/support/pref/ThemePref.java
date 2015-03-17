@@ -1,8 +1,6 @@
 package cn.edu.cqupt.nmid.headline.support.pref;
 
 import android.content.Context;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DrawableRes;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.utils.PreferenceUtils;
 
@@ -31,7 +29,7 @@ public class ThemePref {
     }
   }
 
-  @ColorRes
+
   public static int getToolbarBackgroundResColor(Context context) {
     if (isNightMode(context)) {
       return R.color.background_material_dark;
@@ -40,7 +38,7 @@ public class ThemePref {
     }
   }
 
-  @DrawableRes
+
   public static int getItemBackgroundResColor(Context context) {
     if (isNightMode(context)) {
       return R.color.background_item_material_dark;

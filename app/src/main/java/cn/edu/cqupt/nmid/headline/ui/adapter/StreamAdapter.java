@@ -127,21 +127,20 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
         .transform(new GradientTransformation())
         .into(viewHolder.mIv_stream_previous);
     viewHolder.likesCount.setText(imageInfo.getCount_like() + "人 觉得赞");
-    if (imageInfo.getUploadtime() != null) {
 
-      viewHolder.nickName.setText(imageInfo.getNickname() + " 发表于 " + TimeUtils.getTimeFormatText(
-          imageInfo.getUploadtime()));
-    }
+    viewHolder.nickName.setText(
+        imageInfo.getNickname() + " 发表于 " + TimeUtils.getTimeFormatDate(imageInfo.getUploadtime()));
+
     Picasso.with(viewHolder.mIv_avater.getContext())
         .load(imageInfo.getAvatar())
         .transform(new CircleTransformation())
         .into(viewHolder.mIv_avater);
-    if (imageInfo.isHaveClickLike()){
-      Log.d("StreamAdapter","isHaveClickLike");
+    if (imageInfo.isHaveClickLike()) {
+      Log.d("StreamAdapter", "isHaveClickLike");
       viewHolder.mBtn_like.setImageResource(R.drawable.ic_heart_red);
     } else {
 
-      Log.d("StreamAdapter","!isHaveClickLike");
+      Log.d("StreamAdapter", "!isHaveClickLike");
       viewHolder.mBtn_like.setImageResource(R.drawable.ic_heart_outline_grey);
     }
     disPatchOnClick(viewHolder, position, imageInfo);
@@ -157,8 +156,8 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
             .setEndpoint(HeadlineService.END_POINT)
             .build();
         adapter.create(ImageService.class)
-            .likeImage(knoImageList.get(position).getIdmember(), imageInfo.isHaveClickLike() ? 0 : 1,
-                new Callback<ImageLikeResult>() {
+            .likeImage(knoImageList.get(position).getIdmember(),
+                imageInfo.isHaveClickLike() ? 0 : 1, new Callback<ImageLikeResult>() {
                   @Override
                   public void success(ImageLikeResult imageLikeResult, Response response) {
                     if (imageLikeResult.status == 1) {
@@ -187,8 +186,6 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
         v.getContext().startActivity(intent);
       }
     });
-
-
   }
 
   @Override public int getItemCount() {

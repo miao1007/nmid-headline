@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewStub;
@@ -49,10 +50,12 @@ public class DetailedActivity extends ActionBarActivity {
   /**
    * Intent extra uesd for ShareSDK
    */
+  private Feed feed;
   private int idMember;
   private int category;
   private String title;
   private String excerpt;
+  private boolean isLike = false;
 
   @OnClick(R.id.detailed_action_share) void detailed_action_share() {
     mFloatingActionsMenu.toggle();
@@ -61,15 +64,13 @@ public class DetailedActivity extends ActionBarActivity {
   }
 
   @OnClick(R.id.detailed_action_favorite) void detailed_action_favorite(View v) {
-    //Feed feed = Select.from(Feed.class).where(Condition.prop("idMember").eq(idMember)).first();
-    //
-    //Log.d(TAG, feed.isCollect() + "");
-    //feed.setCollect(!feed.isCollect());
-    //feed.save();
-    //Log.d(TAG, feed.isCollect() + "");
-    //mFloatingActionButton.setColorNormalResId(
-    //    feed.isCollect() ? R.color.holo_red_dark : R.color.icons);
-    //mFloatingActionsMenu.toggle();
+
+    trySetupFAB(!isLike);
+    feed.setCollect(!isLike);
+    feed.save();
+    isLike = !isLike;
+    mFloatingActionsMenu.toggle();
+    Log.d(TAG, "now" + feed.isCollect());
   }
 
   @OnClick(R.id.detailed_action_settings) void detailed_action_settings() {
@@ -87,15 +88,15 @@ public class DetailedActivity extends ActionBarActivity {
     setContentView(R.layout.activity_detailed);
     ButterKnife.inject(this);
     tryGetIntent();
-    trySetupFAB();
+    trySetupFAB(isLike);
     trySetupWebview();
     trySetupToolbar();
   }
 
-  private void trySetupFAB() {
-    //Log.d(TAG, feed.isCollect() + "");
-    //mFloatingActionButton.setColorNormalResId(
-    //    feed.isCollect() ? R.color.holo_red_dark : R.color.icons);
+  private void trySetupFAB(boolean isLike) {
+
+    mFloatingActionButton.setIcon(
+        isLike ? R.drawable.ic_heart_red : R.drawable.ic_heart_outline_grey);
   }
 
   private void trySetupToolbar() {
@@ -107,12 +108,13 @@ public class DetailedActivity extends ActionBarActivity {
   }
 
   private void tryGetIntent() {
-    Feed feed = getIntent().getExtras().getParcelable(PARCELABLE_KEY);
+    feed = getIntent().getExtras().getParcelable(PARCELABLE_KEY);
 
     idMember = feed.getIdmember();
     category = feed.getCategory();
     title = feed.getTitle();
     excerpt = feed.getSimpleContent();
+    isLike = feed.isCollect();
   }
 
   private void trySetupWebview() {
