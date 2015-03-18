@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
@@ -46,5 +47,16 @@ public abstract class BaseFragmentActivity extends ActionBarActivity {
     }
   }
 
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == android.R.id.home){
+      onBackPressed();
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
+  @Override public void onBackPressed() {
+    super.onBackPressed();
+    overridePendingTransition(R.anim.swipeback_stack_to_front, R.anim.swipeback_stack_right_out);
+  }
 
 }

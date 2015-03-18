@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
@@ -66,6 +67,13 @@ public abstract class BasePrefActivity extends ActionBarActivity
     } catch (NullPointerException e) {
       Log.e(getClass().getSimpleName(), "toolbar is null!");
     }
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == android.R.id.home){
+      onBackPressed();
+    }
+    return super.onOptionsItemSelected(item);
   }
 
   @Override public void onBackPressed() {

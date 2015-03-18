@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
 import cn.edu.cqupt.nmid.headline.support.api.image.ImageService;
 import cn.edu.cqupt.nmid.headline.support.api.image.bean.ImageInfo;
 import cn.edu.cqupt.nmid.headline.support.api.image.bean.ImageLikeResult;
+import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.activity.PhotoViewActivity;
 import cn.edu.cqupt.nmid.headline.utils.RetrofitUtils;
 import cn.edu.cqupt.nmid.headline.utils.TimeUtils;
@@ -64,7 +66,6 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
   private boolean isLike = true;
 
   public StreamAdapter(List<ImageInfo> knoImageList) {
-
     this.knoImageList = knoImageList;
   }
 
@@ -73,6 +74,11 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
     View v =
         LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_stream, parent, false);
     StreamViewHolder viewHolder = new StreamViewHolder(v);
+    viewHolder.mCv.setCardBackgroundColor(v.getContext()
+        .getApplicationContext()
+        .getResources()
+        .getColor(ThemePref.getItemBackgroundResColor(v.getContext())));
+
     return viewHolder;
   }
 
@@ -198,6 +204,7 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
     @InjectView(R.id.item_stream_likes_count) TextView likesCount;
     @InjectView(R.id.item_stream_nick_name) TextView nickName;
     @InjectView(R.id.stream_btnLike) ImageButton mBtn_like;
+    @InjectView(R.id.card_view) CardView mCv;
     @InjectView(R.id.iv_stream_avatar) ImageView mIv_avater;
 
     SendingProgressView vSendingProgress;

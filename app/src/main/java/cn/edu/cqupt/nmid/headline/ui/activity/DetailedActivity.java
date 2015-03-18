@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewStub;
 import android.webkit.WebSettings;
@@ -229,5 +230,12 @@ public class DetailedActivity extends ActionBarActivity {
 
     // 启动分享GUI
     oks.show(this);
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == android.R.id.home) {
+      onBackPressed();
+    }
+    return super.onOptionsItemSelected(item);
   }
 }
