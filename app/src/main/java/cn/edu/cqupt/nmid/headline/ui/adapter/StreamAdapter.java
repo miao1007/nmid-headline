@@ -130,7 +130,7 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
     private void bindLoadingFeedItem(StreamViewHolder viewHolder, int position) {
         final ImageInfo imageInfo = knoImageList.get(position);
         Picasso.with(viewHolder.mIv_stream_previous.getContext()).load(imageInfo.getPrevirousurl
-                ()).placeholder(R.drawable.lorempixel).transform(new GradientTransformation())
+                ()).placeholder(R.drawable.ic_default_bg).transform(new GradientTransformation())
                 .into(viewHolder.mIv_stream_previous);
         viewHolder.likesCount.setText(imageInfo.getCount_like() + "人 觉得赞");
 
