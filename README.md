@@ -21,40 +21,6 @@ This is a android feeds client for CQUPT. And it's a material design demonstrate
 [availible on myapp](http://sj.qq.com/myapp/detail.htm?apkName=cn.edu.cqupt.nmid.headline)
 
 
-####Open Source Components
-######maven dependencies
-
-```
-dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
-  compile 'com.squareup.picasso:picasso:2.4.0'
-  compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
-  compile 'com.squareup.okhttp:okhttp:2.0.0'
-  compile 'com.squareup.retrofit:retrofit:1.9.0'
-  compile 'com.jakewharton:butterknife:6.0.0'
-  compile 'com.android.support:recyclerview-v7:21.0.3'
-  compile 'com.android.support:appcompat-v7:21.0.3'
-  compile 'com.getbase:floatingactionbutton:1.5.1'
-  compile 'com.android.support:cardview-v7:21.0.3'
-  compile 'com.github.ksoichiro:android-observablescrollview:1.5.0'
-  compile 'me.drakeet.materialdialog:library:1.2.2'
-  compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
-  compile project(':onekeyshare')
-}
-
-```
-
-###### Widget And Drawable Resources
-
-* [SwipeBackLayout](https://github.com/ikew0ng/SwipeBackLayout)
-* [ProgressBarCircular](https://github.com/navasmdc/MaterialDesignLibrary)
-* [ScrimInsetsFrameLayout,SlidingTabLayout,SlidingTabStrip](https://github.com/google/iosched/blob/master/android/src/main/java/com/google/samples/apps/iosched/ui/widget/ScrimInsetsFrameLayout.java)
-* [SendCommentButton](https://github.com/frogermcs/InstaMaterial)
-* [Some Icon Resources](https://github.com/xiprox/WaniKani-for-Android)
-
-If your project is not listed in, please tell me :)
-
-
 ####Build Environment
 Android Studio 1.1 or higher
 
