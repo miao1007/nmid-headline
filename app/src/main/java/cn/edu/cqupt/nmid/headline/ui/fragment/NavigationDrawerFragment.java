@@ -39,7 +39,6 @@ import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationItemsAdapter;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationSecondaryItemsAdapter;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import cn.edu.cqupt.nmid.headline.utils.PreferenceUtils;
-import cn.edu.cqupt.nmid.headline.utils.picasso.BlurTransformation;
 import cn.edu.cqupt.nmid.headline.utils.picasso.CircleTransformation;
 import cn.edu.cqupt.nmid.headline.utils.picasso.GradientTransformation;
 import cn.sharesdk.framework.Platform;

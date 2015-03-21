@@ -132,18 +132,11 @@ public class StreamFragment extends Fragment {
     //Endless RecyclerView
     mRecyclerview.setOnScrollListener(new RecyclerView.OnScrollListener() {
       @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+        super.onScrolled(recyclerView, dx, dy);
         int visibleItems = mLayoutManager.findLastVisibleItemPosition();
-        if (dy > 0 && visibleItems == adapter.getItemCount() - 3) {
-          if (isLoadingMore) {
-            return;
-          }
-          isLoadingMore = true;
-          mSwipeRefreshLayout.setRefreshing(true);
+        int lastVisibleItems = adapter.getItemCount();
+        if (dy > 0 && visibleItems == lastVisibleItems - 1) {
           loadOldImage();
-          Log.d(TAG, "loadNewFeeds");
-        } else {
-          isLoadingMore = false;
-          super.onScrolled(recyclerView, dx, dy);
         }
       }
     });
@@ -159,57 +152,58 @@ public class StreamFragment extends Fragment {
   void loadNewFeeds() {
     if (isLoadingMore) {
       Log.d(TAG, "ignore manually update");
-    } else {
-      new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
-          .setLogLevel(RestAdapter.LogLevel.BASIC)
-          .build()
-          .create(ImageService.class)
-          .getRefreshImage(0, 15, new Callback<ImageStream>() {
-            @Override public void success(ImageStream imageStream, Response response) {
-              isLoadingMore = false;
-              mSwipeRefreshLayout.setRefreshing(false);
-              images.clear();
-              //bug fix when server return null
-              if (imageStream.getStatus() == 1) {
-                images.addAll(imageStream.getData());
-                adapter.notifyDataSetChanged();
-              }
-            }
-
-            @Override public void failure(RetrofitError error) {
-              mSwipeRefreshLayout.setRefreshing(false);
-              isLoadingMore = false;
-            }
-          });
+      return;
     }
+    isLoadingMore = true;
+    new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
+        .setLogLevel(RestAdapter.LogLevel.BASIC)
+        .build()
+        .create(ImageService.class)
+        .getRefreshImage(0, 4, new Callback<ImageStream>() {
+          @Override public void success(ImageStream imageStream, Response response) {
+            isLoadingMore = false;
+            mSwipeRefreshLayout.setRefreshing(false);
+            images.clear();
+            //bug fix when server return null
+            if (imageStream.getStatus() == 1) {
+              images.addAll(imageStream.getData());
+              adapter.notifyDataSetChanged();
+            }
+          }
+
+          @Override public void failure(RetrofitError error) {
+            mSwipeRefreshLayout.setRefreshing(false);
+            isLoadingMore = false;
+          }
+        });
   }
 
   void loadOldImage() {
+
     if (isLoadingMore) {
       Log.d(TAG, "ignore manually update");
-    } else {
-      lastid = images.size() - 1;
-      new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
-          .setLogLevel(RestAdapter.LogLevel.BASIC)
-          .build()
-          .create(ImageService.class)
-          .getROldImage(lastid, 15, new Callback<ImageStream>() {
-            @Override public void success(ImageStream imageStream, Response response) {
-              isLoadingMore = false;
-              mSwipeRefreshLayout.setRefreshing(false);
-              //bug fix when server return null
-              if (imageStream.getStatus() == 1) {
-                images.addAll(imageStream.getData());
-                adapter.notifyDataSetChanged();
-              }
-            }
-
-            @Override public void failure(RetrofitError error) {
-              mSwipeRefreshLayout.setRefreshing(false);
-              isLoadingMore = false;
-            }
-          });
+      return;
     }
+    isLoadingMore = true;
+    lastid = images.get(images.size() - 1).getIdmember();
+    new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
+        .setLogLevel(RestAdapter.LogLevel.BASIC)
+        .build()
+        .create(ImageService.class)
+        .getROldImage(lastid, 4, new Callback<ImageStream>() {
+          @Override public void success(ImageStream imageStream, Response response) {
+            isLoadingMore = false;
+            //bug fix when server return null
+            if (imageStream.getStatus() == 1) {
+              images.addAll(imageStream.getData());
+              adapter.notifyDataSetChanged();
+            }
+          }
+
+          @Override public void failure(RetrofitError error) {
+            isLoadingMore = false;
+          }
+        });
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -243,6 +237,8 @@ public class StreamFragment extends Fragment {
         } else {
           nickname = "手机用户";
         }
+        Toast.makeText(getActivity().getApplication(), "上传中！", Toast.LENGTH_SHORT)
+            .show();
         String avatar = ShareSDK.getPlatform(context, QZone.NAME).getDb().getUserIcon();
         RestAdapter adapter = new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
             .setLogLevel(RestAdapter.LogLevel.FULL)

@@ -1,7 +1,5 @@
 package cn.edu.cqupt.nmid.headline.utils;
 
-import android.util.Log;
-
 /**
  * Created by leon on 2/7/15.
  */
@@ -20,7 +18,7 @@ public class TimeUtils {
     long current = System.currentTimeMillis();
     long diff = current - unixStamp_s*1000;
 
-    Log.d("TimeUtils","current " + current + "/news" + unixStamp_s + "/diff" + diff);
+    //Log.d("TimeUtils","current " + current + "/news" + unixStamp_s + "/diff" + diff);
     long r = 0;
     if (diff > year) {
       r = (diff / year);
