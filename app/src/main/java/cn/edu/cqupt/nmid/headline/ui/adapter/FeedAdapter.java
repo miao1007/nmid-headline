@@ -27,7 +27,6 @@ public class FeedAdapter extends HeaderFooterRecyclerViewAdapter {
 
   private static final String TAG = LogUtils.makeLogTag(FeedAdapter.class);
   private ArrayList<Feed> mNewsBeans;
-  private Feed newsBean;
 
   public FeedAdapter(ArrayList<Feed> newsBeans) {
     this.mNewsBeans = newsBeans;
@@ -82,13 +81,14 @@ public class FeedAdapter extends HeaderFooterRecyclerViewAdapter {
   @Override
   protected void onBindContentItemViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-    final ContentViewHolder holder_typed = (ContentViewHolder) holder;
+    ContentViewHolder holder_typed = (ContentViewHolder) holder;
 
     holder_typed.mCardView.setCardBackgroundColor(holder_typed.mCardView.getResources()
         .getColor(ThemePref.getItemBackgroundResColor(holder_typed.mCardView.getContext())));
+    final Feed newsBean;
     newsBean = mNewsBeans.get(position);
     holder_typed.title.setText(newsBean.getTitle());
-    holder_typed.time.setText(newsBean.getTimeRelease());
+    holder_typed.time.setText(newsBean.getIdmember() + "");
     holder_typed.excerpt.setText(newsBean.getSimpleContent());
 
     //XX0
@@ -126,9 +126,10 @@ public class FeedAdapter extends HeaderFooterRecyclerViewAdapter {
 
     holder_typed.itemView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        Intent intent = new Intent(holder_typed.itemView.getContext(), DetailedActivity.class);
+        Log.d(TAG,"title" + newsBean.getTitle() + "id" + newsBean.getIdmember());
+        Intent intent = new Intent(v.getContext(), DetailedActivity.class);
         intent.putExtra(DetailedActivity.PARCELABLE_KEY, newsBean);
-        holder_typed.itemView.getContext().startActivity(intent);
+        v.getContext().startActivity(intent);
       }
     });
   }

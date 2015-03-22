@@ -8,8 +8,8 @@ android {
     applicationId "cn.edu.cqupt.nmid.headline"
     minSdkVersion 15
     targetSdkVersion 21
-    versionCode 205
-    versionName "2.05"
+    versionCode 206
+    versionName "2.06"
   }
 
   compileOptions {

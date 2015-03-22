@@ -116,6 +116,7 @@ public class DetailedActivity extends ActionBarActivity {
     title = feed.getTitle();
     excerpt = feed.getSimpleContent();
     isLike = feed.isCollect();
+    Log.d(TAG,"id" + idMember + "title" +title);
   }
 
   private void trySetupWebview() {

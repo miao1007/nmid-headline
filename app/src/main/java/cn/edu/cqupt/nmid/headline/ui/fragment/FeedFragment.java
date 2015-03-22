@@ -240,8 +240,13 @@ public class FeedFragment extends Fragment {
   }
 
   void loadDbFeeds() {
+    mSwipeRefreshLayout.post(new Runnable() {
+      @Override public void run() {
+        mSwipeRefreshLayout.setRefreshing(true);
+      }
+    });
     List<Feed> feeds;
-    if (isFavorite){
+    if (isFavorite) {
       feeds = new Select().from(Feed.class)
           .where("isCollect = ?", true)
           .orderBy("idMember desc")
@@ -254,7 +259,7 @@ public class FeedFragment extends Fragment {
           .limit(feed_limit)
           .execute();
     }
-
+    mSwipeRefreshLayout.setRefreshing(true);
     Log.d(TAG, "loadDbFeeds,size = " + feeds.size());
     if (feeds.isEmpty()) {
       //TODO
