@@ -3,7 +3,6 @@ package cn.edu.cqupt.nmid.headline.ui.adapter;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by leon on 1/19/15.
  */
-public class FeedAdapter extends HeaderFooterRecyclerViewAdapter {
+public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ContentViewHolder> {
 
   private static final String TAG = LogUtils.makeLogTag(FeedAdapter.class);
   private ArrayList<Feed> mNewsBeans;
@@ -36,102 +35,65 @@ public class FeedAdapter extends HeaderFooterRecyclerViewAdapter {
     return position;
   }
 
-  @Override protected int getHeaderItemCount() {
-    return 0;
-  }
+  @Override public ContentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-  @Override protected int getFooterItemCount() {
-    //TODO
-    return 0;
-  }
-
-  @Override protected int getContentItemCount() {
-    return mNewsBeans.size();
-  }
-
-  @Override protected RecyclerView.ViewHolder onCreateHeaderItemViewHolder(ViewGroup parent,
-      int headerViewType) {
-    return null;
-  }
-
-  @Override protected RecyclerView.ViewHolder onCreateFooterItemViewHolder(ViewGroup parent,
-      int footerViewType) {
-    View view = LayoutInflater.from(parent.getContext())
-        .inflate(R.layout.include_progressbar, parent, false);
-    return new FooterViewHolder(view);
-  }
-
-  @Override protected RecyclerView.ViewHolder onCreateContentItemViewHolder(ViewGroup parent,
-      int contentViewType) {
     View view =
         LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_content, parent, false);
-    return new ContentViewHolder(view);
+    ContentViewHolder viewHolder = new ContentViewHolder(view);
+    viewHolder.mCardView.setCardBackgroundColor(parent.getContext()
+        .getResources()
+        .getColor(ThemePref.getItemBackgroundResColor(parent.getContext())));
+    return viewHolder;
   }
 
-  @Override protected void onBindHeaderItemViewHolder(RecyclerView.ViewHolder headerViewHolder,
-      int position) {
-
-  }
-
-  @Override protected void onBindFooterItemViewHolder(RecyclerView.ViewHolder footerViewHolder,
-      int position) {
-    Log.d(TAG, "onBindFooterItemViewHolder" + position);
-  }
-
-  @Override
-  protected void onBindContentItemViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-    ContentViewHolder holder_typed = (ContentViewHolder) holder;
-
-    holder_typed.mCardView.setCardBackgroundColor(holder_typed.mCardView.getResources()
-        .getColor(ThemePref.getItemBackgroundResColor(holder_typed.mCardView.getContext())));
-    final Feed newsBean;
-    newsBean = mNewsBeans.get(position);
-    holder_typed.title.setText(newsBean.getTitle());
-    holder_typed.time.setText(newsBean.getIdmember() + "");
-    holder_typed.excerpt.setText(newsBean.getSimpleContent());
+  @Override public void onBindViewHolder(ContentViewHolder holder, int position) {
+    //
+    //holder.mCardView.setCardBackgroundColor(holder.mCardView.getResources()
+    //    .getColor(ThemePref.getItemBackgroundResColor(holder.mCardView.getContext())));
+    final Feed newsBean = mNewsBeans.get(position);
+    holder.title.setText(newsBean.getTitle());
+    holder.time.setText(newsBean.getTimeRelease());
+    holder.excerpt.setText(newsBean.getSimple_content());
 
     //XX0
     if (newsBean.getImage1().trim().length() == 0 || newsBean.getImage2().trim().length() == 0) {
       //100 010
-      holder_typed.threeImages.setVisibility(View.GONE);
+      holder.threeImages.setVisibility(View.GONE);
       //000
       if (newsBean.getImage1().trim().length() == 0) {
-        holder_typed.image1.setVisibility(View.GONE);
+        holder.image1.setVisibility(View.GONE);
       } else {
         //100
-        Picasso.with(holder_typed.image1.getContext())
-            .load(newsBean.getImage1())
-            .into(holder_typed.image1);
+        Picasso.with(holder.image1.getContext()).load(newsBean.getImage1()).into(holder.image1);
       }
     } else {
       //11x
-      holder_typed.image1.setVisibility(View.GONE);
-      Picasso.with(holder_typed.image2.getContext())
-          .load(newsBean.getImage1())
-          .into(holder_typed.image2);
-      Picasso.with(holder_typed.image3.getContext())
-          .load(newsBean.getImage2())
-          .into(holder_typed.image3);
+      holder.image1.setVisibility(View.GONE);
+      Picasso.with(holder.image2.getContext()).load(newsBean.getImage1()).into(holder.image2);
+      Picasso.with(holder.image3.getContext()).load(newsBean.getImage2()).into(holder.image3);
       if (newsBean.getImage3().trim().length() == 0) {
         //110
-        holder_typed.image3.setVisibility(View.GONE);
+        holder.image3.setVisibility(View.GONE);
       } else {
         //111
-        Picasso.with(holder_typed.image4.getContext())
-            .load(newsBean.getImage3())
-            .into(holder_typed.image4);
+        Picasso.with(holder.image4.getContext()).load(newsBean.getImage3()).into(holder.image4);
       }
     }
 
-    holder_typed.itemView.setOnClickListener(new View.OnClickListener() {
+    //MessageQueue messageQueue
+
+    holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        Log.d(TAG,"title" + newsBean.getTitle() + "id" + newsBean.getIdmember());
+        //Log.d(TAG, "title" + newsBean.getTitle() + "id" + newsBean.getIdmember());
         Intent intent = new Intent(v.getContext(), DetailedActivity.class);
         intent.putExtra(DetailedActivity.PARCELABLE_KEY, newsBean);
         v.getContext().startActivity(intent);
       }
     });
+  }
+
+  @Override public int getItemCount() {
+    return mNewsBeans.size();
   }
 
   public static class ContentViewHolder extends RecyclerView.ViewHolder {

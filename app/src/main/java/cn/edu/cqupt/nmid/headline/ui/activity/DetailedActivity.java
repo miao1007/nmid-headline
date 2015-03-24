@@ -114,7 +114,7 @@ public class DetailedActivity extends ActionBarActivity {
     idMember = feed.getIdmember();
     category = feed.getCategory();
     title = feed.getTitle();
-    excerpt = feed.getSimpleContent();
+    excerpt = feed.getSimple_content();
     isLike = feed.isCollect();
     Log.d(TAG,"id" + idMember + "title" +title);
   }

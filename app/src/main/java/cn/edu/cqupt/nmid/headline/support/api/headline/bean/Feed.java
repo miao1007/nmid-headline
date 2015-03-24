@@ -12,12 +12,12 @@ import com.google.gson.annotations.SerializedName;
   @Column(name = "category") int category;
   @Column(name = "title") String title;
 
-  @SerializedName("simple_content") @Column(name = "simple_content") String simpleContent;
+  @Column(name = "simple_content") String simple_content;
   @Column(name = "image1") String image1;
   @Column(name = "image2") String image2;
   @Column(name = "image3") String image3;
 
-  @SerializedName("time_release") String timeRelease;
+  @SerializedName("time_release") @Column(name = "time_release") String timeRelease;
   @Column(name = "isCollect") boolean isCollect;
 
   public boolean isCollect() {
@@ -65,17 +65,17 @@ import com.google.gson.annotations.SerializedName;
   }
 
   /**
-   * @return The simpleContent
+   * @return The simple_content
    */
-  public String getSimpleContent() {
-    return simpleContent;
+  public String getSimple_content() {
+    return simple_content;
   }
 
   /**
-   * @param simpleContent The simpleContent
+   * @param simple_content The simple_content
    */
-  public void setSimpleContent(String simpleContent) {
-    this.simpleContent = simpleContent;
+  public void setSimple_content(String simple_content) {
+    this.simple_content = simple_content;
   }
 
   /**
@@ -142,7 +142,7 @@ import com.google.gson.annotations.SerializedName;
     dest.writeInt(this.idmember);
     dest.writeInt(this.category);
     dest.writeString(this.title);
-    dest.writeString(this.simpleContent);
+    dest.writeString(this.simple_content);
     dest.writeString(this.image1);
     dest.writeString(this.image2);
     dest.writeString(this.image3);
@@ -153,12 +153,12 @@ import com.google.gson.annotations.SerializedName;
   public Feed() {
   }
 
-  public Feed(int idmember, int category, String title, String simpleContent, String image1,
+  public Feed(int idmember, int category, String title, String simple_content, String image1,
       String image2, String image3, String timeRelease, boolean isCollect) {
     this.idmember = idmember;
     this.category = category;
     this.title = title;
-    this.simpleContent = simpleContent;
+    this.simple_content = simple_content;
     this.image1 = image1;
     this.image2 = image2;
     this.image3 = image3;
@@ -170,7 +170,7 @@ import com.google.gson.annotations.SerializedName;
     this.idmember = in.readInt();
     this.category = in.readInt();
     this.title = in.readString();
-    this.simpleContent = in.readString();
+    this.simple_content = in.readString();
     this.image1 = in.readString();
     this.image2 = in.readString();
     this.image3 = in.readString();

@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -141,6 +142,7 @@ public class StreamFragment extends Fragment {
       }
     });
 
+    Handler handler = new Handler();
     loadNewFeeds();
     return view;
   }
