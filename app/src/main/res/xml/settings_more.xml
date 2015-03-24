@@ -37,5 +37,12 @@
       android:summaryOff="关闭调试日志"
       android:summaryOn="打开调试日志"
       android:title="@string/setting_debug"/>
-
+  <PreferenceScreen
+      android:layout="@layout/preference_item"
+      android:title="Open Source"
+      android:summary="Fork me on gitHub">
+    <intent
+        android:action="android.intent.action.VIEW"
+        android:data="https://github.com/miao1007/nmid-headline"/>
+  </PreferenceScreen>
 </PreferenceScreen>
