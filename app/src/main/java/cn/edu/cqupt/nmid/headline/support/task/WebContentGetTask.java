@@ -2,9 +2,12 @@ package cn.edu.cqupt.nmid.headline.support.task;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import cn.edu.cqupt.nmid.headline.support.GlobalContext;
 import cn.edu.cqupt.nmid.headline.support.task.callback.WebContentGetTaskCallback;
+import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -21,6 +24,15 @@ public class WebContentGetTask extends AsyncTask<String, Void, String> {
   @Override
   protected String doInBackground(String... params) {
     OkHttpClient client = new OkHttpClient();
+    Cache cache;
+    File tmpFile = new File(GlobalContext.getInstance().getCacheDir().getPath(),".webview_cache");
+    try {
+
+      cache = new Cache(tmpFile,10*60*60);
+      client.setCache(cache);
+    } catch (Exception e){
+
+    }
 
     if (params[0] == null){
       throw new IllegalStateException("set url before execute!");

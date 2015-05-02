@@ -232,6 +232,12 @@
             android:label="@string/title_activity_photo_view"
             android:theme="@style/FullscreenTheme" >
         </activity>
+
+        <service
+            android:name=".support.service.UploadService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>

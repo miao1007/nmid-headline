@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
+import cn.edu.cqupt.nmid.headline.support.GlobalContext;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.fragment.FeedFragment;
 import cn.edu.cqupt.nmid.headline.ui.fragment.FeedsFragment;
@@ -21,11 +22,12 @@ import cn.edu.cqupt.nmid.headline.ui.fragment.NavigationDrawerFragment;
 import cn.edu.cqupt.nmid.headline.ui.fragment.StreamFragment;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import cn.jpush.android.api.JPushInterface;
+import com.squareup.otto.Subscribe;
 
 /**
  *
  */
-public class HomeActivity extends ActionBarActivity
+public class HomeActivity extends AppCompatActivity
     implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
   @InjectView(R.id.image_comment_toolbar) Toolbar mToolbar;
@@ -107,19 +109,25 @@ public class HomeActivity extends ActionBarActivity
   @Override protected void onResume() {
     super.onResume();
     JPushInterface.onResume(this);
+    GlobalContext.getBus().register(this);
   }
 
   @Override protected void onPause() {
     super.onPause();
     JPushInterface.onPause(this);
+    GlobalContext.getBus().unregister(this);
   }
+
+  @Subscribe public void onNightmode(boolean currentNightMode){
+    ThemePref.setNightMode(this, !ThemePref.isNightMode(this));
+    Intent intent = new Intent(this, this.getClass());
+    startActivity(intent);
+    finish();
+  }
+
 
   @Override protected void onRestart() {
     super.onRestart();
     Log.d(TAG, "onRestart");
-  }
-
-  @Override public void onLoginSuccess() {
-    getSupportFragmentManager().findFragmentById(R.id.container);
   }
 }

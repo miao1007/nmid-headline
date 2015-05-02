@@ -12,8 +12,8 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -39,8 +39,8 @@ import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationItemsAdapter;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationSecondaryItemsAdapter;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import cn.edu.cqupt.nmid.headline.utils.PreferenceUtils;
+import cn.edu.cqupt.nmid.headline.utils.picasso.BlurTransformation;
 import cn.edu.cqupt.nmid.headline.utils.picasso.CircleTransformation;
-import cn.edu.cqupt.nmid.headline.utils.picasso.GradientTransformation;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.PlatformDb;
@@ -97,8 +97,6 @@ public class NavigationDrawerFragment extends Fragment
     message.what = 1;
     message.obj = platform;
     UIHandler.sendMessage(message, this);
-
-    mCallbacks.onLoginSuccess();
     Log.d(TAG, platform.getDb().getUserName());
     Log.d(TAG, platform.getDb().getUserId());
   }
@@ -201,7 +199,7 @@ public class NavigationDrawerFragment extends Fragment
 
     Picasso.with(context)
         .load(db.getUserIcon())
-        .transform(new GradientTransformation())
+        .transform(new BlurTransformation(getActivity()))
         .into(mAvatarBg);
     Picasso.with(context)
         .load(db.getUserIcon())
@@ -336,13 +334,11 @@ public class NavigationDrawerFragment extends Fragment
   }
 
   private void showGlobalContextActionBar() {
-    ActionBarActivity activity = (ActionBarActivity) getActivity();
+    AppCompatActivity activity = (AppCompatActivity) getActivity();
     if (activity != null) activity.getSupportActionBar().setTitle(getString(R.string.app_name));
   }
 
   public interface NavigationDrawerCallbacks {
     void onNavigationDrawerItemSelected(int position);
-
-    void onLoginSuccess();
   }
 }

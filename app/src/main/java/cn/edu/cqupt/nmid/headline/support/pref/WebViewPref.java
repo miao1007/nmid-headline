@@ -11,16 +11,14 @@ import cn.edu.cqupt.nmid.headline.utils.PreferenceUtils;
  */
 public class WebViewPref {
 
-
   /*
   * See R.arrray.settings_entry_values_font_sizes
   * */
   public static int getWebViewTextZoom(Context context) {
 
     String key = GlobalContext.getInstance().getString(R.string.settings_font_size);
-    return Integer.valueOf(PreferenceUtils.getPrefString(key, "115"));
+    return Integer.valueOf(PreferenceUtils.getPrefString(context, key, "115"));
   }
-
 
   /*
   * See {@link R.array.settings_entry_values_load_images}

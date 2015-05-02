@@ -3,7 +3,6 @@ package cn.edu.cqupt.nmid.headline.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import cn.edu.cqupt.nmid.headline.support.GlobalContext;
 
 /**
  * Created by leon on 1/14/15.
@@ -12,8 +11,8 @@ public class PreferenceUtils {
 
   static String TAG = LogUtils.makeLogTag(PreferenceUtils.class);
 
-  public static String getPrefString(String key, final String defaultValue) {
-    final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(GlobalContext.getInstance());
+  public static String getPrefString(Context context,String key, final String defaultValue) {
+    final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
     return settings.getString(key, defaultValue);
   }
 

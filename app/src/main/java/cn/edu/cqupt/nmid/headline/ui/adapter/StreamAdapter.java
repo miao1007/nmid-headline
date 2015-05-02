@@ -28,6 +28,7 @@ import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.activity.PhotoViewActivity;
 import cn.edu.cqupt.nmid.headline.utils.RetrofitUtils;
 import cn.edu.cqupt.nmid.headline.utils.TimeUtils;
+import cn.edu.cqupt.nmid.headline.utils.picasso.CircleTransformation;
 import cn.edu.cqupt.nmid.headline.utils.picasso.GradientTransformation;
 import com.squareup.picasso.Picasso;
 import io.github.froger.instamaterial.ui.view.SendingProgressView;
@@ -139,7 +140,7 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamView
     if (imageInfo.getAvatar() != null) {
       Picasso.with(viewHolder.mIv_avater.getContext())
           .load(imageInfo.getAvatar())
-          //.transform(new CircleTransformation())
+          .transform(new CircleTransformation())
           .into(viewHolder.mIv_avater);
     }
 

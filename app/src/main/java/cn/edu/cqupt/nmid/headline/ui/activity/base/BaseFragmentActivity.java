@@ -54,9 +54,5 @@ public abstract class BaseFragmentActivity extends ActionBarActivity {
     return super.onOptionsItemSelected(item);
   }
 
-  @Override public void onBackPressed() {
-    super.onBackPressed();
-    overridePendingTransition(R.anim.swipeback_stack_to_front, R.anim.swipeback_stack_right_out);
-  }
 
 }

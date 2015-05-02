@@ -1,38 +1,46 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-  <view
-      android:id="@+id/feed_swiperefreshlayout"
-      class="android.support.v4.widget.SwipeRefreshLayout"
+  <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:fab="http://schemas.android.com/apk/res-auto"
       android:layout_width="match_parent"
       android:layout_height="match_parent">
 
-
-    <view android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView"
-        android:id="@+id/feed_recyclerview"/>
-  </view>
-
-  <com.getbase.floatingactionbutton.FloatingActionButton
-      android:id="@+id/feed_floating_actionButton"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:layout_alignParentEnd="true"
-      android:layout_alignParentRight="true"
-      android:layout_marginBottom="16dp"
-      android:layout_marginEnd="16dp"
-      android:layout_marginRight="16dp"
-      fab:fab_icon="@drawable/ic_reload_48dp"
-      fab:fab_addButtonColorNormal="@color/icons"
-      fab:fab_addButtonColorPressed="@color/divider"
-      fab:fab_addButtonPlusIconColor="#808080">
+    <view
+        android:id="@+id/feed_swiperefreshlayout"
+        class="android.support.v4.widget.SwipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
-  </com.getbase.floatingactionbutton.FloatingActionButton>
+      <view android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          class="com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView"
+          android:id="@+id/feed_recyclerview"/>
+    </view>
 
-</RelativeLayout>
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/feed_floating_actionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        fab:fab_icon="@drawable/ic_reload_48dp"
+        fab:fab_addButtonColorNormal="@color/icons"
+        fab:fab_addButtonColorPressed="@color/divider"
+        fab:fab_addButtonPlusIconColor="#808080">
 
+
+    </com.getbase.floatingactionbutton.FloatingActionButton>
+
+  </RelativeLayout>
+
+
+  <include layout="@layout/include_emptyview" android:id="@+id/feed_loading_page"/>
+
+</FrameLayout>

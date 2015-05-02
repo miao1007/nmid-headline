@@ -23,6 +23,20 @@
         <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/picasso-2.5.0-51ad4111422ca1e383db0cd2e94ddd7b0d3cc1c3.jar" />
     </item>
     <item
+        jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.0/libs/internal_impl-22.1.0.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="025cb89f2896c63200ff4c2e6c467a95691d880a">
+        <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/internal_impl-22.1.0-54af1c388226113b2d9ac44a8a9b1840428dc62d.jar" />
+    </item>
+    <item
+        jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/library-2.4.0-715a51ee674a9544062be0705e4542b10f7a44a3.jar" />
+    </item>
+    <item
         jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp-urlconnection/2.0.0/afe8399d352713b66e597e9670c741d1e60ae923/okhttp-urlconnection-2.0.0.jar"
         jumboMode="false"
         revision="21.1.1"
@@ -30,11 +44,11 @@
         <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/okhttp-urlconnection-2.0.0-bf24a8aebfbea4595e489f87ac4be053c7fae2f8.jar" />
     </item>
     <item
-        jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/classes.jar"
+        jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/com.jpardogo.materialtabstrip/library/1.0.6/classes.jar"
         jumboMode="false"
         revision="21.1.1"
-        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
-        <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-94efd89e39624cad1effce64c3c22e51d4e3a1d7.jar" />
+        sha1="15ebf37e2dc7047e993afdfb308610e171bcea1b">
+        <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-1e3f52888edb4b7b3dd2c15758132ac77985fa0c.jar" />
     </item>
     <item
         jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/me.drakeet.materialdialog/library/1.2.2/classes.jar"
@@ -42,6 +56,13 @@
         revision="21.1.1"
         sha1="8646b1e69dd5d923d8866dc4311859f0fbca456c">
         <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-17dd00e4196edc179d68af9309a163367c176400.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.1.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="80434c45861675a57d690fba5ca31c3d55c89489">
+        <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-a854d37ae97b59ea0ef9f79437567f917c27fc63.jar" />
     </item>
     <item
         jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.michaelpardo/activeandroid/3.1.0-SNAPSHOT/4ab7b0182975bc57c49efc5e0b3baa4a10e4ec08/activeandroid-3.1.0-SNAPSHOT.jar"
@@ -65,6 +86,20 @@
         <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/gson-2.3.1-b2fa6462e8e74c88e7928a0f1f74c3f172d4d521.jar" />
     </item>
     <item
+        jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="983e2f375504bc04def18e709c35192afe92e65f">
+        <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-536e2d7c1b62793b8d899ad9355a185ebf875eef.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/22.1.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="66fd9d179eb79b64c99e555dead32e725792217a">
+        <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-ce06fddc6a005ad8a912ceffd9c0de17357427a6.jar" />
+    </item>
+    <item
         jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-Wechat-Moments-2.5.8.jar"
         jumboMode="false"
         revision="21.1.1"
@@ -84,13 +119,6 @@
         revision="21.1.1"
         sha1="010ee9e87a286afcaeaed368dcf829e42d0aa2a0">
         <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-6654da24c2f75f63be191d7475e8455353ef71e1.jar" />
-    </item>
-    <item
-        jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/libs/internal_impl-22.0.0.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
-        <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/internal_impl-22.0.0-14d897350ee89b6d440dc9409c942b0c2e21fb96.jar" />
     </item>
     <item
         jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-QZone-2.5.8.jar"
@@ -142,18 +170,18 @@
         <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-bfcf20f81cd23123f19aa42064ae5e4aebc5d2d8.jar" />
     </item>
     <item
+        jar="/Users/leon/Documents/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.0/support-annotations-22.1.0.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="281bc6c58ecb3644c23fbc5ee0452019f67b4d5d">
+        <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/support-annotations-22.1.0-bf3991decfd48bfa1e6444cb7c236af3e60f9ea6.jar" />
+    </item>
+    <item
         jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/com.getbase/floatingactionbutton/1.5.1/classes.jar"
         jumboMode="false"
         revision="21.1.1"
         sha1="3b465c76432a5bc9292608ab6522b41b5ef292d6">
         <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-902b26fb7f9746808a960f2e693e2a7b0e628abd.jar" />
-    </item>
-    <item
-        jar="/Users/leon/Documents/sdk/extras/android/m2repository/com/android/support/support-annotations/22.0.0/support-annotations-22.0.0.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
-        <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/support-annotations-22.0.0-6a8ee72c0fbd04195632e838317a98e17250c7cb.jar" />
     </item>
     <item
         jar="/Users/leon/Documents/github/nmid-headline/app/libs/bugly_1.1.3_release.jar"
@@ -163,13 +191,6 @@
         <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/bugly_1.1.3_release-af17ec57930aff7dddcacafc428e723591987285.jar" />
     </item>
     <item
-        jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/21.0.2/classes.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="4796f18d3750bf2bfa078407a94a7f9db35b440d">
-        <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-f734f29050bf217f51e9b922c7f31294421f5fbd.jar" />
-    </item>
-    <item
         jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-SinaWeibo-2.5.8.jar"
         jumboMode="false"
         revision="21.1.1"
@@ -177,11 +198,11 @@
         <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/ShareSDK-SinaWeibo-2.5.8-139f83c4fa6a147a14d08b767805fc24497dabf4.jar" />
     </item>
     <item
-        jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/classes.jar"
+        jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/com.malinskiy/superrecyclerview/1.1.0/classes.jar"
         jumboMode="false"
         revision="21.1.1"
-        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
-        <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-cc5a68d9175aa37756d34f4fd89f8a80c0c45f56.jar" />
+        sha1="4649d32a5916687ff5d8e430aacb9a4e4eb10724">
+        <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-98f928b37e98120f5fd0a443c0ae36f511ef8383.jar" />
     </item>
     <item
         jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-Wechat-2.5.8.jar"
@@ -205,11 +226,11 @@
         <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/jpush-sdk-release1.7.2-e5d879678453f7a0bee7be0141750856b58991b5.jar" />
     </item>
     <item
-        jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/22.0.0/classes.jar"
+        jar="/Users/leon/.gradle/caches/modules-2/files-2.1/com.squareup/otto/1.3.6/ee373b6d0d6ea36a0a9b0cbabaf16be7e7fc3e30/otto-1.3.6.jar"
         jumboMode="false"
         revision="21.1.1"
-        sha1="11842de6a309c447b3a3d60d73ad637a87c58994">
-        <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-f278eb2de4c0248209e4e2dca236c1a18a0ec320.jar" />
+        sha1="ee373b6d0d6ea36a0a9b0cbabaf16be7e7fc3e30">
+        <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/otto-1.3.6-da29279979f62d8419f78381c9a5b1c84ddcb905.jar" />
     </item>
     <item
         jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/nmid-headline/onekeyshare/unspecified/libs/ShareSDK-Core-2.5.8.jar"
@@ -217,6 +238,20 @@
         revision="21.1.1"
         sha1="85f5874b452e076908cb403c1dde38d5f6e1c423">
         <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/ShareSDK-Core-2.5.8-85bb5f2f910683531a8eaf9a9379e5d5488e1828.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="eeebabdfd8203f6ab639ccea4ffa1f20e1adee3a">
+        <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-82d2fede5f344b3d6242835c7a5d5da6b7ab6bd7.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/exploded-aar/com.android.support/palette-v7/22.1.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="def806a18139dd1d38ffef4f41f911448d6aa860">
+        <dex dex="/Users/leon/Documents/github/nmid-headline/app/build/intermediates/pre-dexed/debug/classes-e7c8302b63bf118aa2fa43e40c45d4764e5bbc17.jar" />
     </item>
 
 </items>

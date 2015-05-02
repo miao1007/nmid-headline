@@ -1,5 +1,6 @@
 package cn.edu.cqupt.nmid.headline.support.pref;
 
+import android.content.Context;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.GlobalContext;
 import cn.edu.cqupt.nmid.headline.utils.PreferenceUtils;
@@ -9,9 +10,9 @@ import cn.edu.cqupt.nmid.headline.utils.PreferenceUtils;
  */
 public class HttpPref {
 
-  public static int getQueryFeedsLimit() {
+  public static int getQueryFeedsLimit(Context context) {
 
     String key = GlobalContext.getInstance().getString(R.string.settings_more_query_limit);
-    return Integer.valueOf(PreferenceUtils.getPrefString(key, "15"));
+    return Integer.valueOf(PreferenceUtils.getPrefString(context,key, "15"));
   }
 }

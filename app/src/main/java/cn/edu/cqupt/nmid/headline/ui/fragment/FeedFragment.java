@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -20,13 +22,10 @@ import cn.edu.cqupt.nmid.headline.support.api.headline.bean.HeadJson;
 import cn.edu.cqupt.nmid.headline.support.pref.HttpPref;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.adapter.FeedAdapter;
-import cn.edu.cqupt.nmid.headline.utils.animation.SlideInOutBottomItemAnimator;
-import com.activeandroid.query.Select;
+import cn.edu.cqupt.nmid.headline.utils.RetrofitUtils;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
-import java.util.List;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -51,6 +50,9 @@ public class FeedFragment extends Fragment {
   @InjectView(R.id.feed_recyclerview) RecyclerView mRecyclerview;
   @InjectView(R.id.feed_swiperefreshlayout) SwipeRefreshLayout mSwipeRefreshLayout;
   @InjectView(R.id.feed_floating_actionButton) FloatingActionButton mFloatingActionButton;
+
+  @InjectView(R.id.loading_tips) TextView mTvloading_tips;
+  @InjectView(R.id.loading_refresh) Button mBtnloading_refresh;
   /**
    * Data
    */
@@ -85,6 +87,10 @@ public class FeedFragment extends Fragment {
     loadNewFeeds();
   }
 
+  @OnClick(R.id.loading_refresh) void loading_refresh() {
+    loadNewFeeds();
+  }
+
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     Log.d(TAG, "onCreate");
@@ -99,7 +105,7 @@ public class FeedFragment extends Fragment {
     } else {
       Log.e(TAG, "getArguments == null!");
     }
-    feed_limit = HttpPref.getQueryFeedsLimit();
+    feed_limit = HttpPref.getQueryFeedsLimit(getActivity());
   }
 
   @Override public View onCreateView(LayoutInflater inflater, final ViewGroup container,
@@ -107,10 +113,15 @@ public class FeedFragment extends Fragment {
     Log.d(TAG, "onCreateView");
     View view = inflater.inflate(R.layout.fragment_feed, container, false);
     ButterKnife.inject(this, view);
+    return view;
+  }
+
+  @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+    Log.d(TAG, "onViewCreated");
+    super.onViewCreated(view, savedInstanceState);
     //set for night mode
     mRecyclerview.setBackgroundResource(ThemePref.getBackgroundResColor(getActivity()));
-    mFloatingActionButton.setColorNormalResId(
-        ThemePref.getToolbarBackgroundResColor(getActivity()));
+    mFloatingActionButton.setColorNormalResId(ThemePref.getToolbarBackgroundResColor(getActivity()));
     mFloatingActionButton.setColorPressedResId(ThemePref.getItemBackgroundResColor(getActivity()));
 
     mFloatingActionButton.setIcon(R.drawable.ic_reload_48dp);
@@ -121,16 +132,14 @@ public class FeedFragment extends Fragment {
     mRecyclerview.setHasFixedSize(true);
     mLayoutManager = new LinearLayoutManager(getActivity());
     mRecyclerview.setLayoutManager(mLayoutManager);
-    mRecyclerview.setItemAnimator(new SlideInOutBottomItemAnimator(mRecyclerview));
     mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
       @Override public void onRefresh() {
 
         loadNewFeeds();
-        mRecyclerview.smoothScrollToPosition(0);
       }
     });
     //Endless RecyclerView
-    mRecyclerview.setOnScrollListener(new RecyclerView.OnScrollListener() {
+    mRecyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
       @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
         int lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
@@ -145,9 +154,8 @@ public class FeedFragment extends Fragment {
       }
     });
 
-    loadDbFeeds();
+    //loadDbFeeds();
     //loadNewFeeds();
-    return view;
   }
 
   void loadNewFeeds() {
@@ -155,115 +163,123 @@ public class FeedFragment extends Fragment {
     if (isFavorite) {
       mSwipeRefreshLayout.setRefreshing(false);
     } else {
-      new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
-          .setLogLevel(RestAdapter.LogLevel.FULL)
-          .build()
+      RetrofitUtils.getCachedAdapter(HeadlineService.END_POINT)
           .create(HeadlineService.class)
           .getFreshFeeds(feed_category, 0, feed_limit, new Callback<HeadJson>() {
             @Override public void success(final HeadJson headJson, Response response) {
-              //fix NullPointException at samsung SM-G3812
-              if (mSwipeRefreshLayout != null) {
-                mSwipeRefreshLayout.setRefreshing(false);
-              }
-              if (headJson.getStatus() == HeadlineService.STATUS_ERR) {
-                Log.e(TAG, "STATUS_ERR , use LogLevel.FULL for more!");
-                return;
-              }
-              if (headJson.getStatus() == HeadlineService.STATUS_OK) {
-                if (newsBeans.isEmpty()) {
-                  Log.d(TAG, "newsBeans.isEmpty()");
-                  newsBeans.addAll(headJson.getData());
-                  adapter.notifyDataSetChanged();
-                  cacheToDb(newsBeans);
-                  return;
-                }
-                if (newsBeans.get(0).getIdmember() == headJson.getData().get(0).getIdmember()) {
-                  Log.d(TAG, "Same data, Ignore cacheToDb");
-                  return;
-                }
-                newsBeans.clear();
-                newsBeans.addAll(headJson.getData());
-                adapter.notifyDataSetChanged();
-                cacheToDb(newsBeans);
-              }
+              dispatchSuccess(headJson, true);
             }
 
             @Override public void failure(RetrofitError error) {
-              if (mSwipeRefreshLayout != null) {
-                mSwipeRefreshLayout.setRefreshing(false);
-              }
+              dispatchError();
             }
           });
     }
   }
 
-  private void cacheToDb(List<Feed> feeds) {
-    //如果你同时只操作一个数据库的话，就用被注释掉的方法，反之用下面的
-    //try {
-    //  for (Feed feed : feeds) {
-    //    feed.save();
-    //  }
-    //  ActiveAndroid.setTransactionSuccessful();
-    //} finally {
-    //  ActiveAndroid.endTransaction();
-    //}
-    for (Feed feed : feeds) {
-      feed.save();
-    }
-  }
+  //private void cacheToDb(List<Feed> feeds) {
+  //  //如果你同时只操作一个数据库的话，就用被注释掉的方法，反之用下面的
+  //  //try {
+  //  //  for (Feed feed : feeds) {
+  //  //    feed.save();
+  //  //  }
+  //  //  ActiveAndroid.setTransactionSuccessful();
+  //  //} finally {
+  //  //  ActiveAndroid.endTransaction();
+  //  //}
+  //  for (Feed feed : feeds) {
+  //    feed.save();
+  //  }
+  //}
 
   void loadOldNews() {
     isLoadingMore = true;
     feed_id = newsBeans.get(newsBeans.size() - 1).getIdmember();
-    new RestAdapter.Builder().setEndpoint(HeadlineService.END_POINT)
-        .build()
+    RetrofitUtils.getCachedAdapter(HeadlineService.END_POINT)
         .create(HeadlineService.class)
         .getOldFeeds(feed_category, feed_id, feed_limit, new Callback<HeadJson>() {
           @Override public void success(HeadJson headJson, Response response) {
-            Log.d(TAG, "loadOldNews id = " + feed_id);
-            mSwipeRefreshLayout.setRefreshing(false);
-            isLoadingMore = false;
-            if (headJson.getStatus() == 1) {
-              newsBeans.addAll(headJson.getData());
-              adapter.notifyDataSetChanged();
-            } else if (headJson.getStatus() == 0) {
-
-            }
+            dispatchSuccess(headJson, false);
           }
 
           @Override public void failure(RetrofitError error) {
-
-            mSwipeRefreshLayout.setRefreshing(false);
-            isLoadingMore = false;
+            dispatchError();
           }
         });
   }
 
-  void loadDbFeeds() {
-    List<Feed> feeds;
-    if (isFavorite) {
-      feeds = new Select().from(Feed.class)
-          .where("isCollect = ?", true)
-          .orderBy("idMember desc")
-          .limit(feed_limit)
-          .execute();
-    } else {
-      feeds = new Select().from(Feed.class)
-          .where("category = ?", feed_category)
-          .orderBy("idMember desc")
-          .limit(feed_limit)
-          .execute();
-    }
-    Log.d(TAG, "loadDbFeeds,size = " + feeds.size());
-    if (feeds.isEmpty()) {
-      //TODO
-      loadNewFeeds();
-    } else {
-      newsBeans.addAll(feeds);
-      adapter.notifyDataSetChanged();
+  private void dispatchSuccess(HeadJson headJson, boolean isClaer) {
+
+    if (mSwipeRefreshLayout != null) {
       mSwipeRefreshLayout.setRefreshing(false);
     }
+    showErrorView(View.GONE);
+
+    if (headJson.getStatus() == HeadlineService.STATUS_ERR) {
+      Log.e(TAG, "STATUS_ERR , use LogLevel.FULL for more!");
+      return;
+    }
+    if (headJson.getStatus() == HeadlineService.STATUS_OK) {
+      if (newsBeans.isEmpty()) {
+        Log.d(TAG, "newsBeans.isEmpty()");
+        newsBeans.addAll(headJson.getData());
+        adapter.notifyDataSetChanged();
+        //cacheToDb(newsBeans);
+        return;
+      }
+      if (newsBeans.get(0).getIdmember() == headJson.getData().get(0).getIdmember()) {
+        Log.d(TAG, "Same data, Ignore cacheToDb");
+        return;
+      }
+      if (isClaer) {
+        newsBeans.clear();
+      }
+      newsBeans.addAll(headJson.getData());
+      adapter.notifyDataSetChanged();
+    }
   }
+
+  private void dispatchError() {
+    if (mSwipeRefreshLayout != null) {
+      mSwipeRefreshLayout.setRefreshing(false);
+    }
+    newsBeans.clear();
+    adapter.notifyDataSetChanged();
+    isLoadingMore = false;
+    showErrorView(View.VISIBLE);
+  }
+
+  //void loadDbFeeds() {
+  //  List<Feed> feeds;
+  //  if (isFavorite) {
+  //    feeds = new Select().from(Feed.class)
+  //        .where("isCollect = ?", true)
+  //        .orderBy("idMember desc")
+  //        .limit(feed_limit)
+  //        .execute();
+  //  } else {
+  //    feeds = new Select().from(Feed.class)
+  //        .where("category = ?", feed_category)
+  //        .orderBy("idMember desc")
+  //        .limit(feed_limit)
+  //        .execute();
+  //  }
+  //  Log.d(TAG, "loadDbFeeds,size = " + feeds.size());
+  //  if (feeds.isEmpty()) {
+  //    //TODO
+  //    loadNewFeeds();
+  //  } else {
+  //    newsBeans.addAll(feeds);
+  //    adapter.notifyDataSetChanged();
+  //    mSwipeRefreshLayout.setRefreshing(false);
+  //  }
+  //}
+
+  void showErrorView(int isVisible) {
+    mBtnloading_refresh.setVisibility(isVisible);
+    mTvloading_tips.setVisibility(isVisible);
+  }
+
 
   @Override public void onDestroyView() {
     super.onDestroyView();

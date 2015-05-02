@@ -2,8 +2,14 @@ package cn.edu.cqupt.nmid.headline.utils;
 
 import android.content.Context;
 import android.widget.Toast;
-import cn.edu.cqupt.nmid.headline.R;
+import cn.edu.cqupt.nmid.headline.support.GlobalContext;
+import com.squareup.okhttp.Cache;
+import com.squareup.okhttp.OkHttpClient;
+import java.io.File;
+import retrofit.RequestInterceptor;
+import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 /**
@@ -13,29 +19,14 @@ public class RetrofitUtils {
   public static void disErr(Context context, RetrofitError e) {
     switch (e.getKind()) {
       case NETWORK:
-        Toast.makeText(context, context.getString(R.string.NETWORK), Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "NETWORK ERR", Toast.LENGTH_SHORT).show();
         break;
       case CONVERSION:
-        Toast.makeText(context, context.getString(R.string.CONVERSION), Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "CONVERSION ERR", Toast.LENGTH_SHORT).show();
         break;
       case HTTP:
-        switch (e.getResponse().getStatus()) {
-          case 500:
-            Toast.makeText(context,
-                e.getResponse().getReason() + " ：" + context.getString(R.string.HTTP_500),
-                Toast.LENGTH_SHORT).show();
-            break;
-          case 404:
-            Toast.makeText(context, context.getString(R.string.HTTP_404), Toast.LENGTH_SHORT)
-                .show();
-            break;
-          default:
-            Toast.makeText(context, context.getString(R.string.HTTP)
-                + String.valueOf(e.getResponse().getStatus())
-                + e.getResponse().getReason(), Toast.LENGTH_SHORT).show();
-            break;
-        }
-
+        Toast.makeText(context, "SERVER ERR" + " : " +
+            e.getResponse().getReason(), Toast.LENGTH_SHORT).show();
         break;
       case UNEXPECTED:
         Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -54,5 +45,31 @@ public class RetrofitUtils {
     if (context != null) {
       Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
+  }
+
+  public static RestAdapter getCachedAdapter(String endpoint) {
+    Cache cache = null;
+    OkHttpClient okHttpClient = null;
+    RestAdapter adapter;
+    try {
+      File cacheDir =
+          new File(GlobalContext.getInstance().getCacheDir().getPath(), "pictures.json");
+      cache = new Cache(cacheDir, 10 * 1024 * 1024);
+      okHttpClient = new OkHttpClient();
+      okHttpClient.setCache(cache);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    adapter = new RestAdapter.Builder().setEndpoint(endpoint)
+        //.setLogLevel(RestAdapter.LogLevel.FULL)
+        .setClient(new OkClient(okHttpClient))
+        .setRequestInterceptor(new RequestInterceptor() {
+          @Override public void intercept(RequestFacade request) {
+            request.addHeader("Cache-Control", "public, max-age=" + 60 * 60 * 4);
+          }
+        })
+        .build();
+    return adapter;
   }
 }

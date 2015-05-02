@@ -1,11 +1,10 @@
 package cn.edu.cqupt.nmid.headline.ui.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,8 +15,8 @@ import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
-import cn.edu.cqupt.nmid.headline.ui.widget.SlidingTabLayout;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
+import com.astuetz.PagerSlidingTabStrip;
 import java.util.ArrayList;
 
 /**
@@ -27,7 +26,7 @@ public class FeedsFragment extends Fragment {
 
   static final String TAG = LogUtils.makeLogTag(FeedsFragment.class);
 
-  @InjectView(R.id.slidingtab) SlidingTabLayout mTabLayout;
+  @InjectView(R.id.slidingtab) PagerSlidingTabStrip mTabLayout;
 
   @InjectView(R.id.viewpager) ViewPager mViewPager;
 
@@ -51,12 +50,7 @@ public class FeedsFragment extends Fragment {
     fragments.add(FeedFragment.newInstance("通信校友", HeadlineService.CATE_ALUMNUS));
     Log.d(TAG, "setViewPager");
     mTabLayout.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(getActivity()));
-    mTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
-      @Override
-      public int getIndicatorColor(int position) {
-        return Color.WHITE;
-      }
-    });
+
 
     mPagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager(), fragments);
     //mViewPager.setOffscreenPageLimit(fragments.size());
@@ -87,11 +81,8 @@ public class FeedsFragment extends Fragment {
     super.onDestroy();
   }
 
-  /**
-   * It's better to use FragmentStatePagerAdapter instead of {@link android.support.v4.view.PagerAdapter}
-   * Less memory associated when invisible.
-   */
-  public static class PagerAdapter extends FragmentStatePagerAdapter {
+
+  public static class PagerAdapter extends FragmentPagerAdapter {
 
     private String TAG = LogUtils.makeLogTag(PagerAdapter.class);
 
@@ -116,5 +107,7 @@ public class FeedsFragment extends Fragment {
     public CharSequence getPageTitle(int position) {
       return fragments.get(position).getArguments().getString("title");
     }
+
+    
   }
 }
