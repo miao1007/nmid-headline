@@ -5,6 +5,8 @@
 This is a android feeds client for CQUPT. And it's a material design demonstrate as well :)
 
 
+<iframe src="https://appetize.io/embed/r2bcrm0qy386md3fv37ye47z7c?device=nexus5&scale=75&autoplay=false&orientation=portrait&deviceColor=black" width="300px" height="597px" frameborder="0" scrolling="no"></iframe>
+
 ####Features
 * Full Material Design
 * RESTful API Design
@@ -13,7 +15,9 @@ This is a android feeds client for CQUPT. And it's a material design demonstrate
 * Night mode supported
 * Check for update supported
 
-![screenshot](screenshot/screenshot.png)
+
+####Showcase
+[Showcase avaliable in Appetize.io](https://appetize.io/app/r2bcrm0qy386md3fv37ye47z7c)
 
 ####Download
 Downloads are avaliable on
