@@ -11,6 +11,7 @@ import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 
 /**
  * Created by leon on 2/17/15.
+ * Called when download update apk complete.
  */
 public class DownloadCompleteReceiver extends BroadcastReceiver {
 

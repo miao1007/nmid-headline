@@ -8,7 +8,6 @@
       android:id="@+id/contentRoot"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_below="@id/image_comment_toolbar"
       android:background="@color/bg_comments"
       android:elevation="@dimen/default_elevation"
       android:orientation="vertical">

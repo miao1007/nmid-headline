@@ -7,10 +7,10 @@ public class ImageComment {
 
   //{"status":1,"data":[{"comment_id":"2","nickname":"nickname","avatar":"avatarurl","comment":"comment","time":"2015-03-15 13:05:25"}]}
 
-  @SerializedName("comment_id") private int commentId;
-  @Expose private String nickname;
-  @Expose private String comment;
-  @Expose private String time;
+  @SerializedName("comment_id") int commentId;
+  @SerializedName("nickname") String nickname;
+  @SerializedName("comment") String comment;
+  @SerializedName("time") String time;
   private String avatar;
 
   @Expose(deserialize = false) private boolean isCancelable;

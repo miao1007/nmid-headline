@@ -1,15 +1,13 @@
 package cn.edu.cqupt.nmid.headline.support.api.image.bean;
 
-import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ImageCommnetReslut {
 
-
-
-  @Expose private int status;
-  @Expose private List<ImageComment> data = new ArrayList<ImageComment>();
+  @SerializedName("status") private int status;
+  @SerializedName("data") private List<ImageComment> data = new ArrayList<ImageComment>();
 
   /**
    * @return The status

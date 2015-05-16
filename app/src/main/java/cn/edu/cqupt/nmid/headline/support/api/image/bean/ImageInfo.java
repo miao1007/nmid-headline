@@ -1,19 +1,20 @@
 package cn.edu.cqupt.nmid.headline.support.api.image.bean;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ImageInfo {
 
-  private int idmember;
-  private String imageurl;
-  private String previrousurl;
-  private String nickname;
-  private String deviceinfo;
-  private long uploadtime;
-  private int count_like;
-  private String avatar;
+  @SerializedName("idmember") int idmember;
+  @SerializedName("imageurl") String imageurl;
+  @SerializedName("previrousurl") String previrousurl;
+  @SerializedName("nickname") String nickname;
+  @SerializedName("deviceinfo") String deviceinfo;
+  @SerializedName("uploadtime") long uploadtime;
+  @SerializedName("count_like") int count_like;
+  @SerializedName("avatar") String avatar;
 
   @Expose(serialize = false) private boolean isHaveClickLike = false;
 

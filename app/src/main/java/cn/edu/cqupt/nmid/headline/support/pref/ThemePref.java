@@ -29,15 +29,13 @@ public class ThemePref {
     }
   }
 
-
   public static int getToolbarBackgroundResColor(Context context) {
     if (isNightMode(context)) {
       return R.color.background_material_dark;
     } else {
-      return R.color.primary;
+      return R.color.primarg_bg;
     }
   }
-
 
   public static int getItemBackgroundResColor(Context context) {
     if (isNightMode(context)) {

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+
   <color name="drawerbackgroud">@color/switch_thumb_normal_material_dark</color>
-  <color name="primarg_bg">@color/primary</color>
+  <color name="primarg_bg">#ff4198eb</color>
 
 
   <color name="style_color_primary">#2d5d82</color>

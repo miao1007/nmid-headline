@@ -2,10 +2,10 @@ package cn.edu.cqupt.nmid.headline.ui.activity.base;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
@@ -17,14 +17,16 @@ import com.hannesdorfmann.swipeback.SwipeBack;
 /**
  * Created by leon on 1/21/15.
  */
-public abstract class BasePrefActivity extends ActionBarActivity {
+public abstract class BasePrefActivity extends BaseToolbarActivity {
 
   final static String TAG = LogUtils.makeLogTag(BasePrefActivity.class);
 
-  @InjectView(R.id.include_settings_toolbar) Toolbar mToolbar;
+  @InjectView(R.id.toolbar) Toolbar mToolbar;
+  @InjectView(R.id.toolbar_holder) RelativeLayout mToolbarHolder;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    setStatusbarColor(mToolbarHolder);
     // Init the swipe back
     SwipeBack.attach(this, Position.LEFT)
         .setContentView(R.layout.activity_base_settings)

@@ -9,16 +9,16 @@ import android.view.ViewGroup;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.GlobalContext;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
-import cn.edu.cqupt.nmid.headline.ui.activity.base.BasePrefActivity;
+import cn.edu.cqupt.nmid.headline.ui.activity.base.BaseFragmentActivity;
 import cn.edu.cqupt.nmid.headline.ui.fragment.SupportPreferenceFragment;
 
-public class SettingsActivity extends BasePrefActivity {
+public class SettingsActivity extends BaseFragmentActivity {
 
   public int getPreferencesResId() {
     return R.xml.settings_general;
   }
 
-  @Override protected Fragment getFragment() {
+  @Override public Fragment getFragment() {
     return new SupportPreferenceFragment() {
       @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
           Bundle savedInstanceState) {

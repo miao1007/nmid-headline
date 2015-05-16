@@ -6,10 +6,9 @@ import cn.edu.cqupt.nmid.headline.support.pref.DebugPref;
 import cn.edu.cqupt.nmid.headline.support.pref.PushPref;
 import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.ShareSDK;
-import com.activeandroid.ActiveAndroid;
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
-import com.tencent.bugly.crashreport.CrashReport;
+import im.fir.sdk.FIR;
 
 /**
  * Created by leon on 1/27/15.
@@ -22,6 +21,7 @@ public class GlobalContext extends Application {
   public static Bus bus;
 
   @Override public void onCreate() {
+    FIR.init(this);
     super.onCreate();
     globalContext = this;
     bus = new Bus(ThreadEnforcer.MAIN);
@@ -34,20 +34,17 @@ public class GlobalContext extends Application {
       JPushInterface.init(this);
       JPushInterface.setDebugMode(isDebug);
     }
-    //bugly.qq.com
-    String appId = "1104137422";
 
-    CrashReport.initCrashReport(this, appId, isDebug);
     //sharesdk
     ShareSDK.initSDK(this);
     // Here you start using the ActiveAndroid library.
-    ActiveAndroid.initialize(this);
+    //ActiveAndroid.initialize(this);
   }
 
   @Override public void onTerminate() {
     super.onTerminate();
     Log.d("GlobalContext", "onTerminate");
-    ActiveAndroid.dispose();
+    //ActiveAndroid.dispose();
   }
 
   public static GlobalContext getInstance() {

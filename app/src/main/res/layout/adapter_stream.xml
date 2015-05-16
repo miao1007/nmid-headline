@@ -31,17 +31,13 @@
           android:layout_height="wrap_content"/>
     </LinearLayout>
 
-    <io.github.froger.instamaterial.ui.view.SquaredFrameLayout
+
+    <ImageView
+        android:id="@+id/item_stream_imageview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
 
-      <ImageView
-          android:id="@+id/item_stream_imageview"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:scaleType="centerCrop"/>
-
-    </io.github.froger.instamaterial.ui.view.SquaredFrameLayout>
 
     <ImageView
         android:id="@+id/ivFeedBottom"

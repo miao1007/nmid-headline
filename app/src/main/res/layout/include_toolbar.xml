@@ -1,11 +1,16 @@
-<view xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    class="android.support.v7.widget.Toolbar"
-    android:paddingTop="@dimen/nav_drawer_status_bar_offset"
-    android:elevation="@dimen/default_elevation"
-    android:background="@color/primarg_bg"
-    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    android:minHeight="?attr/actionBarSize"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"/>
+    android:id="@+id/toolbar_holder"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorPrimary">
+  <android.support.v7.widget.Toolbar
+      android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+      app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="?attr/colorPrimary"
+      android:elevation="4dp"/>
+</RelativeLayout>

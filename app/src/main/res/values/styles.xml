@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+  <!-- Base application theme. -->
   <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="android:textColor">#FF1F1F1F</item>
-    <item name="android:windowIsTranslucent">true</item>
+    <!-- Customize your theme here. -->
+    <item name="android:textColor">@color/secondary_text_night</item>
+    <item name="colorPrimary">@color/primarg_bg</item>
+    <item name="colorPrimaryDark">@color/primarg_bg</item>
+    <item name="colorAccent">@color/primarg_bg</item>
   </style>
 
   <!--com.getbase.floatingactionbutton.FloatingActionButton-->
@@ -12,13 +16,8 @@
     <item name="android:textColor">@color/secondary_text</item>
   </style>
 
-  <style name="SwipeBackLayout">
-    <item name="edge_size">200dip</item>
-    <item name="shadow_left">@drawable/shadow_left</item>
-    <item name="shadow_right">@drawable/shadow_right</item>
-    <item name="shadow_bottom">@drawable/shadow_bottom</item>
-  </style>
 
+  <!--PhotoView-->
   <style name="FullscreenTheme" parent="android:Theme.NoTitleBar">
     <item name="android:windowContentOverlay">@null</item>
     <item name="android:windowBackground">@null</item>
@@ -26,7 +25,7 @@
     <item name="metaButtonBarButtonStyle">@style/ButtonBarButton</item>
   </style>
 
-    <!-- Backward-compatible version of ?android:attr/buttonBarStyle -->
+  <!-- PhotoView:Backward-compatible version of ?android:attr/buttonBarStyle -->
   <style name="ButtonBar">
     <item name="android:paddingLeft">2dp</item>
     <item name="android:paddingTop">5dp</item>
@@ -35,7 +34,7 @@
     <item name="android:background">@android:drawable/bottom_bar</item>
   </style>
 
-    <!-- Backward-compatible version of ?android:attr/buttonBarButtonStyle -->
+  <!-- PhotoViewBackward-compatible version of ?android:attr/buttonBarButtonStyle -->
   <style name="ButtonBarButton"/>
 
 </resources>

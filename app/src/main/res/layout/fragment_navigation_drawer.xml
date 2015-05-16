@@ -32,6 +32,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:id="@+id/navigation_drawer_avatar_holder"
             android:layout_marginTop="@dimen/nav_drawer_status_bar_offset">
 
           <ImageView

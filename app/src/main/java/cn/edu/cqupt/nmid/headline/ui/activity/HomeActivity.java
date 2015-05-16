@@ -1,6 +1,7 @@
 package cn.edu.cqupt.nmid.headline.ui.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,17 +11,21 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.GlobalContext;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
-import cn.edu.cqupt.nmid.headline.ui.fragment.FeedFragment;
-import cn.edu.cqupt.nmid.headline.ui.fragment.FeedsFragment;
+import cn.edu.cqupt.nmid.headline.ui.fragment.ImagesFeedFragment;
 import cn.edu.cqupt.nmid.headline.ui.fragment.NavigationDrawerFragment;
-import cn.edu.cqupt.nmid.headline.ui.fragment.StreamFragment;
+import cn.edu.cqupt.nmid.headline.ui.fragment.NewsFeedFragment;
+import cn.edu.cqupt.nmid.headline.ui.fragment.SlidingTabFragment;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
+import cn.edu.cqupt.nmid.headline.utils.LolipopUtils;
 import cn.jpush.android.api.JPushInterface;
 import com.squareup.otto.Subscribe;
 
@@ -30,7 +35,9 @@ import com.squareup.otto.Subscribe;
 public class HomeActivity extends AppCompatActivity
     implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-  @InjectView(R.id.image_comment_toolbar) Toolbar mToolbar;
+  @InjectView(R.id.toolbar) Toolbar mToolbar;
+  @InjectView(R.id.toolbar_holder) RelativeLayout mToolbarHolder;
+
   @InjectView(R.id.home_drawer_layout) DrawerLayout mDrawerLayout;
   @InjectView(R.id.home_content_layout) LinearLayout mLinearLayout;
 
@@ -41,15 +48,24 @@ public class HomeActivity extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
     ButterKnife.inject(this);
-    Log.d(TAG, "onCreate");
-    mToolbar.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
-    mLinearLayout.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
+    setStatusbarColor();
     trySetupToolbar();
+    trySetupNavigationDrawer();
   }
 
-  private void trySetupToolbar() {
+  public void trySetupToolbar() {
+    try {
+      setSupportActionBar(mToolbar);
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      mToolbar.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
+      mToolbarHolder.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
+    } catch (NullPointerException e) {
+      Log.e(getClass().getSimpleName(), "toolbar is null!");
+    }
+  }
 
-    setSupportActionBar(mToolbar);
+  private void trySetupNavigationDrawer() {
+
     mNavigationDrawerFragment =
         (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(
             R.id.navigation_drawer);
@@ -62,18 +78,18 @@ public class HomeActivity extends AppCompatActivity
     Fragment fragment = null;
     switch (position) {
       case 0:
-        fragment = new FeedsFragment();
+        fragment = new SlidingTabFragment();
         break;
       case 1:
-        fragment = new StreamFragment();
+        fragment = new ImagesFeedFragment();
         break;
       case 2:
-        fragment = FeedFragment.newFavInstance();
+        fragment = NewsFeedFragment.newFavInstance();
         break;
     }
 
     if (fragment != null) {
-      fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+      fragmentManager.beginTransaction().replace(R.id.base_fragment_container, fragment).commit();
     }
   }
 
@@ -118,16 +134,31 @@ public class HomeActivity extends AppCompatActivity
     GlobalContext.getBus().unregister(this);
   }
 
-  @Subscribe public void onNightmode(boolean currentNightMode){
+  @Subscribe public void onNightmode(boolean currentNightMode) {
     ThemePref.setNightMode(this, !ThemePref.isNightMode(this));
     Intent intent = new Intent(this, this.getClass());
     startActivity(intent);
     finish();
   }
 
-
   @Override protected void onRestart() {
     super.onRestart();
     Log.d(TAG, "onRestart");
+  }
+
+  protected void setStatusbarColor() {
+
+    //对于Lollipop的设备，只需要在style.xml中设置colorPrimaryDark即可
+
+    //对于4.4的设备，如下即可
+    Window w = getWindow();
+
+    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+      w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+          WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+      int statusBarHeight = LolipopUtils.getStatusBarHeight(this);
+      mToolbarHolder.setPadding(0, statusBarHeight, 0, 0);
+      return;
+    }
   }
 }

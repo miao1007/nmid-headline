@@ -33,6 +33,8 @@ public class UploadService extends Service {
   public static final String TAG = LogUtils.makeLogTag(UploadService.class);
   public static final String Key = "urikey";
 
+  Uri outputFileUri;
+
   private Uri mImageUri;
 
   public UploadService() {
@@ -98,6 +100,7 @@ public class UploadService extends Service {
         onDestroy();
       }
     } catch (IOException e) {
+      Toast.makeText(UploadService.this, e.getMessage(), Toast.LENGTH_SHORT).show();
       e.printStackTrace();
     }
 
@@ -136,6 +139,6 @@ public class UploadService extends Service {
 
   @Override public void onDestroy() {
     super.onDestroy();
-    Log.d(TAG,"onDestroy");
+    Log.d(TAG, "onDestroy");
   }
 }

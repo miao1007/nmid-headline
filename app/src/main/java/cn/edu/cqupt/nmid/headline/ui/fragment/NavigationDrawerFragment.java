@@ -27,6 +27,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -38,9 +39,10 @@ import cn.edu.cqupt.nmid.headline.ui.activity.SettingsActivity;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationItemsAdapter;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationSecondaryItemsAdapter;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
+import cn.edu.cqupt.nmid.headline.utils.LolipopUtils;
 import cn.edu.cqupt.nmid.headline.utils.PreferenceUtils;
-import cn.edu.cqupt.nmid.headline.utils.picasso.BlurTransformation;
-import cn.edu.cqupt.nmid.headline.utils.picasso.CircleTransformation;
+import cn.edu.cqupt.nmid.headline.utils.thirdparty.picasso.BlurTransformation;
+import cn.edu.cqupt.nmid.headline.utils.thirdparty.picasso.CircleTransformation;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.PlatformDb;
@@ -60,7 +62,9 @@ public class NavigationDrawerFragment extends Fragment
   View rootView;
   Context context;
 
-  @InjectView(R.id.navigation_drawer_holder) LinearLayout mLinearLayout;
+
+  @InjectView(R.id.navigation_drawer_holder) LinearLayout mHolder;
+  @InjectView(R.id.navigation_drawer_avatar_holder) RelativeLayout mAvatarHolder;
   @InjectView(R.id.navigation_drawer_avatar) ImageView mAvatar;
   @InjectView(R.id.navigation_drawer_avatar_bg) ImageView mAvatarBg;
   @InjectView(R.id.navigation_drawer_username) TextView mUsername;
@@ -160,8 +164,8 @@ public class NavigationDrawerFragment extends Fragment
     ButterKnife.inject(this, rootView);
 
     //add night mode
-    mLinearLayout.setBackgroundResource(ThemePref.getItemBackgroundResColor(getActivity()));
-    mProfile.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(getActivity()));
+    mHolder.setBackgroundResource(ThemePref.getBackgroundResColor(getActivity()));
+    LolipopUtils.setStatusbarColor(getActivity(), mAvatarHolder);
 
     mNavigationItemsAdapter = new NavigationItemsAdapter(getActivity());
     mMainListView.setAdapter(mNavigationItemsAdapter);

@@ -6,12 +6,13 @@ import android.net.Uri;
 
 /**
  * Created by leon on 2/16/15.
+ * Download update apk with SystemService.
  */
 public class DownloadUtils {
 
   public static String MINETYPE_APPLCATION = "application/vnd.android.package-archive";
 
-  public static long DownloadWithProgress(Context context, String url) {
+  public static long DownloadApkWithProgress(Context context, String url) {
 
     DownloadManager downloadManager =
         (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
