@@ -166,18 +166,16 @@
 
     <!-- sharesdk -->
     <activity
-        android:name="cn.sharesdk.framework.ShareSDKUIShell"
+        android:name="com.mob.tools.MobUIShell"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar"
         android:configChanges="keyboardHidden|orientation|screenSize"
         android:screenOrientation="portrait"
-        android:theme="@android:style/Theme.Translucent.NoTitleBar"
-        android:windowSoftInputMode="stateHidden|adjustResize">
+        android:windowSoftInputMode="stateHidden|adjustResize" >
       <intent-filter>
-        <data android:scheme="tencent100371282"/>
-
-        <action android:name="android.intent.action.VIEW"/>
-
-        <category android:name="android.intent.category.BROWSABLE"/>
-        <category android:name="android.intent.category.DEFAULT"/>
+        <data android:scheme="tencent100371282" />
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <category android:name="android.intent.category.DEFAULT" />
       </intent-filter>
     </activity>
 

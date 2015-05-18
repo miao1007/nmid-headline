@@ -16,12 +16,6 @@
         android:id="@+id/feed_recyclerview"/>
   </view>
 
-  <include
-      layout="@layout/include_progressbar"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      android:id="@+id/stream_progressbar"
-      android:layout_centerInParent="true"/>
 
   <com.getbase.floatingactionbutton.FloatingActionButton
       android:id="@+id/stream_multiple_actions"

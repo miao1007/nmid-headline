@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -28,15 +29,17 @@ import cn.edu.cqupt.nmid.headline.support.api.image.bean.ImageStream;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.support.service.UploadService;
 import cn.edu.cqupt.nmid.headline.ui.adapter.ImagesFeedAdapter;
-import cn.edu.cqupt.nmid.headline.utils.FileUtils;
-import cn.edu.cqupt.nmid.headline.utils.thirdparty.RetrofitUtils;
+import cn.edu.cqupt.nmid.headline.utils.ImageUtils;
 import cn.edu.cqupt.nmid.headline.utils.animation.SlideInOutBottomItemAnimator;
+import cn.edu.cqupt.nmid.headline.utils.thirdparty.RetrofitUtils;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.tencent.qzone.QZone;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -46,9 +49,9 @@ import static cn.edu.cqupt.nmid.headline.utils.LogUtils.makeLogTag;
 public class ImagesFeedFragment extends Fragment {
 
   String TAG = makeLogTag(ImagesFeedFragment.class);
-  public final static int REQUEST_IMAGE_CAPTURE = 1;
+
   Uri outputFileUri;
-  AlertDialog dialog;
+  private String theLarge;
 
   /**
    * Injected Vies
@@ -62,26 +65,49 @@ public class ImagesFeedFragment extends Fragment {
     if (!ShareSDK.getPlatform(getActivity().getApplicationContext(), QZone.NAME).isValid()) {
 
       new AlertDialog.Builder(getActivity()).setTitle("Login Required")
-          .setMessage("请先登录账号，这样才可以上传哦！").setPositiveButton("OK",
-          new DialogInterface.OnClickListener() {
-            @Override public void onClick(DialogInterface dialog, int which) {
+          .setMessage("请先登录账号，这样才可以上传哦！")
+          .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override public void onClick(DialogInterface dialog, int which) {
 
-            }
-          }).create().show();
-
+                }
+              })
+          .create()
+          .show();
     } else {
-      tryUploadImage();
+      startTakePhoto();
     }
   }
 
-  private void tryUploadImage() {
-    File camaraCacheFile = FileUtils.createCachedFile();
-    outputFileUri = Uri.fromFile(camaraCacheFile);
-    Intent intent = new Intent(
-        MediaStore.ACTION_IMAGE_CAPTURE);
+  private void startTakePhoto() {
+    Intent intent;
+    // 判断是否挂载了SD卡
+    String savePath = "";
+    String storageState = Environment.getExternalStorageState();
+    if (storageState.equals(Environment.MEDIA_MOUNTED)) {
+      savePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/headline/Camera/";
+      File savedir = new File(savePath);
+      if (!savedir.exists()) {
+        savedir.mkdirs();
+      }
+    }
 
-    intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, Uri.fromFile(camaraCacheFile));
-    startActivity(intent);
+    // 没有挂载SD卡，无法保存文件
+    if (savePath.isEmpty()) {
+      RetrofitUtils.disMsg(getActivity(), "无法保存照片，请检查SD卡是否挂载");
+      return;
+    }
+
+    String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+    String fileName = "osc_" + timeStamp + ".jpg";// 照片命名
+    File out = new File(savePath, fileName);
+    Uri uri = Uri.fromFile(out);
+    outputFileUri = uri;
+
+    theLarge = savePath + fileName;// 该照片的绝对路径
+
+    intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+    startActivityForResult(intent, ImageUtils.REQUEST_CODE_GETIMAGE_BYCAMERA);
   }
 
   ImagesFeedAdapter adapter;
@@ -196,7 +222,7 @@ public class ImagesFeedFragment extends Fragment {
       return;
     }
 
-    if (requestCode == REQUEST_IMAGE_CAPTURE) {
+    if (requestCode == ImageUtils.REQUEST_CODE_GETIMAGE_BYCAMERA) {
       Log.d(TAG, "onActivityResult: REQUEST_IMAGE_CAPTURE");
       mRecyclerview.smoothScrollToPosition(0);
       tryUploadFromUri(getActivity(), outputFileUri);

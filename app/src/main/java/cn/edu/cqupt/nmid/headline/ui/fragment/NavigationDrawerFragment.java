@@ -47,7 +47,7 @@ import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.PlatformDb;
 import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.framework.utils.UIHandler;
+import com.mob.tools.utils.UIHandler;
 import cn.sharesdk.tencent.qzone.QZone;
 import com.squareup.picasso.Picasso;
 import java.util.HashMap;
@@ -106,11 +106,11 @@ public class NavigationDrawerFragment extends Fragment
   }
 
   @Override public void onError(Platform platform, int i, Throwable throwable) {
-
+    Log.d(TAG, "onError");
   }
 
   @Override public void onCancel(Platform platform, int i) {
-
+    Log.d(TAG, "onCancel");
   }
 
   @Override public boolean handleMessage(Message msg) {
@@ -200,6 +200,10 @@ public class NavigationDrawerFragment extends Fragment
     Log.d(TAG, "db.isValid() ,load avatar");
 
     Log.d(TAG, db.getUserIcon());
+
+    if (db.getUserIcon().isEmpty() || db.getUserName().isEmpty()){
+      return;
+    }
 
     Picasso.with(context)
         .load(db.getUserIcon())

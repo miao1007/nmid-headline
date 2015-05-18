@@ -25,7 +25,8 @@ public class NavigationItemsAdapter extends ArrayAdapter<NavigationItemsAdapter.
     super(context, R.layout.item_navigation);
 
     mDataset.add(new NavItem(R.drawable.ic_home_grey600_24dp, "我的主页"));
-    mDataset.add(new NavItem(R.drawable.ic_camera_grey600_24dp, context.getString(R.string.iiem_camera)));
+    mDataset.add(
+        new NavItem(R.drawable.ic_camera_grey600_24dp, context.getString(R.string.iiem_camera)));
     mDataset.add(new NavItem(R.drawable.ic_favorite_grey600_24dp, "我的收藏"));
   }
 
@@ -34,8 +35,7 @@ public class NavigationItemsAdapter extends ArrayAdapter<NavigationItemsAdapter.
     notifyDataSetChanged();
   }
 
-  @Override
-  public View getView(int position, View convertView, ViewGroup parent) {
+  @Override public View getView(int position, View convertView, ViewGroup parent) {
     View v = convertView;
 
     if (v == null) {
@@ -56,7 +56,7 @@ public class NavigationItemsAdapter extends ArrayAdapter<NavigationItemsAdapter.
       Resources res = getContext().getResources();
       int transparentColor = res.getColor(android.R.color.transparent);
       int selectedBackgroundColor = res.getColor(R.color.separator_light);
-      int selectedItemColor = res.getColor(R.color.apptheme_main);
+      int selectedItemColor = res.getColor(R.color.primarg_bg);
       int unselectedItemColor = res.getColor(R.color.text_gray);
 
       v.setBackgroundColor(position == selectedItem ? selectedBackgroundColor : transparentColor);
@@ -68,8 +68,7 @@ public class NavigationItemsAdapter extends ArrayAdapter<NavigationItemsAdapter.
     return v;
   }
 
-  @Override
-  public int getCount() {
+  @Override public int getCount() {
     return mDataset.size();
   }
 

@@ -206,7 +206,7 @@ public class WebViewFragment extends Fragment {
     oks.disableSSOWhenAuthorize();
 
     // 分享时Notification的图标和文字
-    oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
+    //oks.set(R.drawable.ic_launcher, getString(R.string.app_name));
     // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
     oks.setTitle(title);
     // text是分享文本，所有平台都需要这个字段

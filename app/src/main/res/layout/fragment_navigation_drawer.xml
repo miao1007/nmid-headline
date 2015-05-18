@@ -7,7 +7,7 @@
 
   <ScrollView
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="match_parent"
       android:fadingEdge="none"
       android:scrollbars="none">
 
@@ -87,7 +87,7 @@
       <!--navigation list 2 (for settings/exit only)-->
       <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
+          android:layout_height="fill_parent"
           android:clickable="true"
           android:orientation="vertical">
 

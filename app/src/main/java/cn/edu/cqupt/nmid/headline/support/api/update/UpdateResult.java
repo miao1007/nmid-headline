@@ -3,6 +3,7 @@ package cn.edu.cqupt.nmid.headline.support.api.update;
 /**
  * Created by leon on 2/16/15.
  */
+@Deprecated
 public class UpdateResult {
   private int status;
   private String url;

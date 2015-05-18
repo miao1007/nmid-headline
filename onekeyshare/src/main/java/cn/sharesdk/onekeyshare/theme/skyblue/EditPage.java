@@ -28,9 +28,9 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.EditPageFakeActivity;
 import cn.sharesdk.onekeyshare.PicViewer;
 
-import static cn.sharesdk.framework.utils.R.getIdRes;
-import static cn.sharesdk.framework.utils.R.getLayoutRes;
-import static cn.sharesdk.framework.utils.R.getStringRes;
+import static com.mob.tools.utils.R.getIdRes;
+import static com.mob.tools.utils.R.getLayoutRes;
+import static com.mob.tools.utils.R.getStringRes;
 
 /** 执行图文分享的页面，此页面不支持微信平台的分享 */
 public class EditPage extends EditPageFakeActivity implements OnClickListener, TextWatcher {

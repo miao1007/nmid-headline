@@ -8,7 +8,7 @@
 
 package cn.sharesdk.onekeyshare;
 
-import static cn.sharesdk.framework.utils.R.*;
+import static com.mob.tools.utils.R.*;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -20,7 +20,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.ImageView.ScaleType;
-import cn.sharesdk.framework.FakeActivity;
+import com.mob.tools.FakeActivity;
 
 /** 摇一摇启动分享的例子 */
 public class Shake2Share extends FakeActivity implements SensorEventListener {

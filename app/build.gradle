@@ -8,8 +8,8 @@ android {
     applicationId "cn.edu.cqupt.nmid.headline"
     minSdkVersion 15
     targetSdkVersion 22
-    versionCode 210
-    versionName "2.10"
+    versionCode 220
+    versionName "2.20"
   }
 
   compileOptions {
@@ -20,16 +20,10 @@ android {
     release {
       minifyEnabled true //run proguard
       shrinkResources true
-      // Open Source libs
-      proguardFile 'proguard-gson.pro'
-      proguardFile 'proguard-butterknife.pro'
-      proguardFile 'proguard-square-okhttp.pro'
-      proguardFile 'proguard-square-otto.pro'
-      proguardFile 'proguard-square-picasso.pro'
-      proguardFile 'proguard-square-retrofit.pro'
+      proguardFile 'proguard-square.pro'
 
       //Already Proguarded Libs
-      proguardFile 'proguard-third-sharesdk.pro'
+      //proguardFile 'proguard-third-sharesdk.pro'
 
       // Default proguard files(including support libs)
       proguardFiles getDefaultProguardFile('proguard-android.txt')
