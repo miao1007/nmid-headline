@@ -21,11 +21,12 @@ import com.hannesdorfmann.swipeback.SwipeBack;
 /**
  * Created by leon on 1/28/15.
  * Best for : Webview, Settings , About
+ * UI elements included only
  */
 public abstract class BaseFragmentActivity extends AppCompatActivity {
 
-  @InjectView(R.id.toolbar) Toolbar mToolbar;
-  @InjectView(R.id.toolbar_holder) RelativeLayout mToolbarHolder;
+  @InjectView(R.id.toolbar) public Toolbar mToolbar;
+  @InjectView(R.id.toolbar_holder) public RelativeLayout mToolbarHolder;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

@@ -1,24 +1,22 @@
 package cn.edu.cqupt.nmid.headline.ui.activity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.GlobalContext;
+import cn.edu.cqupt.nmid.headline.support.event.NightModeEvent;
+import cn.edu.cqupt.nmid.headline.support.pref.KEYS;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.fragment.ImagesFeedFragment;
 import cn.edu.cqupt.nmid.headline.ui.fragment.NavigationDrawerFragment;
@@ -26,8 +24,10 @@ import cn.edu.cqupt.nmid.headline.ui.fragment.NewsFeedFragment;
 import cn.edu.cqupt.nmid.headline.ui.fragment.SlidingTabFragment;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import cn.edu.cqupt.nmid.headline.utils.LolipopUtils;
+import cn.edu.cqupt.nmid.headline.utils.PreferenceUtils;
 import cn.jpush.android.api.JPushInterface;
 import com.squareup.otto.Subscribe;
+import me.denley.preferenceinjector.PreferenceInjector;
 
 /**
  *
@@ -48,20 +48,18 @@ public class HomeActivity extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
     ButterKnife.inject(this);
-    setStatusbarColor();
+    PreferenceInjector.inject(this);
+    LolipopUtils.setStatusbarColor(this, mToolbarHolder);
     trySetupToolbar();
     trySetupNavigationDrawer();
+    mToolbar.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
+    mToolbarHolder.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
   }
 
   public void trySetupToolbar() {
-    try {
-      setSupportActionBar(mToolbar);
-      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-      mToolbar.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
-      mToolbarHolder.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
-    } catch (NullPointerException e) {
-      Log.e(getClass().getSimpleName(), "toolbar is null!");
-    }
+
+    setSupportActionBar(mToolbar);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
   }
 
   private void trySetupNavigationDrawer() {
@@ -106,12 +104,12 @@ public class HomeActivity extends AppCompatActivity
   @Override public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.action_night_mode:
-        ThemePref.setNightMode(this, !ThemePref.isNightMode(this));
-
-        Intent intent = new Intent(this, this.getClass());
+        boolean isNightmode = PreferenceUtils.getPrefBoolean(this, KEYS.NIGHTMODE, false);
+        PreferenceUtils.setPrefBoolean(this, KEYS.NIGHTMODE, !isNightmode);
+        //GlobalContext.getBus().post(new NightModeEvent(isNightmode));
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
-
         break;
       case R.id.action_settings:
         startActivity(new Intent(this, SettingsActivity.class));
@@ -134,31 +132,17 @@ public class HomeActivity extends AppCompatActivity
     GlobalContext.getBus().unregister(this);
   }
 
-  @Subscribe public void onNightmode(boolean currentNightMode) {
-    ThemePref.setNightMode(this, !ThemePref.isNightMode(this));
-    Intent intent = new Intent(this, this.getClass());
-    startActivity(intent);
-    finish();
+  @Override protected void onDestroy() {
+    super.onDestroy();
+    PreferenceInjector.stopListening(this);
+    ButterKnife.reset(this);
   }
 
-  @Override protected void onRestart() {
-    super.onRestart();
-    Log.d(TAG, "onRestart");
-  }
+  @Subscribe public void onNightmode(NightModeEvent currentNightMode) {
 
-  protected void setStatusbarColor() {
-
-    //对于Lollipop的设备，只需要在style.xml中设置colorPrimaryDark即可
-
-    //对于4.4的设备，如下即可
-    Window w = getWindow();
-
-    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-      w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-          WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-      int statusBarHeight = LolipopUtils.getStatusBarHeight(this);
-      mToolbarHolder.setPadding(0, statusBarHeight, 0, 0);
-      return;
-    }
+    mToolbar.setBackgroundResource(
+        ThemePref.getToolbarBackgroundResColor(currentNightMode.isNightMode));
+    mToolbarHolder.setBackgroundResource(
+        ThemePref.getToolbarBackgroundResColor(currentNightMode.isNightMode));
   }
 }

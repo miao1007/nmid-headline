@@ -20,12 +20,12 @@ public class GlobalContext extends Application {
   private boolean isDebug = true;
   public static Bus bus;
 
+
   @Override public void onCreate() {
     FIR.init(this);
     super.onCreate();
     globalContext = this;
     bus = new Bus(ThreadEnforcer.MAIN);
-
     isDebug = DebugPref.isDebug(this);
 
     //start JPush service
@@ -41,9 +41,11 @@ public class GlobalContext extends Application {
     //ActiveAndroid.initialize(this);
   }
 
+  //However , It will never be called.
   @Override public void onTerminate() {
     super.onTerminate();
     Log.d("GlobalContext", "onTerminate");
+    bus.unregister(this);
     //ActiveAndroid.dispose();
   }
 
@@ -51,6 +53,7 @@ public class GlobalContext extends Application {
     return globalContext;
   }
 
+  //otto eventbus
   public static Bus getBus() {
     return bus;
   }

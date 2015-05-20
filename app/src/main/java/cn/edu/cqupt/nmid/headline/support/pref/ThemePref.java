@@ -29,12 +29,25 @@ public class ThemePref {
     }
   }
 
+  public static int getBackgroundResColor(boolean isNightMode) {
+    if (isNightMode) {
+      return R.color.background_floating_material_dark;
+    } else {
+      return R.color.background_floating_material_light;
+    }
+  }
+
   public static int getToolbarBackgroundResColor(Context context) {
     if (isNightMode(context)) {
       return R.color.background_material_dark;
     } else {
       return R.color.primarg_bg;
     }
+  }
+
+  public static int getToolbarBackgroundResColor(boolean isNightMode) {
+
+    return isNightMode ? R.color.background_material_dark : R.color.primarg_bg;
   }
 
   public static int getItemBackgroundResColor(Context context) {
@@ -44,4 +57,11 @@ public class ThemePref {
       return R.color.background_item_material_light;
     }
   }
+
+  public static int getItemBackgroundResColor(boolean isNightMode) {
+
+    return isNightMode ? R.color.background_item_material_dark
+        : R.color.background_item_material_light;
+  }
 }
+

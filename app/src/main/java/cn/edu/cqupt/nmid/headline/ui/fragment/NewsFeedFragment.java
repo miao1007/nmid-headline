@@ -1,5 +1,6 @@
 package cn.edu.cqupt.nmid.headline.ui.fragment;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,14 +17,17 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.edu.cqupt.nmid.headline.R;
-import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
-import cn.edu.cqupt.nmid.headline.support.api.headline.bean.Feed;
-import cn.edu.cqupt.nmid.headline.support.api.headline.bean.HeadJson;
+import cn.edu.cqupt.nmid.headline.support.GlobalContext;
+import cn.edu.cqupt.nmid.headline.support.event.NightModeEvent;
 import cn.edu.cqupt.nmid.headline.support.pref.HttpPref;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
+import cn.edu.cqupt.nmid.headline.support.repository.headline.HeadlineService;
+import cn.edu.cqupt.nmid.headline.support.repository.headline.bean.Feed;
+import cn.edu.cqupt.nmid.headline.support.repository.headline.bean.HeadJson;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NewsFeedAdapter;
 import cn.edu.cqupt.nmid.headline.utils.thirdparty.RetrofitUtils;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -121,7 +125,8 @@ public class NewsFeedFragment extends Fragment {
     super.onViewCreated(view, savedInstanceState);
     //set for night mode
     mRecyclerview.setBackgroundResource(ThemePref.getBackgroundResColor(getActivity()));
-    mFloatingActionButton.setColorNormalResId(ThemePref.getToolbarBackgroundResColor(getActivity()));
+    mFloatingActionButton.setColorNormalResId(
+        ThemePref.getToolbarBackgroundResColor(getActivity()));
     mFloatingActionButton.setColorPressedResId(ThemePref.getItemBackgroundResColor(getActivity()));
 
     mFloatingActionButton.setIcon(R.drawable.ic_reload_48dp);
@@ -155,7 +160,7 @@ public class NewsFeedFragment extends Fragment {
     });
 
     //loadDbFeeds();
-    //loadNewFeeds();
+    loadNewFeeds();
   }
 
   void loadNewFeeds() {
@@ -276,10 +281,34 @@ public class NewsFeedFragment extends Fragment {
   //}
 
   void showErrorView(int isVisible) {
-    mBtnloading_refresh.setVisibility(isVisible);
-    mTvloading_tips.setVisibility(isVisible);
+    if (mBtnloading_refresh != null && mTvloading_tips != null) {
+      mBtnloading_refresh.setVisibility(isVisible);
+      mTvloading_tips.setVisibility(isVisible);
+    }
   }
 
+  @Subscribe public void onNightmode(NightModeEvent event) {
+    Log.d(TAG, "isNightMode" + event.isNightMode);
+    //if (mRecyclerview == null) {
+    //  Log.d(TAG, "onNightmode mRecyclerview is null!");
+    //}
+    //mFloatingActionButton.setColorNormalResId(ThemePref.getBackgroundResColor(event.isNightMode));
+    //mFloatingActionButton.setColorPressedResId(
+    //    ThemePref.getItemBackgroundResColor(event.isNightMode));
+    onDetach();
+    onAttach(getActivity());
+  }
+
+  @Override public void onAttach(Activity activity) {
+    super.onAttach(activity);
+
+    GlobalContext.getBus().register(this);
+  }
+
+  @Override public void onDetach() {
+    super.onDetach();
+    GlobalContext.getBus().unregister(this);
+  }
 
   @Override public void onDestroyView() {
     super.onDestroyView();

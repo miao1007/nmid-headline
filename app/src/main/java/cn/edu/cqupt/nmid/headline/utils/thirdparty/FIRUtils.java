@@ -37,6 +37,7 @@ public class FIRUtils {
             .setMessage(appVersion.getChangeLog())
             .setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
               @Override public void onClick(DialogInterface dialogInterface, int i) {
+                //when download complete, broadcast will be sent to receiver
                 DownloadUtils.DownloadApkWithProgress(context.getApplicationContext(),
                     appVersion.getUpdateUrl());
               }

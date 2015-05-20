@@ -34,6 +34,8 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 import cn.edu.cqupt.nmid.headline.R;
+import cn.edu.cqupt.nmid.headline.support.GlobalContext;
+import cn.edu.cqupt.nmid.headline.support.event.NightModeEvent;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.activity.SettingsActivity;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationItemsAdapter;
@@ -47,8 +49,9 @@ import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.PlatformDb;
 import cn.sharesdk.framework.ShareSDK;
-import com.mob.tools.utils.UIHandler;
 import cn.sharesdk.tencent.qzone.QZone;
+import com.mob.tools.utils.UIHandler;
+import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 
@@ -61,7 +64,6 @@ public class NavigationDrawerFragment extends Fragment
 
   View rootView;
   Context context;
-
 
   @InjectView(R.id.navigation_drawer_holder) LinearLayout mHolder;
   @InjectView(R.id.navigation_drawer_avatar_holder) RelativeLayout mAvatarHolder;
@@ -201,7 +203,7 @@ public class NavigationDrawerFragment extends Fragment
 
     Log.d(TAG, db.getUserIcon());
 
-    if (db.getUserIcon().isEmpty() || db.getUserName().isEmpty()){
+    if (db.getUserIcon().isEmpty() || db.getUserName().isEmpty()) {
       return;
     }
 
@@ -299,6 +301,8 @@ public class NavigationDrawerFragment extends Fragment
 
   @Override public void onAttach(Activity activity) {
     super.onAttach(activity);
+
+    GlobalContext.getBus().register(this);
     try {
       mCallbacks = (NavigationDrawerCallbacks) activity;
     } catch (ClassCastException e) {
@@ -306,8 +310,14 @@ public class NavigationDrawerFragment extends Fragment
     }
   }
 
+  @Subscribe public void onNightmode(NightModeEvent event) {
+    mHolder.setBackgroundResource(ThemePref.getBackgroundResColor(event.isNightMode));
+  }
+
   @Override public void onDetach() {
     super.onDetach();
+
+    GlobalContext.getBus().unregister(this);
     mCallbacks = null;
   }
 

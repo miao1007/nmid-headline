@@ -12,7 +12,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
-import cn.edu.cqupt.nmid.headline.support.api.headline.bean.Feed;
+import cn.edu.cqupt.nmid.headline.support.repository.headline.bean.Feed;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.activity.DetailedActivity;
 import cn.edu.cqupt.nmid.headline.ui.fragment.WebViewFragment;

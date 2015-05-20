@@ -5,4 +5,8 @@ package cn.edu.cqupt.nmid.headline.support.event;
  */
 public class NightModeEvent {
   public boolean isNightMode;
+
+  public NightModeEvent(boolean isNightMode) {
+    this.isNightMode = isNightMode;
+  }
 }

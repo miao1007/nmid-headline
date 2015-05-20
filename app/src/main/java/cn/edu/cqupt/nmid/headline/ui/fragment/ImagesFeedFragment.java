@@ -22,11 +22,13 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.edu.cqupt.nmid.headline.R;
-import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
-import cn.edu.cqupt.nmid.headline.support.api.image.ImageService;
-import cn.edu.cqupt.nmid.headline.support.api.image.bean.ImageInfo;
-import cn.edu.cqupt.nmid.headline.support.api.image.bean.ImageStream;
+import cn.edu.cqupt.nmid.headline.support.GlobalContext;
+import cn.edu.cqupt.nmid.headline.support.event.ImageUploadEvent;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
+import cn.edu.cqupt.nmid.headline.support.repository.headline.HeadlineService;
+import cn.edu.cqupt.nmid.headline.support.repository.image.ImageService;
+import cn.edu.cqupt.nmid.headline.support.repository.image.bean.ImageInfo;
+import cn.edu.cqupt.nmid.headline.support.repository.image.bean.ImageStream;
 import cn.edu.cqupt.nmid.headline.support.service.UploadService;
 import cn.edu.cqupt.nmid.headline.ui.adapter.ImagesFeedAdapter;
 import cn.edu.cqupt.nmid.headline.utils.ImageUtils;
@@ -36,6 +38,7 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.tencent.qzone.QZone;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
+import com.squareup.otto.Subscribe;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -67,10 +70,10 @@ public class ImagesFeedFragment extends Fragment {
       new AlertDialog.Builder(getActivity()).setTitle("Login Required")
           .setMessage("请先登录账号，这样才可以上传哦！")
           .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override public void onClick(DialogInterface dialog, int which) {
+            @Override public void onClick(DialogInterface dialog, int which) {
 
-                }
-              })
+            }
+          })
           .create()
           .show();
     } else {
@@ -233,5 +236,20 @@ public class ImagesFeedFragment extends Fragment {
     Intent intent = new Intent(context.getApplicationContext(), UploadService.class);
     intent.putExtra(UploadService.Key, mImageUri);
     getActivity().startService(intent);
+  }
+
+  //called from upload service when uploaded successfully
+  @Subscribe public void onNightmode(ImageUploadEvent event) {
+    loadNewFeeds();
+  }
+
+  @Override public void onAttach(Activity activity) {
+    super.onAttach(activity);
+    GlobalContext.getBus().register(this);
+  }
+
+  @Override public void onDetach() {
+    super.onDetach();
+    GlobalContext.getBus().unregister(this);
   }
 }

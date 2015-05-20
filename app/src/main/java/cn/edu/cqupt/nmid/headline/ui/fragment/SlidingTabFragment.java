@@ -1,5 +1,6 @@
 package cn.edu.cqupt.nmid.headline.ui.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,13 +11,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
-import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
+import cn.edu.cqupt.nmid.headline.support.GlobalContext;
+import cn.edu.cqupt.nmid.headline.support.event.NightModeEvent;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
+import cn.edu.cqupt.nmid.headline.support.repository.headline.HeadlineService;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import com.astuetz.PagerSlidingTabStrip;
+import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 
 /**
@@ -29,12 +34,12 @@ public class SlidingTabFragment extends Fragment {
   @InjectView(R.id.slidingtab) PagerSlidingTabStrip mTabLayout;
 
   @InjectView(R.id.viewpager) ViewPager mViewPager;
+  @InjectView(R.id.holder) LinearLayout mHolder;
 
   ArrayList<NewsFeedFragment> fragments = new ArrayList<>();
   PagerAdapter mPagerAdapter;
 
-  @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+  @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_viewpager, container, false);
     ButterKnife.inject(this, view);
@@ -51,7 +56,6 @@ public class SlidingTabFragment extends Fragment {
     Log.d(TAG, "setViewPager");
     mTabLayout.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(getActivity()));
 
-
     mPagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager(), fragments);
     //mViewPager.setOffscreenPageLimit(fragments.size());
     mViewPager.setAdapter(mPagerAdapter);
@@ -59,28 +63,25 @@ public class SlidingTabFragment extends Fragment {
     mTabLayout.setViewPager(mViewPager);
   }
 
-  @Override public void onStop() {
-    super.onStop();
-    Log.d(TAG, "onStop");
+  @Override public void onAttach(Activity activity) {
+    super.onAttach(activity);
+    GlobalContext.getBus().register(this);
   }
 
   @Override public void onDetach() {
-    Log.d(TAG, "onDetach");
     super.onDetach();
+    GlobalContext.getBus().unregister(this);
   }
 
-  @Override
-  public void onDestroyView() {
+  @Override public void onDestroyView() {
     super.onDestroyView();
     Log.d(TAG, "onDestroyView");
     ButterKnife.reset(this);
   }
 
-  @Override public void onDestroy() {
-    Log.d(TAG, "onDestroy");
-    super.onDestroy();
+  @Subscribe public void onNightmode(NightModeEvent event) {
+    mTabLayout.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(event.isNightMode));
   }
-
 
   public static class PagerAdapter extends FragmentPagerAdapter {
 
@@ -93,21 +94,16 @@ public class SlidingTabFragment extends Fragment {
       this.fragments = fragments;
     }
 
-    @Override
-    public Fragment getItem(int pos) {
+    @Override public Fragment getItem(int pos) {
       return fragments.get(pos);
     }
 
-    @Override
-    public int getCount() {
+    @Override public int getCount() {
       return fragments.size();
     }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
+    @Override public CharSequence getPageTitle(int position) {
       return fragments.get(position).getArguments().getString("title");
     }
-
-
   }
 }

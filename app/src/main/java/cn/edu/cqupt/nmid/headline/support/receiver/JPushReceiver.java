@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import cn.edu.cqupt.nmid.headline.support.api.headline.HeadlineService;
+import cn.edu.cqupt.nmid.headline.support.repository.headline.HeadlineService;
 import cn.edu.cqupt.nmid.headline.ui.activity.DetailedActivity;
 import cn.jpush.android.api.JPushInterface;
 import com.google.gson.JsonObject;

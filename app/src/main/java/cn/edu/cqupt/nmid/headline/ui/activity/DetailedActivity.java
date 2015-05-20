@@ -2,7 +2,7 @@ package cn.edu.cqupt.nmid.headline.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import cn.edu.cqupt.nmid.headline.support.api.headline.bean.Feed;
+import cn.edu.cqupt.nmid.headline.support.repository.headline.bean.Feed;
 import cn.edu.cqupt.nmid.headline.ui.activity.base.BaseFragmentActivity;
 import cn.edu.cqupt.nmid.headline.ui.fragment.WebViewFragment;
 

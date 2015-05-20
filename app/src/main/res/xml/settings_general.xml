@@ -21,11 +21,6 @@
         android:key="@string/settings_data_usage_control"
         android:title="@string/settings_data_usage_control"/>
 
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:layout="@layout/preference_item"
-        android:key="@string/settings_night_mode_night"
-        android:title="@string/settings_night_mode_night"/>
   </PreferenceCategory>
 
   <PreferenceCategory android:title="其它">
