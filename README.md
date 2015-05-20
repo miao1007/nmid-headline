@@ -2,7 +2,7 @@
 --------
 [中文用户点这里！](note/readme_chs.md)
 
-This is a android feeds client for CQUPT. And it's a material design demonstrate as well :)
+This is a android feeds client. And it's a material design demonstrate as well :)
 
 
 <iframe src="https://appetize.io/embed/r2bcrm0qy386md3fv37ye47z7c?device=nexus5&scale=75&autoplay=false&orientation=portrait&deviceColor=black" width="300px" height="597px" frameborder="0" scrolling="no"></iframe>
@@ -29,7 +29,7 @@ Downloads are avaliable on
 * [91 Store](http://apk.91.com/Soft/Android/cn.edu.cqupt.nmid.headline-206-2.06.html)
 * [Hiapk Store](http://apk.hiapk.com/appinfo/cn.edu.cqupt.nmid.headline/206)  
 
-####Build Environment
+####Build Environmen
 Android Studio 1.1 or higher
 
 
