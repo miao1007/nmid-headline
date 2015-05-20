@@ -1,13 +1,11 @@
 #nmid-headline
 --------
-[中文用户点这里！](note/readme_chs.md)
 
 This is a android feeds client. And it's a material design demonstrate as well :)
 
-
 <iframe src="https://appetize.io/embed/r2bcrm0qy386md3fv37ye47z7c?device=nexus5&scale=75&autoplay=false&orientation=portrait&deviceColor=black" width="300px" height="597px" frameborder="0" scrolling="no"></iframe>
 
-####Features
+##Features
 * Full Material Design
 * RESTful API Design
 * Translucent mode for kitkat or higher
@@ -16,11 +14,11 @@ This is a android feeds client. And it's a material design demonstrate as well :
 * Check for update supported
 
 
-####Showcase
-[Showcase avaliable in Appetize.io](https://appetize.io/app/r2bcrm0qy386md3fv37ye47z7c)
+##Showcase
+[Showcase available in Appetize.io](https://appetize.io/app/r2bcrm0qy386md3fv37ye47z7c)
 
-####Download
-Downloads are avaliable on
+##Download
+Release Versions are available on AppStore
 
 * [Wandoujia Store](http://www.wandoujia.com/apps/cn.edu.cqupt.nmid.headline) 
 * [Tencent Store](http://sj.qq.com/myapp/detail.htm?apkName=cn.edu.cqupt.nmid.headline)  
@@ -29,9 +27,13 @@ Downloads are avaliable on
 * [91 Store](http://apk.91.com/Soft/Android/cn.edu.cqupt.nmid.headline-206-2.06.html)
 * [Hiapk Store](http://apk.hiapk.com/appinfo/cn.edu.cqupt.nmid.headline/206)  
 
-####Build Environmen
-Android Studio 1.1 or higher
+Dev Versions are available on Fir.im
 
+* [Fir.im](http://fir.im/rkxv/)
+
+####Build Environmen
+
+Android Studio 1.2 or higher
 
 ####License
 MIT
