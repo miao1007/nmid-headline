@@ -1,4 +1,4 @@
-package cn.edu.cqupt.nmid.headline.ui.fragment;
+package cn.edu.cqupt.nmid.headline.ui.fragment.base;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -65,7 +65,7 @@ public class NewsFeedFragment extends Fragment {
   NewsFeedAdapter adapter;
   int feed_id;
   private String title;
-  private int feed_limit = 15;
+  protected int feed_limit = 15;
   private int feed_category = HeadlineService.CATE_ALUMNUS;
   private boolean isFavorite = false;
   private boolean isLoadingMore = false;
@@ -159,27 +159,23 @@ public class NewsFeedFragment extends Fragment {
       }
     });
 
-    //loadDbFeeds();
-    loadNewFeeds();
+    loadDbFeeds();
   }
 
   void loadNewFeeds() {
     mRecyclerview.smoothScrollToPosition(0);
-    if (isFavorite) {
-      mSwipeRefreshLayout.setRefreshing(false);
-    } else {
-      RetrofitUtils.getCachedAdapter(HeadlineService.END_POINT)
-          .create(HeadlineService.class)
-          .getFreshFeeds(feed_category, 0, feed_limit, new Callback<HeadJson>() {
-            @Override public void success(final HeadJson headJson, Response response) {
-              dispatchSuccess(headJson, true);
-            }
+    RetrofitUtils.getCachedAdapter(HeadlineService.END_POINT)
+        .create(HeadlineService.class)
+        .getFreshFeeds(feed_category, 0, feed_limit, new Callback<HeadJson>() {
+          @Override public void success(final HeadJson headJson, Response response) {
+            //cacheToDb(headJson.getData());
+            dispatchSuccess(headJson, true);
+          }
 
-            @Override public void failure(RetrofitError error) {
-              dispatchError();
-            }
-          });
-    }
+          @Override public void failure(RetrofitError error) {
+            dispatchError();
+          }
+        });
   }
 
   //private void cacheToDb(List<Feed> feeds) {
@@ -213,7 +209,7 @@ public class NewsFeedFragment extends Fragment {
         });
   }
 
-  private void dispatchSuccess(HeadJson headJson, boolean isClaer) {
+  private void dispatchSuccess(HeadJson headJson, boolean isClear) {
 
     if (mSwipeRefreshLayout != null) {
       mSwipeRefreshLayout.setRefreshing(false);
@@ -236,7 +232,7 @@ public class NewsFeedFragment extends Fragment {
         Log.d(TAG, "Same data, Ignore cacheToDb");
         return;
       }
-      if (isClaer) {
+      if (isClear) {
         newsBeans.clear();
       }
       newsBeans.addAll(headJson.getData());
@@ -254,31 +250,23 @@ public class NewsFeedFragment extends Fragment {
     showErrorView(View.VISIBLE);
   }
 
-  //void loadDbFeeds() {
-  //  List<Feed> feeds;
-  //  if (isFavorite) {
-  //    feeds = new Select().from(Feed.class)
-  //        .where("isCollect = ?", true)
-  //        .orderBy("idMember desc")
-  //        .limit(feed_limit)
-  //        .execute();
-  //  } else {
-  //    feeds = new Select().from(Feed.class)
-  //        .where("category = ?", feed_category)
-  //        .orderBy("idMember desc")
-  //        .limit(feed_limit)
-  //        .execute();
-  //  }
-  //  Log.d(TAG, "loadDbFeeds,size = " + feeds.size());
-  //  if (feeds.isEmpty()) {
-  //    //TODO
-  //    loadNewFeeds();
-  //  } else {
-  //    newsBeans.addAll(feeds);
-  //    adapter.notifyDataSetChanged();
-  //    mSwipeRefreshLayout.setRefreshing(false);
-  //  }
-  //}
+  void loadDbFeeds() {
+    //List<Feed> feeds;
+    //feeds = new Select().from(Feed.class)
+    //    .where("category = ?", Integer.valueOf(this.feed_category))
+    //    .orderBy("idMember desc")
+    //    .limit(this.feed_limit)
+    //    .execute();
+    //if (feeds.isEmpty()) {
+    //  //TODO
+    //  loadNewFeeds();
+    //} else {
+    //  newsBeans.addAll(feeds);
+    //  adapter.notifyDataSetChanged();
+    //  mSwipeRefreshLayout.setRefreshing(false);
+    //}
+    loadNewFeeds();
+  }
 
   void showErrorView(int isVisible) {
     if (mBtnloading_refresh != null && mTvloading_tips != null) {

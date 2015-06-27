@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
-import cn.edu.cqupt.nmid.headline.utils.LolipopUtils;
+import cn.edu.cqupt.nmid.headline.utils.LollipopUtils;
 import com.hannesdorfmann.swipeback.Position;
 import com.hannesdorfmann.swipeback.SwipeBack;
 
@@ -30,6 +30,7 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    setTheme(android.R.style.Theme_DeviceDefault_Light_DarkActionBar);
     // Init the swipe back
     SwipeBack.attach(this, Position.LEFT)
         .setContentView(R.layout.activity_base_fragment)
@@ -73,7 +74,7 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
     if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
       w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
           WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-      int statusBarHeight = LolipopUtils.getStatusBarHeight(this);
+      int statusBarHeight = LollipopUtils.getStatusBarHeight(this);
       mToolbarHolder.setPadding(0, statusBarHeight, 0, 0);
       return;
     }

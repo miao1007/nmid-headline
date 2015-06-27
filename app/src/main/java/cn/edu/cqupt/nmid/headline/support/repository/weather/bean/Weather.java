@@ -7,7 +7,7 @@ import java.util.Map;
 public class Weather {
 
     private int status;
-    private Data data;
+    private WweatherData wweatherData;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
@@ -33,17 +33,17 @@ public class Weather {
      * @return
      *     The data
      */
-    public Data getData() {
-        return data;
+    public WweatherData getWweatherData() {
+        return wweatherData;
     }
 
     /**
      * 
-     * @param data
+     * @param wweatherData
      *     The data
      */
-    public void setData(Data data) {
-        this.data = data;
+    public void setWweatherData(WweatherData wweatherData) {
+        this.wweatherData = wweatherData;
     }
 
     public Map<String, Object> getAdditionalProperties() {

@@ -86,7 +86,7 @@ public class UploadService extends Service {
                   Log.e(TAG, "upload failed!");
                   Toast.makeText(getApplicationContext(), "上传失败！", Toast.LENGTH_SHORT).show();
                 }
-                onDestroy();
+                UploadService.this.stopSelf();
               }
 
               @Override public void failure(RetrofitError error) {

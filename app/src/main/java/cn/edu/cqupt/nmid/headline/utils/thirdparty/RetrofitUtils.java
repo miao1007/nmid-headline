@@ -6,7 +6,6 @@ import cn.edu.cqupt.nmid.headline.support.GlobalContext;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import java.io.File;
-import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
@@ -64,11 +63,6 @@ public class RetrofitUtils {
     adapter = new RestAdapter.Builder().setEndpoint(endpoint)
         .setLogLevel(RestAdapter.LogLevel.FULL)
         .setClient(new OkClient(okHttpClient))
-        .setRequestInterceptor(new RequestInterceptor() {
-          @Override public void intercept(RequestFacade request) {
-            request.addHeader("Cache-Control", "public, max-age=" + 60 * 60 * 4);
-          }
-        })
         .build();
     return adapter;
   }

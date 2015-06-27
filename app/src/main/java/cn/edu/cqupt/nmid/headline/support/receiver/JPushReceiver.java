@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import cn.edu.cqupt.nmid.headline.support.repository.headline.HeadlineService;
+import cn.edu.cqupt.nmid.headline.support.repository.headline.bean.Feed;
 import cn.edu.cqupt.nmid.headline.ui.activity.DetailedActivity;
 import cn.jpush.android.api.JPushInterface;
 import com.google.gson.JsonObject;
@@ -21,8 +22,7 @@ import com.google.gson.JsonParser;
 public class JPushReceiver extends BroadcastReceiver {
   private static final String TAG = "JPush";
 
-  @Override
-  public void onReceive(Context context, Intent intent) {
+  @Override public void onReceive(Context context, Intent intent) {
     Bundle bundle = intent.getExtras();
     if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
       Log.d(TAG, "用户点击打开了通知");
@@ -32,24 +32,14 @@ public class JPushReceiver extends BroadcastReceiver {
 
   private void processClick(Context context, Bundle bundle) {
     //打开自定义的Activity
-    Log.d(TAG, printBundle(bundle));
-    Intent i = new Intent(context, DetailedActivity.class);
-    i.putExtras(bundle);
-    System.out.println("bundle.getString(JPushInterface.EXTRA_EXTRA) = " + bundle.getString(
-        JPushInterface.EXTRA_EXTRA).length());
-    System.out.println(
-        "bundle.getString(JPushInterface.EXTRA_EXTRA).trim().length() = " + bundle.getString(
-            JPushInterface.EXTRA_EXTRA).trim().length());
     if (bundle.getString(JPushInterface.EXTRA_EXTRA).trim().length() > 3) {
+
       JsonObject newObj =
           new JsonParser().parse(bundle.getString(JPushInterface.EXTRA_EXTRA)).getAsJsonObject();
 
-      i.putExtra(HeadlineService.ID, newObj.get(HeadlineService.ID).getAsInt());
-      i.putExtra(HeadlineService.CATEGORY, newObj.get(HeadlineService.CATEGORY).getAsInt());
-
-      //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-      i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-      context.startActivity(i);
+      Feed feed = new Feed(newObj.get(HeadlineService.ID).getAsInt(),
+          newObj.get(HeadlineService.CATEGORY).getAsInt());
+      DetailedActivity.startActivity(context, feed);
     } else {
       Log.e(TAG, "cn.jpush.android.EXTRA IllegalFormatException");
     }

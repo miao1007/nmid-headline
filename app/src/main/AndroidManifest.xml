@@ -37,17 +37,12 @@
 
   <application
       android:name=".support.GlobalContext"
-      android:icon="@drawable/ic_launcher"
+      android:icon="@drawable/ic_launcher_headline"
       android:label="@string/app_name"
       android:theme="@style/AppTheme">
     <activity
         android:name=".ui.activity.HomeActivity"
         android:label="@string/app_name">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
-
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
     </activity>
 
     <!-- For test only 测试状态通知栏，需要打开的Activity -->
@@ -138,9 +133,10 @@
       </intent-filter>
     </receiver>
 
-    <!--fir.im bugHD-->
-    <meta-data android:value="1130b15cd26d89d078622df3daf6d23d"
-        android:name="BUG_HD_SDK_GENERAL_KEY"/>
+    <!-- fir.im bugHD -->
+    <meta-data
+        android:name="BUG_HD_SDK_GENERAL_KEY"
+        android:value="1130b15cd26d89d078622df3daf6d23d"/>
 
     <!-- Required  . Enable it you can get statistics data with channel -->
     <meta-data
@@ -167,15 +163,17 @@
     <!-- sharesdk -->
     <activity
         android:name="com.mob.tools.MobUIShell"
-        android:theme="@android:style/Theme.Translucent.NoTitleBar"
         android:configChanges="keyboardHidden|orientation|screenSize"
         android:screenOrientation="portrait"
-        android:windowSoftInputMode="stateHidden|adjustResize" >
+        android:theme="@android:style/Theme.Translucent.NoTitleBar"
+        android:windowSoftInputMode="stateHidden|adjustResize">
       <intent-filter>
-        <data android:scheme="tencent100371282" />
-        <action android:name="android.intent.action.VIEW" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <category android:name="android.intent.category.DEFAULT" />
+        <data android:scheme="tencent100371282"/>
+
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <category android:name="android.intent.category.DEFAULT"/>
       </intent-filter>
     </activity>
 
@@ -228,6 +226,15 @@
         android:enabled="true"
         android:exported="true">
     </service>
+
+    <activity
+        android:name=".ui.activity.IntroActivity"
+        android:label="@string/app_name">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
   </application>
 
 </manifest>

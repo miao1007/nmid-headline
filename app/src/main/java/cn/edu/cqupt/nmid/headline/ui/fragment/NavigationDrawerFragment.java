@@ -41,7 +41,7 @@ import cn.edu.cqupt.nmid.headline.ui.activity.SettingsActivity;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationItemsAdapter;
 import cn.edu.cqupt.nmid.headline.ui.adapter.NavigationSecondaryItemsAdapter;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
-import cn.edu.cqupt.nmid.headline.utils.LolipopUtils;
+import cn.edu.cqupt.nmid.headline.utils.LollipopUtils;
 import cn.edu.cqupt.nmid.headline.utils.PreferenceUtils;
 import cn.edu.cqupt.nmid.headline.utils.thirdparty.picasso.BlurTransformation;
 import cn.edu.cqupt.nmid.headline.utils.thirdparty.picasso.CircleTransformation;
@@ -167,7 +167,7 @@ public class NavigationDrawerFragment extends Fragment
 
     //add night mode
     mHolder.setBackgroundResource(ThemePref.getBackgroundResColor(getActivity()));
-    LolipopUtils.setStatusbarColor(getActivity(), mAvatarHolder);
+    LollipopUtils.setStatusbarColor(getActivity(), mAvatarHolder);
 
     mNavigationItemsAdapter = new NavigationItemsAdapter(getActivity());
     mMainListView.setAdapter(mNavigationItemsAdapter);

@@ -2,34 +2,42 @@ package cn.edu.cqupt.nmid.headline.support.repository.headline.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.SerializedName;
 
-public class Feed implements Parcelable {
+@Table(name = "Feed") public class Feed extends Model implements Parcelable {
 
-  @SerializedName("idmember") int idmember;
+  @SerializedName("idmember") @Column(name = "idmember") int idmember;
 
-  @SerializedName("category") int category;
+  @SerializedName("category") @Column(name = "category") int category;
 
-  @SerializedName("title") String title;
+  @SerializedName("title") @Column(name = "title") String title;
 
-  @SerializedName("simple_content") String simple_content;
+  @SerializedName("simple_content") @Column(name = "simple_content") String simple_content;
 
-  @SerializedName("image1") String image1;
+  @SerializedName("image1") @Column(name = "image1") String image1;
 
-  @SerializedName("image2") String image2;
+  @SerializedName("image2") @Column(name = "image2") String image2;
 
-  @SerializedName("image3") String image3;
+  @SerializedName("image3") @Column(name = "image3") String image3;
 
-  @SerializedName("time_release") String timeRelease;
+  @SerializedName("time_release") @Column(name = "time_release") String timeRelease;
 
-  boolean isCollect;
+  @SerializedName("isLike") @Column(name = "isLike") boolean isLike;
 
-  public boolean isCollect() {
-    return isCollect;
+  public Feed(int idmember, int category) {
+    this.idmember = idmember;
+    this.category = category;
   }
 
-  public void setCollect(boolean isCollect) {
-    this.isCollect = isCollect;
+  public boolean isLike() {
+    return isLike;
+  }
+
+  public void setLike(boolean isLike) {
+    this.isLike = isLike;
   }
 
   public int getIdmember() {
@@ -151,14 +159,14 @@ public class Feed implements Parcelable {
     dest.writeString(this.image2);
     dest.writeString(this.image3);
     dest.writeString(this.timeRelease);
-    dest.writeByte(isCollect ? (byte) 1 : (byte) 0);
+    dest.writeByte(isLike ? (byte) 1 : (byte) 0);
   }
 
   public Feed() {
   }
 
   public Feed(int idmember, int category, String title, String simple_content, String image1,
-      String image2, String image3, String timeRelease, boolean isCollect) {
+      String image2, String image3, String timeRelease, boolean isLike) {
     this.idmember = idmember;
     this.category = category;
     this.title = title;
@@ -167,7 +175,7 @@ public class Feed implements Parcelable {
     this.image2 = image2;
     this.image3 = image3;
     this.timeRelease = timeRelease;
-    this.isCollect = isCollect;
+    this.isLike = isLike;
   }
 
   private Feed(Parcel in) {
@@ -179,7 +187,7 @@ public class Feed implements Parcelable {
     this.image2 = in.readString();
     this.image3 = in.readString();
     this.timeRelease = in.readString();
-    this.isCollect = in.readByte() != 0;
+    this.isLike = in.readByte() != 0;
   }
 
   public static final Parcelable.Creator<Feed> CREATOR = new Parcelable.Creator<Feed>() {

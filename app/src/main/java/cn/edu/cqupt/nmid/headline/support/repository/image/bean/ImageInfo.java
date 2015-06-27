@@ -1,20 +1,23 @@
 package cn.edu.cqupt.nmid.headline.support.repository.image.bean;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ImageInfo {
+@Table(name = "ImageInfo") public class ImageInfo extends Model {
 
-  @SerializedName("idmember") int idmember;
-  @SerializedName("imageurl") String imageurl;
-  @SerializedName("previrousurl") String previrousurl;
-  @SerializedName("nickname") String nickname;
-  @SerializedName("deviceinfo") String deviceinfo;
-  @SerializedName("uploadtime") long uploadtime;
-  @SerializedName("count_like") int count_like;
-  @SerializedName("avatar") String avatar;
+  @SerializedName("idmember") @Column(name = "idmember") int idmember;
+  @SerializedName("imageurl") @Column(name = "imageurl") String imageurl;
+  @SerializedName("previrousurl") @Column(name = "previrousurl") String previrousurl;
+  @SerializedName("nickname") @Column(name = "nickname") String nickname;
+  @SerializedName("deviceinfo") @Column(name = "deviceinfo") String deviceinfo;
+  @SerializedName("uploadtime") @Column(name = "uploadtime") long uploadtime;
+  @SerializedName("count_like") @Column(name = "count_like") int count_like;
+  @SerializedName("avatar") @Column(name = "avatar") String avatar;
 
   @Expose(serialize = false) private boolean isHaveClickLike = false;
 

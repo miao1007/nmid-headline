@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import cn.edu.cqupt.nmid.headline.utils.LolipopUtils;
+import cn.edu.cqupt.nmid.headline.utils.LollipopUtils;
 
 /**
  * Created by leon on 15/5/17.
@@ -22,7 +22,7 @@ public class BaseToolbarActivity extends AppCompatActivity {
     if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
       w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
           WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-      int statusBarHeight = LolipopUtils.getStatusBarHeight(this);
+      int statusBarHeight = LollipopUtils.getStatusBarHeight(this);
       view.setPadding(0, statusBarHeight, 0, 0);
       return;
     }

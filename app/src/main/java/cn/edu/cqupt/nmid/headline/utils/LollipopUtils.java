@@ -11,7 +11,7 @@ import android.view.WindowManager;
 /**
  * Created by leon on 4/14/15.
  */
-public class LolipopUtils {
+public class LollipopUtils {
 
   public static int getStatusBarHeight(Context context) {
     Context appContext = context.getApplicationContext();
@@ -35,7 +35,7 @@ public class LolipopUtils {
     if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
       w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
           WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-      int statusBarHeight = LolipopUtils.getStatusBarHeight(activity);
+      int statusBarHeight = LollipopUtils.getStatusBarHeight(activity);
       view.setPadding(0, statusBarHeight, 0, 0);
       return;
     }

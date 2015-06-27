@@ -20,7 +20,7 @@
       <ImageView android:layout_width="32dp" android:layout_height="32dp"
           android:layout_gravity="center_vertical"
           android:id="@+id/iv_stream_avatar"
-          android:src="@drawable/ic_launcher"/>
+          android:src="@drawable/ic_launcher_headline"/>
 
       <TextView
           android:layout_marginLeft="8dp"

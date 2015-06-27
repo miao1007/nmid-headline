@@ -6,7 +6,6 @@
     <ListPreference
         android:defaultValue="115"
         android:dialogTitle="@string/settings_font_size"
-        android:layout="@layout/preference_item"
         android:entries="@array/settings_entries_font_sizes"
         android:entryValues="@array/settings_entry_values_font_sizes"
         android:key="@string/settings_font_size"
@@ -15,7 +14,6 @@
     <ListPreference
         android:defaultValue="1"
         android:dialogTitle="@string/settings_data_usage_control"
-        android:layout="@layout/preference_item"
         android:entries="@array/settings_entries_load_images"
         android:entryValues="@array/settings_entry_values_load_images"
         android:key="@string/settings_data_usage_control"
@@ -24,13 +22,11 @@
   </PreferenceCategory>
 
   <PreferenceCategory android:title="其它">
-    <PreferenceScreen android:title="高级"
-        android:layout="@layout/preference_item">
+    <PreferenceScreen android:title="高级">
       <intent android:action=".ui.activity.SettingsMoreActivity"/>
 
     </PreferenceScreen>
-    <PreferenceScreen android:title="关于"
-        android:layout="@layout/preference_item">
+    <PreferenceScreen android:title="关于">
       <intent android:action=".ui.activity.AboutActivity"/>
     </PreferenceScreen>
   </PreferenceCategory>

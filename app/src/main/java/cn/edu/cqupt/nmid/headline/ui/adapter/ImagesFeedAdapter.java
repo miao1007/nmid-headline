@@ -98,7 +98,7 @@ public class ImagesFeedAdapter extends RecyclerView.Adapter<ImagesFeedAdapter.St
     viewHolder.likesCount.setText(imageInfo.getCount_like() + "人 觉得赞");
 
     viewHolder.nickName.setText(
-        imageInfo.getNickname() + " 发表于 " + TimeUtils.getTimeFormatDate(imageInfo.getUploadtime()));
+        imageInfo.getNickname() + " 发表于 " + TimeUtils.getTimeFromStamp(imageInfo.getUploadtime()));
 
     if (imageInfo.getAvatar() != null) {
       Picasso.with(viewHolder.mIv_avater.getContext())

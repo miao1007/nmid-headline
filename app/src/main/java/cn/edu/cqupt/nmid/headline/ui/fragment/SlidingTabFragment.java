@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +19,7 @@ import cn.edu.cqupt.nmid.headline.support.GlobalContext;
 import cn.edu.cqupt.nmid.headline.support.event.NightModeEvent;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.support.repository.headline.HeadlineService;
+import cn.edu.cqupt.nmid.headline.ui.fragment.base.NewsFeedFragment;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import com.astuetz.PagerSlidingTabStrip;
 import com.squareup.otto.Subscribe;
@@ -83,7 +84,7 @@ public class SlidingTabFragment extends Fragment {
     mTabLayout.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(event.isNightMode));
   }
 
-  public static class PagerAdapter extends FragmentPagerAdapter {
+  public static class PagerAdapter extends FragmentStatePagerAdapter {
 
     private String TAG = LogUtils.makeLogTag(PagerAdapter.class);
 
@@ -105,5 +106,7 @@ public class SlidingTabFragment extends Fragment {
     @Override public CharSequence getPageTitle(int position) {
       return fragments.get(position).getArguments().getString("title");
     }
+
+
   }
 }

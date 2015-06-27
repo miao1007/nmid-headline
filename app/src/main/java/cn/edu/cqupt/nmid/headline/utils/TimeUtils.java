@@ -1,5 +1,8 @@
 package cn.edu.cqupt.nmid.headline.utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 /**
  * Created by leon on 2/7/15.
  */
@@ -13,10 +16,10 @@ public class TimeUtils {
   /**
    * 返回文字描述的日期
    */
-  public static String getTimeFormatDate(long unixStamp_s) {
+  public static String getTimeFromStamp(long unixStamp_s) {
 
     long current = System.currentTimeMillis();
-    long diff = current - unixStamp_s*1000;
+    long diff = current - unixStamp_s * 1000;
 
     //Log.d("TimeUtils","current " + current + "/news" + unixStamp_s + "/diff" + diff);
     long r = 0;
@@ -43,13 +46,13 @@ public class TimeUtils {
     return "刚刚";
   }
 
-  //public static String getTimeFormatText(String yyyy_MM_dd_HH_mm_ss) {
-  //  DateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-  //  try {
-  //    return getTimeFormatDate(date.parse(yyyy_MM_dd_HH_mm_ss));
-  //  } catch (Exception e) {
-  //    e.printStackTrace();
-  //    return "刚刚";
-  //  }
-  //}
+  public static String getTimeFromYYYY_MM_DD(String yyyy_MM_dd_HH_mm_ss) {
+    DateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+    try {
+      return getTimeFromStamp(date.parse(yyyy_MM_dd_HH_mm_ss).getTime());
+    } catch (Exception e) {
+      e.printStackTrace();
+      return "刚刚";
+    }
+  }
 }

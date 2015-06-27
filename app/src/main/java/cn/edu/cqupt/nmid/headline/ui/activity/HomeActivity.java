@@ -14,20 +14,17 @@ import android.widget.RelativeLayout;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
-import cn.edu.cqupt.nmid.headline.support.GlobalContext;
 import cn.edu.cqupt.nmid.headline.support.event.NightModeEvent;
 import cn.edu.cqupt.nmid.headline.support.pref.KEYS;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
+import cn.edu.cqupt.nmid.headline.ui.fragment.base.FavFeedFragment;
 import cn.edu.cqupt.nmid.headline.ui.fragment.ImagesFeedFragment;
 import cn.edu.cqupt.nmid.headline.ui.fragment.NavigationDrawerFragment;
-import cn.edu.cqupt.nmid.headline.ui.fragment.NewsFeedFragment;
 import cn.edu.cqupt.nmid.headline.ui.fragment.SlidingTabFragment;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
-import cn.edu.cqupt.nmid.headline.utils.LolipopUtils;
+import cn.edu.cqupt.nmid.headline.utils.LollipopUtils;
 import cn.edu.cqupt.nmid.headline.utils.PreferenceUtils;
-import cn.jpush.android.api.JPushInterface;
 import com.squareup.otto.Subscribe;
-import me.denley.preferenceinjector.PreferenceInjector;
 
 /**
  *
@@ -48,8 +45,7 @@ public class HomeActivity extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
     ButterKnife.inject(this);
-    PreferenceInjector.inject(this);
-    LolipopUtils.setStatusbarColor(this, mToolbarHolder);
+    LollipopUtils.setStatusbarColor(this, mToolbarHolder);
     trySetupToolbar();
     trySetupNavigationDrawer();
     mToolbar.setBackgroundResource(ThemePref.getToolbarBackgroundResColor(this));
@@ -82,7 +78,7 @@ public class HomeActivity extends AppCompatActivity
         fragment = new ImagesFeedFragment();
         break;
       case 2:
-        fragment = NewsFeedFragment.newFavInstance();
+        fragment = new FavFeedFragment();
         break;
     }
 
@@ -120,21 +116,8 @@ public class HomeActivity extends AppCompatActivity
     return super.onOptionsItemSelected(item);
   }
 
-  @Override protected void onResume() {
-    super.onResume();
-    JPushInterface.onResume(this);
-    GlobalContext.getBus().register(this);
-  }
-
-  @Override protected void onPause() {
-    super.onPause();
-    JPushInterface.onPause(this);
-    GlobalContext.getBus().unregister(this);
-  }
-
   @Override protected void onDestroy() {
     super.onDestroy();
-    PreferenceInjector.stopListening(this);
     ButterKnife.reset(this);
   }
 

@@ -6,6 +6,7 @@ import cn.edu.cqupt.nmid.headline.support.pref.DebugPref;
 import cn.edu.cqupt.nmid.headline.support.pref.PushPref;
 import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.ShareSDK;
+import com.activeandroid.ActiveAndroid;
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
 import im.fir.sdk.FIR;
@@ -20,11 +21,11 @@ public class GlobalContext extends Application {
   private boolean isDebug = true;
   public static Bus bus;
 
-
   @Override public void onCreate() {
     FIR.init(this);
     super.onCreate();
     globalContext = this;
+
     bus = new Bus(ThreadEnforcer.MAIN);
     isDebug = DebugPref.isDebug(this);
 
@@ -38,7 +39,7 @@ public class GlobalContext extends Application {
     //sharesdk
     ShareSDK.initSDK(this);
     // Here you start using the ActiveAndroid library.
-    //ActiveAndroid.initialize(this);
+    ActiveAndroid.initialize(this);
   }
 
   //However , It will never be called.

@@ -8,16 +8,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
 import android.webkit.WebSettings;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.edu.cqupt.nmid.headline.R;
-import cn.edu.cqupt.nmid.headline.support.repository.headline.HeadlineService;
-import cn.edu.cqupt.nmid.headline.support.repository.headline.bean.Feed;
 import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.support.pref.WebViewPref;
+import cn.edu.cqupt.nmid.headline.support.repository.headline.HeadlineService;
+import cn.edu.cqupt.nmid.headline.support.repository.headline.bean.Feed;
 import cn.edu.cqupt.nmid.headline.support.task.WebContentGetTask;
 import cn.edu.cqupt.nmid.headline.support.task.callback.WebContentGetTaskCallback;
 import cn.edu.cqupt.nmid.headline.ui.activity.SettingsActivity;
@@ -41,7 +40,6 @@ public class WebViewFragment extends Fragment {
 
   @InjectView(R.id.detailed_webview) ObservableWebView mWebView;
   @InjectView(R.id.detailed_multiple_actions) FloatingActionsMenu mFloatingActionsMenu;
-  @InjectView(R.id.detailed_progressbar) ViewStub mViewStub;
   @InjectView(R.id.detailed_action_favorite) FloatingActionButton mFloatingActionButton;
 
   private String TAG = LogUtils.makeLogTag(WebViewFragment.class);
@@ -49,11 +47,6 @@ public class WebViewFragment extends Fragment {
    * Intent extra uesd for ShareSDK
    */
   private Feed feed;
-  private int idMember;
-  private int category;
-  private String title;
-  private String excerpt;
-  private boolean isLike = false;
 
   public WebViewFragment() {
   }
@@ -72,10 +65,22 @@ public class WebViewFragment extends Fragment {
 
   @OnClick(R.id.detailed_action_favorite) void detailed_action_favorite(View v) {
 
-    trySetupFAB(!isLike);
-    isLike = !isLike;
+    feed.setLike(!feed.isLike());
+    trySetupFAB(feed.isLike());
     mFloatingActionsMenu.toggle();
-    Log.d(TAG, "now" + feed.isCollect());
+    if (feed.isLike()) {
+      feed.save();
+    } else {
+      if (feed != null) {
+        try {
+          feed.delete();
+        } catch (NullPointerException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+
+    Log.d(TAG, "now" + feed.isLike());
   }
 
   @OnClick(R.id.detailed_action_settings) void detailed_action_settings() {
@@ -93,7 +98,7 @@ public class WebViewFragment extends Fragment {
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     tryGetIntent();
-    trySetupFAB(isLike);
+    trySetupFAB(feed.isLike());
     trySetupWebview();
   }
 
@@ -105,13 +110,6 @@ public class WebViewFragment extends Fragment {
 
   private void tryGetIntent() {
     feed = getArguments().getParcelable(PARCELABLE_KEY);
-
-    idMember = feed.getIdmember();
-    category = feed.getCategory();
-    title = feed.getTitle();
-    excerpt = feed.getSimple_content();
-    isLike = feed.isCollect();
-    Log.d(TAG, "id" + idMember + "title" + title);
   }
 
   private void trySetupWebview() {
@@ -119,9 +117,9 @@ public class WebViewFragment extends Fragment {
     //http://202.202.43.205:8086/api/android/newscontent?category=1&id=194
     url = HeadlineService.END_POINT
         + "/api/android/newscontent?id="
-        + idMember
+        + feed.getIdmember()
         + "&category="
-        + category;
+        + feed.getCategory();
 
     WebSettings settings = mWebView.getSettings();
 
@@ -206,11 +204,11 @@ public class WebViewFragment extends Fragment {
     oks.disableSSOWhenAuthorize();
 
     // 分享时Notification的图标和文字
-    //oks.set(R.drawable.ic_launcher, getString(R.string.app_name));
+    //oks.set(R.drawable.ic_launcher_headline, getString(R.string.app_name));
     // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-    oks.setTitle(title);
+    oks.setTitle(feed.getTitle());
     // text是分享文本，所有平台都需要这个字段
-    oks.setText(excerpt);
+    oks.setText(feed.getSimple_content());
     // comment是我对这条分享的评论，仅在人人网和QQ空间使用
     oks.setComment("我在通信头条分享了文章");
     // site是分享此内容的网站名称，仅在QQ空间使用

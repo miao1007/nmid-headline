@@ -1,7 +1,6 @@
 package cn.edu.cqupt.nmid.headline.support.task;
 
 import android.os.AsyncTask;
-import android.util.Log;
 import cn.edu.cqupt.nmid.headline.support.GlobalContext;
 import cn.edu.cqupt.nmid.headline.support.task.callback.WebContentGetTaskCallback;
 import com.squareup.okhttp.Cache;
@@ -56,7 +55,6 @@ public class WebContentGetTask extends AsyncTask<String, Void, String> {
   @Override
   protected void onPostExecute(String s) {
     super.onPostExecute(s);
-    Log.d(getClass().getSimpleName(), s);
     if (s != null) {
       if (mCallback != null) {
         mCallback.onSuccess(s);
