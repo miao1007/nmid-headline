@@ -12,6 +12,7 @@ import retrofit.http.Part;
 import retrofit.http.Query;
 import retrofit.mime.TypedFile;
 import retrofit.mime.TypedString;
+import rx.Observable;
 
 /**
  * Created by leon on 2/2/15.
@@ -30,6 +31,12 @@ public interface ImageService {
       @Part(NICKNAME) TypedString description,
       @Part(DEVICE_INFO) TypedString deviceinfo,
       @Part(AVATAR) TypedString avatar, Callback<UploadResult> callback);
+
+  @Multipart @POST("/api/android/upload") Observable<UploadResult> getupdateImage(
+      @Part(IMAGE) TypedFile photo,
+      @Part(NICKNAME) TypedString description,
+      @Part(DEVICE_INFO) TypedString deviceinfo,
+      @Part(AVATAR) TypedString avatar);
 
   //get image list
   @GET("/api/android/freshimage") void getRefreshImage(@Query("id") int id, @Query(LIMIT) int limit,

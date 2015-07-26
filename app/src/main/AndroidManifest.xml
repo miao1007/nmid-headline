@@ -206,14 +206,6 @@
       </intent-filter>
     </activity>
 
-    <receiver
-        android:name=".support.receiver.DownloadCompleteReceiver"
-        android:enabled="true">
-      <intent-filter>
-        <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
-      </intent-filter>
-    </receiver>
-
     <activity
         android:name=".ui.activity.PhotoViewActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"

@@ -8,7 +8,6 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 import cn.edu.cqupt.nmid.headline.support.GlobalContext;
-import cn.edu.cqupt.nmid.headline.support.event.ImageUploadEvent;
 import cn.edu.cqupt.nmid.headline.support.repository.headline.HeadlineService;
 import cn.edu.cqupt.nmid.headline.support.repository.image.ImageService;
 import cn.edu.cqupt.nmid.headline.support.repository.image.bean.UploadResult;
@@ -19,12 +18,11 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.tencent.qzone.QZone;
 import java.io.File;
 import java.io.IOException;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 import retrofit.mime.TypedString;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class UploadService extends Service {
 
@@ -55,45 +53,61 @@ public class UploadService extends Service {
   @Override public int onStartCommand(Intent intent, int flags, int startId) {
 
     mImageUri = intent.getParcelableExtra(Key);
-    if (mImageUri == null && !ShareSDK.getPlatform(QZone.NAME).isValid()) {
-      onDestroy();
-      return -1;
-    }
+    //if (mImageUri == null && !ShareSDK.getPlatform(QZone.NAME).isValid()) {
+    //  onDestroy();
+    //  return -1;
+    //}
+    //
+    //String nickname = ShareSDK.getPlatform(QZone.NAME).getDb().getUserName();
+    //String avatar = ShareSDK.getPlatform(QZone.NAME).getDb().getUserIcon();
+
+    //try {
+    //  ImageUtils.createImageThumbnail(getApplicationContext(), mImageUri.getPath(),
+    //      mImageUri.getPath(), 800, 100);
+    //} catch (IOException e) {
+    //  Toast.makeText(getApplicationContext(), "上传失败！", Toast.LENGTH_SHORT).show();
+    //  return super.onStartCommand(intent, flags, startId);
+    //}
 
     String nickname = ShareSDK.getPlatform(QZone.NAME).getDb().getUserName();
     String avatar = ShareSDK.getPlatform(QZone.NAME).getDb().getUserIcon();
+    Observable.just(mImageUri)
+        .filter(uri -> uri != null)
+        .map(this::resizeImg)
+        .flatMap(uri1 -> resultObservable(uri1, nickname, avatar))
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(next -> showSuccessToast(), err -> showBadToast(), this::showSuccessToast);
+    return super.onStartCommand(intent, flags, startId);
+  }
 
+  void showBadToast() {
+    Log.e(TAG, "upload failed!");
+    Toast.makeText(getApplicationContext(), "上传失败！", Toast.LENGTH_SHORT).show();
+    this.stopSelf();
+  }
+
+  void showSuccessToast() {
+    Log.d(TAG, "upload successfully!");
+    Toast.makeText(getApplicationContext(), "上传成功", Toast.LENGTH_SHORT).show();
+    this.stopSelf();
+  }
+
+  Uri resizeImg(Uri uri) {
     try {
       ImageUtils.createImageThumbnail(getApplicationContext(), mImageUri.getPath(),
           mImageUri.getPath(), 800, 100);
+      return uri;
     } catch (IOException e) {
-      Toast.makeText(getApplicationContext(), "上传失败！", Toast.LENGTH_SHORT).show();
-      return super.onStartCommand(intent, flags, startId);
+      e.printStackTrace();
+      return null;
     }
+  }
 
-    Toast.makeText(this, "上传中！", Toast.LENGTH_SHORT).show();
-    RestAdapter adapter = RetrofitUtils.getCachedAdapter(HeadlineService.END_POINT);
-    adapter.create(ImageService.class)
-        .updateImage(new TypedFile("image/*", new File(mImageUri.getPath())),
-            new TypedString(nickname), new TypedString(Build.MODEL), new TypedString(avatar),
-            new Callback<UploadResult>() {
-              @Override public void success(UploadResult uploadResult, Response response) {
-                if (uploadResult.getStatus() == 1) {
-                  Log.d(TAG, "upload successfully!");
-                  Toast.makeText(getApplicationContext(), "上传成功！", Toast.LENGTH_SHORT).show();
-                  GlobalContext.getBus().post(new ImageUploadEvent(true));
-                } else {
-                  Log.e(TAG, "upload failed!");
-                  Toast.makeText(getApplicationContext(), "上传失败！", Toast.LENGTH_SHORT).show();
-                }
-                UploadService.this.stopSelf();
-              }
-
-              @Override public void failure(RetrofitError error) {
-                onDestroy();
-              }
-            });
-
-    return super.onStartCommand(intent, flags, startId);
+  Observable<UploadResult> resultObservable(Uri uri, String nickname, String avatar) {
+    return RetrofitUtils.getCachedAdapter(HeadlineService.END_POINT)
+        .create(ImageService.class)
+        .getupdateImage(new TypedFile("image/*", new File(uri.getPath())),
+            new TypedString(nickname), new TypedString(Build.MODEL), new TypedString(avatar));
   }
 }

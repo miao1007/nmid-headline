@@ -29,8 +29,8 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
   @InjectView(R.id.toolbar_holder) public RelativeLayout mToolbarHolder;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
+    setTheme(android.R.style.Theme_DeviceDefault_Light_NoActionBar);
     super.onCreate(savedInstanceState);
-    setTheme(android.R.style.Theme_DeviceDefault_Light_DarkActionBar);
     // Init the swipe back
     SwipeBack.attach(this, Position.LEFT)
         .setContentView(R.layout.activity_base_fragment)
