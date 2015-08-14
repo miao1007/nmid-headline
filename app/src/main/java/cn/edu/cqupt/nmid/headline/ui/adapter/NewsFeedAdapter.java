@@ -62,7 +62,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.Conten
 
     holder.title.setText(newsBean.getTitle());
     holder.time.setText(newsBean.getTimeRelease());
-    holder.excerpt.setText(newsBean.getSimple_content());
+    holder.excerpt.setText(newsBean.getSimple_content().trim());
 
     //what the fuck api!
     boolean one = !newsBean.getImage1().trim().isEmpty();
@@ -72,12 +72,14 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.Conten
     if (!one && !two && !three) {
       holder.threeBottonImages.setVisibility(View.GONE);
       holder.iv_single.setVisibility(View.GONE);
+      return;
     }
 
     if (one && !two && !three) {
       holder.iv_single.setVisibility(View.VISIBLE);
       holder.threeBottonImages.setVisibility(View.GONE);
       Picasso.with(holder.iv_single.getContext()).load(newsBean.getImage1()).into(holder.iv_single);
+      return;
     }
 
     if (one && two) {
@@ -93,6 +95,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.Conten
         //110
         holder.iv_all_3.setVisibility(View.GONE);
       }
+      return;
     }
   }
 

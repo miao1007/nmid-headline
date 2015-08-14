@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
+import android.webkit.WebView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -17,17 +18,17 @@ import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.support.pref.WebViewPref;
 import cn.edu.cqupt.nmid.headline.support.repository.headline.HeadlineService;
 import cn.edu.cqupt.nmid.headline.support.repository.headline.bean.Feed;
-import cn.edu.cqupt.nmid.headline.support.task.WebContentGetTask;
-import cn.edu.cqupt.nmid.headline.support.task.callback.WebContentGetTaskCallback;
 import cn.edu.cqupt.nmid.headline.ui.activity.SettingsActivity;
 import cn.edu.cqupt.nmid.headline.utils.LogUtils;
 import cn.edu.cqupt.nmid.headline.utils.NetworkUtils;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ObservableWebView;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+import java.io.IOException;
 
 /**
  * Created by leon on 15/5/17.
@@ -38,7 +39,7 @@ public class WebViewFragment extends Fragment {
   public static final String PARCELABLE_KEY = "key";
   String url;
 
-  @InjectView(R.id.detailed_webview) ObservableWebView mWebView;
+  @InjectView(R.id.detailed_webview) WebView mWebView;
   @InjectView(R.id.detailed_multiple_actions) FloatingActionsMenu mFloatingActionsMenu;
   @InjectView(R.id.detailed_action_favorite) FloatingActionButton mFloatingActionButton;
 
@@ -122,7 +123,7 @@ public class WebViewFragment extends Fragment {
         + feed.getCategory();
 
     WebSettings settings = mWebView.getSettings();
-
+    mWebView.setWebContentsDebuggingEnabled(true);
     settings.setTextZoom(WebViewPref.getWebViewTextZoom(getActivity()));
     switch (WebViewPref.isAutoLoadImages(getActivity())) {
       case 0:
@@ -138,65 +139,40 @@ public class WebViewFragment extends Fragment {
         break;
     }
 
-    mWebView.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
-      //正在滚动时，包括drag滚动和惯性滚动
-      @Override public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+    OkHttpClient client = new OkHttpClient();
+    Request request = new Request.Builder().url(url).build();
+
+    client.newCall(request).enqueue(new Callback() {
+      @Override public void onFailure(Request request, IOException e) {
 
       }
 
-      //当按下touch
-      @Override public void onDownMotionEvent() {
-        ///Log.i(TAG, "onDownMotionEvent");
-
-      }
-
-      //当松开touch后，计算相对y
-      @Override public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-
-      }
-    });
-
-    new WebContentGetTask(new WebContentGetTaskCallback() {
-      @Override public void onPreExcute() {
-
-      }
-
-      @Override public void onSuccess(Object o) {
+      @Override public void onResponse(Response response) throws IOException {
         String htmlData;
         if (ThemePref.isNightMode(getActivity())) {
           // Webview will use asserts/style_night.css
           htmlData =
               "<link rel=\"stylesheet\" type=\"text/css\" href=\"style_night.css\" /> <body class= \"gloable\"> "
-                  + o
+                  + response.body().string()
                   + "</body>";
         } else {
           // Webview will use asserts/style.css
           htmlData =
               "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" /> <body class= \"gloable\"> "
-                  + o
+                  + response.body().string()
                   + "</body>";
         }
-        mWebView.loadDataWithBaseURL("file:///android_asset/", htmlData, MIME_TYPE, ENCODING, null);
+        Log.d(TAG,Thread.currentThread().getName());
+        getActivity().runOnUiThread(new Runnable() {
+          @Override public void run() {
+            mWebView.loadDataWithBaseURL("file:///android_asset/", htmlData, MIME_TYPE, ENCODING, null);
+          }
+        });
       }
-    }).execute(url);
+    });
   }
 
-  //@Override public void onBackPressed() {
-  //  overridePendingTransition(R.anim.swipeback_stack_to_front, R.anim.swipeback_stack_right_out);
-  //
-  //  if (mFloatingActionsMenu.isExpanded()) {
-  //    mFloatingActionsMenu.collapse();
-  //  } else {
-  //    super.onBackPressed();
-  //  }
-  //}
 
-  //@Override public boolean onKeyUp(int keyCode, KeyEvent event) {
-  //  if (keyCode == KeyEvent.KEYCODE_MENU) {
-  //    mFloatingActionsMenu.toggle();
-  //  }
-  //  return super.onKeyUp(keyCode, event);
-  //}
 
   private void dispatchOneKeyShare() {
     OnekeyShare oks = new OnekeyShare();

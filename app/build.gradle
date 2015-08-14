@@ -2,17 +2,24 @@ apply plugin: 'com.android.application' //or apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
 
 android {
+  signingConfigs {
+    debugconfig {
+      keyAlias 'debug'
+      keyPassword 'qwe12345'
+      storeFile file('/Users/leon/Documents/person/dev info/miao1007_key.jks')
+      storePassword 'qwe12345'
+    }
+  }
   compileSdkVersion 22
   buildToolsVersion '22.0.1'
-
   defaultConfig {
     applicationId "cn.edu.cqupt.nmid.headline"
     minSdkVersion 15
     targetSdkVersion 22
     versionCode 230
     versionName "2.30"
+    signingConfig signingConfigs.debugconfig
   }
-
   buildTypes {
     release {
       minifyEnabled true //run proguard
@@ -26,11 +33,11 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt')
     }
   }
-
   //for injection
   packagingOptions {
     exclude 'META-INF/services/javax.annotation.processing.Processor'
   }
+  productFlavors {}
 }
 
 repositories {
@@ -47,11 +54,11 @@ dependencies {
   compile 'com.squareup.retrofit:retrofit:1.9.0'
   compile 'com.squareup:otto:1.3.6'
   compile 'com.jakewharton:butterknife:6.0.0'
-  compile 'com.android.support:cardview-v7:22.2.0'
-  compile 'com.android.support:recyclerview-v7:22.2.0'
-  compile 'com.android.support:appcompat-v7:22.2.0'
-  compile 'com.android.support:palette-v7:22.2.0'
-  compile 'com.android.support:support-v4:22.2.0'
+  compile 'com.android.support:cardview-v7:22.2.1'
+  compile 'com.android.support:recyclerview-v7:22.2.1'
+  compile 'com.android.support:appcompat-v7:22.2.1'
+  compile 'com.android.support:palette-v7:22.2.1'
+  compile 'com.android.support:support-v4:22.2.1'
   compile 'com.getbase:floatingactionbutton:1.5.1'
   compile 'com.github.ksoichiro:android-observablescrollview:1.5.0'
   compile 'com.hannesdorfmann:swipeback:1.0.0'
@@ -60,6 +67,7 @@ dependencies {
   //compile 'com.malinskiy:superrecyclerview:1.1.0'
   compile 'im.fir:sdk:1.2.2'
   compile 'io.reactivex:rxandroid:0.25.0'
+  compile files('libs/tbs.jar')
 }
 
 

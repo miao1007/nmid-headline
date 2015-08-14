@@ -20,7 +20,7 @@ public class AboutFragment extends Fragment {
   @InjectView(R.id.about_version) TextView mTextView_vision;
 
   @OnClick(R.id.about_version) void about_version() {
-    FIRUtils.checkForUpdate(getActivity());
+    FIRUtils.checkForUpdate(getActivity(),true);
   }
 
   @OnClick(R.id.about_nexus_img) void about_nexus_img() {

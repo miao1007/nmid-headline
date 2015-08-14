@@ -14,13 +14,11 @@
       android:orientation="vertical">
 
 
-    <com.github.ksoichiro.android.observablescrollview.ObservableWebView
+    <WebView
         android:id="@+id/detailed_webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"/>
 
-
-    </com.github.ksoichiro.android.observablescrollview.ObservableWebView>
 
     <ViewStub android:layout_width="match_parent" android:layout_height="wrap_content"
         android:id="@+id/detailed_progressbar"
