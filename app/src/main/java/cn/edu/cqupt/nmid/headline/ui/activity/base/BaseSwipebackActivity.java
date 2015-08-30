@@ -17,6 +17,7 @@ public class BaseSwipebackActivity extends ActionBarActivity {
         .setContentView(R.layout.activity_base_settings)
         .setSwipeBackView(R.layout.swipeback_default);
     setContentView(R.layout.activity_base_settings);
+
   }
 
 
