@@ -18,8 +18,6 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.tencent.qzone.QZone;
 import java.io.File;
 import java.io.IOException;
-import retrofit.mime.TypedFile;
-import retrofit.mime.TypedString;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -107,7 +105,6 @@ public class UploadService extends Service {
   Observable<UploadResult> resultObservable(Uri uri, String nickname, String avatar) {
     return RetrofitUtils.getCachedAdapter(HeadlineService.END_POINT)
         .create(ImageService.class)
-        .getupdateImage(new TypedFile("image/*", new File(uri.getPath())),
-            new TypedString(nickname), new TypedString(Build.MODEL), new TypedString(avatar));
+        .getupdateImage( new File(uri.getPath()),nickname, Build.MODEL, avatar);
   }
 }

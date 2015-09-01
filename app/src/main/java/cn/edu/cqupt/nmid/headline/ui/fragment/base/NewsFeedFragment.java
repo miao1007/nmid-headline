@@ -30,8 +30,7 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit.Response;
 
 import static cn.edu.cqupt.nmid.headline.utils.LogUtils.LOGD;
 import static cn.edu.cqupt.nmid.headline.utils.LogUtils.makeLogTag;
@@ -166,16 +165,15 @@ public class NewsFeedFragment extends Fragment {
     mRecyclerview.smoothScrollToPosition(0);
     RetrofitUtils.getCachedAdapter(HeadlineService.END_POINT)
         .create(HeadlineService.class)
-        .getFreshFeeds(feed_category, 0, feed_limit, new Callback<HeadJson>() {
-          @Override public void success(final HeadJson headJson, Response response) {
-            //cacheToDb(headJson.getData());
-            dispatchSuccess(headJson, true);
-          }
+        .getFreshFeeds(feed_category, 0, feed_limit).enqueue(new Callback<HeadJson>() {
+      @Override public void onResponse(Response<HeadJson> response) {
+        dispatchSuccess(response.body(), true);
+      }
 
-          @Override public void failure(RetrofitError error) {
-            dispatchError();
-          }
-        });
+      @Override public void onFailure(Throwable t) {
+
+      }
+    });
   }
 
   //private void cacheToDb(List<Feed> feeds) {
@@ -198,15 +196,15 @@ public class NewsFeedFragment extends Fragment {
     feed_id = newsBeans.get(newsBeans.size() - 1).getIdmember();
     RetrofitUtils.getCachedAdapter(HeadlineService.END_POINT)
         .create(HeadlineService.class)
-        .getOldFeeds(feed_category, feed_id, feed_limit, new Callback<HeadJson>() {
-          @Override public void success(HeadJson headJson, Response response) {
-            dispatchSuccess(headJson, false);
-          }
+        .getOldFeeds(feed_category, feed_id, feed_limit).enqueue(new Callback<HeadJson>() {
+      @Override public void onResponse(Response<HeadJson> response) {
+        dispatchSuccess(response.body(), false);
+      }
 
-          @Override public void failure(RetrofitError error) {
-            dispatchError();
-          }
-        });
+      @Override public void onFailure(Throwable t) {
+
+      }
+    });
   }
 
   private void dispatchSuccess(HeadJson headJson, boolean isClear) {

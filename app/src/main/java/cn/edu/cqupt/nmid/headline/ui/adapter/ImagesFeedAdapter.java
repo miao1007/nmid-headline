@@ -19,11 +19,11 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.edu.cqupt.nmid.headline.R;
+import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.support.repository.headline.HeadlineService;
 import cn.edu.cqupt.nmid.headline.support.repository.image.ImageService;
 import cn.edu.cqupt.nmid.headline.support.repository.image.bean.ImageInfo;
 import cn.edu.cqupt.nmid.headline.support.repository.image.bean.ImageLikeResult;
-import cn.edu.cqupt.nmid.headline.support.pref.ThemePref;
 import cn.edu.cqupt.nmid.headline.ui.activity.PhotoViewActivity;
 import cn.edu.cqupt.nmid.headline.utils.TimeUtils;
 import cn.edu.cqupt.nmid.headline.utils.thirdparty.RetrofitUtils;
@@ -35,9 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit.Response;
 
 /**
  * Created by leon on 2/2/15.
@@ -45,21 +43,17 @@ import retrofit.client.Response;
 
 public class ImagesFeedAdapter extends RecyclerView.Adapter<ImagesFeedAdapter.StreamViewHolder> {
 
-  List<ImageInfo> knoImageList;
-  boolean showLoadingView = false;
-
-  private final Map<RecyclerView.ViewHolder, AnimatorSet> likeAnimations = new HashMap<>();
-  private final ArrayList<Integer> likedPositions = new ArrayList<>();
-
   private static final DecelerateInterpolator DECCELERATE_INTERPOLATOR =
       new DecelerateInterpolator();
   private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR =
       new AccelerateInterpolator();
   private static final OvershootInterpolator OVERSHOOT_INTERPOLATOR = new OvershootInterpolator(4);
-
   private static final int VIEW_TYPE_DEFAULT = 1;
   private static final int VIEW_TYPE_UPLOADING = 2;
-
+  private final Map<RecyclerView.ViewHolder, AnimatorSet> likeAnimations = new HashMap<>();
+  private final ArrayList<Integer> likedPositions = new ArrayList<>();
+  List<ImageInfo> knoImageList;
+  boolean showLoadingView = false;
   private boolean isLike = true;
 
   public ImagesFeedAdapter(List<ImageInfo> knoImageList) {
@@ -124,29 +118,27 @@ public class ImagesFeedAdapter extends RecyclerView.Adapter<ImagesFeedAdapter.St
     viewHolder.mBtn_like.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(final View v) {
 
-        RestAdapter adapter = new RestAdapter.Builder().setLogLevel(RestAdapter.LogLevel.FULL)
-            .setEndpoint(HeadlineService.END_POINT)
-            .build();
-        adapter.create(ImageService.class)
+        RetrofitUtils.getCachedAdapter(HeadlineService.END_POINT)
+            .create(ImageService.class)
             .likeImage(knoImageList.get(position).getIdmember(),
-                imageInfo.isHaveClickLike() ? 0 : 1, new Callback<ImageLikeResult>() {
-                  @Override
-                  public void success(ImageLikeResult imageLikeResult, Response response) {
-                    if (imageLikeResult.status == 1) {
-                      RetrofitUtils.disMsg(v.getContext(),
-                          !imageInfo.isHaveClickLike() ? "Success!" : "取消成功");
-                      int currentLike =
-                          imageInfo.getCount_like() + (imageInfo.isHaveClickLike() ? (0) : (1));
-                      viewHolder.likesCount.setText(currentLike + "人 觉得赞");
-                      updateHeartButton(viewHolder, true, !imageInfo.isHaveClickLike());
-                      imageInfo.setIsLike(!imageInfo.isHaveClickLike());
-                    }
-                  }
+                imageInfo.isHaveClickLike() ? 0 : 1)
+            .enqueue(new Callback<ImageLikeResult>() {
+              @Override public void onResponse(Response<ImageLikeResult> response) {
+                if (response.body().status == 1) {
+                  RetrofitUtils.disMsg(v.getContext(),
+                      !imageInfo.isHaveClickLike() ? "Success!" : "取消成功");
+                  int currentLike =
+                      imageInfo.getCount_like() + (imageInfo.isHaveClickLike() ? (0) : (1));
+                  viewHolder.likesCount.setText(currentLike + "人 觉得赞");
+                  updateHeartButton(viewHolder, true, !imageInfo.isHaveClickLike());
+                  imageInfo.setIsLike(!imageInfo.isHaveClickLike());
+                }
+              }
 
-                  @Override public void failure(RetrofitError error) {
-                    RetrofitUtils.disErr(v.getContext(), error);
-                  }
-                });
+              @Override public void onFailure(Throwable t) {
+
+              }
+            });
       }
     });
 
@@ -162,21 +154,6 @@ public class ImagesFeedAdapter extends RecyclerView.Adapter<ImagesFeedAdapter.St
 
   @Override public int getItemCount() {
     return knoImageList.size();
-  }
-
-  public static class StreamViewHolder extends RecyclerView.ViewHolder {
-
-    @InjectView(R.id.item_stream_imageview) ImageView mIv_stream_previous;
-    @InjectView(R.id.item_stream_likes_count) TextView likesCount;
-    @InjectView(R.id.item_stream_nick_name) TextView nickName;
-    @InjectView(R.id.stream_btnLike) ImageButton mBtn_like;
-    @InjectView(R.id.card_view) CardView mCv;
-    @InjectView(R.id.iv_stream_avatar) ImageView mIv_avater;
-
-    public StreamViewHolder(View itemView) {
-      super(itemView);
-      ButterKnife.inject(this, itemView);
-    }
   }
 
   private void updateHeartButton(final StreamViewHolder holder, boolean animated,
@@ -242,5 +219,20 @@ public class ImagesFeedAdapter extends RecyclerView.Adapter<ImagesFeedAdapter.St
 
   private void resetLikeAnimationState(StreamViewHolder holder) {
     likeAnimations.remove(holder);
+  }
+
+  public static class StreamViewHolder extends RecyclerView.ViewHolder {
+
+    @InjectView(R.id.item_stream_imageview) ImageView mIv_stream_previous;
+    @InjectView(R.id.item_stream_likes_count) TextView likesCount;
+    @InjectView(R.id.item_stream_nick_name) TextView nickName;
+    @InjectView(R.id.stream_btnLike) ImageButton mBtn_like;
+    @InjectView(R.id.card_view) CardView mCv;
+    @InjectView(R.id.iv_stream_avatar) ImageView mIv_avater;
+
+    public StreamViewHolder(View itemView) {
+      super(itemView);
+      ButterKnife.inject(this, itemView);
+    }
   }
 }

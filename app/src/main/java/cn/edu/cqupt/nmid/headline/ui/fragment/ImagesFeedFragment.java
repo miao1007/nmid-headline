@@ -44,8 +44,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit.Response;
 
 import static cn.edu.cqupt.nmid.headline.utils.LogUtils.makeLogTag;
 
@@ -173,23 +172,23 @@ public class ImagesFeedFragment extends Fragment {
     isLoadingMore = true;
     RetrofitUtils.getCachedAdapter(HeadlineService.END_POINT)
         .create(ImageService.class)
-        .getRefreshImage(0, 4, new Callback<ImageStream>() {
-          @Override public void success(ImageStream imageStream, Response response) {
-            isLoadingMore = false;
-            mSwipeRefreshLayout.setRefreshing(false);
-            images.clear();
-            //bug fix when server return null
-            if (imageStream.getStatus() == 1) {
-              images.addAll(imageStream.getData());
-              adapter.notifyDataSetChanged();
-            }
-          }
+        .getRefreshImage(0, 4).enqueue(new Callback<ImageStream>() {
+      @Override public void onResponse(retrofit.Response<ImageStream> response) {
+        isLoadingMore = false;
+        mSwipeRefreshLayout.setRefreshing(false);
+        images.clear();
+        //bug fix when server return null
+        if (response.body().getStatus() == 1) {
+          images.addAll(response.body().getData());
+          adapter.notifyDataSetChanged();
+        }
+      }
 
-          @Override public void failure(RetrofitError error) {
-            mSwipeRefreshLayout.setRefreshing(false);
-            isLoadingMore = false;
-          }
-        });
+      @Override public void onFailure(Throwable t) {
+        mSwipeRefreshLayout.setRefreshing(false);
+        isLoadingMore = false;
+      }
+    });
   }
 
   void loadOldImage() {
@@ -202,20 +201,20 @@ public class ImagesFeedFragment extends Fragment {
     lastid = images.get(images.size() - 1).getIdmember();
     RetrofitUtils.getCachedAdapter(HeadlineService.END_POINT)
         .create(ImageService.class)
-        .getROldImage(lastid, 4, new Callback<ImageStream>() {
-          @Override public void success(ImageStream imageStream, Response response) {
-            isLoadingMore = false;
-            //bug fix when server return null
-            if (imageStream.getStatus() == 1) {
-              images.addAll(imageStream.getData());
-              adapter.notifyDataSetChanged();
-            }
-          }
+        .getROldImage(lastid, 4).enqueue(new Callback<ImageStream>() {
+      @Override public void onResponse(retrofit.Response<ImageStream> response) {
+        isLoadingMore = false;
+        //bug fix when server return null
+        if (response.body().getStatus() == 1) {
+          images.addAll(response.body().getData());
+          adapter.notifyDataSetChanged();
+        }
+      }
 
-          @Override public void failure(RetrofitError error) {
-            isLoadingMore = false;
-          }
-        });
+      @Override public void onFailure(Throwable t) {
+        isLoadingMore = false;
+      }
+    });
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
