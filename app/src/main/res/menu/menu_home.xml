@@ -4,7 +4,6 @@
     tools:context=".HomeActivity">
     <item
         android:id="@+id/message"
-        android:icon="@drawable/num"
         android:showAsAction="ifRoom"
         android:orderInCategory="0"
         android:title="消息"

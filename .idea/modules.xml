@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/TXnews.iml" filepath="$PROJECT_DIR$/TXnews.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/nmid-headline.iml" filepath="$PROJECT_DIR$/nmid-headline.iml" />
       <module fileurl="file://$PROJECT_DIR$/onekeyshare/onekeyshare.iml" filepath="$PROJECT_DIR$/onekeyshare/onekeyshare.iml" />
     </modules>
   </component>
