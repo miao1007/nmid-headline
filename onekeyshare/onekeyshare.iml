@@ -95,8 +95,8 @@
     <orderEntry type="library" exported="" name="ShareSDK-QZone-2.6.0" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Core-2.6.0" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-Moments-2.6.0" level="project" />
-    <orderEntry type="library" exported="" name="ShareSDK-Wechat-2.6.0" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-SinaWeibo-2.6.0" level="project" />
+    <orderEntry type="library" exported="" name="ShareSDK-Wechat-2.6.0" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-Core-2.6.0" level="project" />
   </component>
 </module>

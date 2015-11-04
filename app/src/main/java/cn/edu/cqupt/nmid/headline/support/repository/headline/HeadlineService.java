@@ -4,6 +4,7 @@ import cn.edu.cqupt.nmid.headline.support.repository.headline.bean.HeadJson;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.http.GET;
+import retrofit.http.POST;
 import retrofit.http.Query;
 
 /**
@@ -11,7 +12,7 @@ import retrofit.http.Query;
  */
 public interface HeadlineService {
 
-  String END_POINT = "http://202.202.43.205:8086/";
+  String END_POINT = "http://172.23.26.121:8080/TongxinHeadline";
 
   //1	int	学院新闻
   //2	int	科研动态
@@ -47,4 +48,6 @@ public interface HeadlineService {
 
   @GET("/api/android/newscontent") Call<HeadJson> getNewsContent(@Query(CATEGORY) int category,
       @Query(ID) int id, Callback<Void> callback);
+//  @POST("/api/message/receiveId")
+//      Call<Repo> IsNewMessage();
 }

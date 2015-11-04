@@ -90,9 +90,9 @@ public class HomeActivity extends AppCompatActivity
   @Override public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.menu_home, menu);
     if (ThemePref.isNightMode(this)) {
-      menu.getItem(0).setTitle(R.string.settings_night_mode_day);
+      menu.getItem(1).setTitle(R.string.settings_night_mode_day);
     } else {
-      menu.getItem(0).setTitle(R.string.settings_night_mode_night);
+      menu.getItem(1).setTitle(R.string.settings_night_mode_night);
     }
     return super.onCreateOptionsMenu(menu);
   }
@@ -109,6 +109,9 @@ public class HomeActivity extends AppCompatActivity
         break;
       case R.id.action_settings:
         startActivity(new Intent(this, SettingsActivity.class));
+        break;
+      case R.id.message:
+        startActivity(new Intent(this,NoticeActivity.class));
         break;
       default:
         break;

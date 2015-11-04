@@ -2,11 +2,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".HomeActivity">
-  <item
+    <item
+        android:id="@+id/message"
+        android:icon="@drawable/num"
+        android:showAsAction="ifRoom"
+        android:orderInCategory="0"
+        android:title="消息"
+        />
+    <item
       android:id="@+id/action_night_mode"
+        android:orderInCategory="1"
       android:title="@string/settings_night_mode_night"/>
 
-  <item
+     <item
       android:id="@+id/action_settings"
+         android:orderInCategory="2"
       android:title="@string/action_settings"/>
+
 </menu>

@@ -19,6 +19,8 @@
   <string name="settings_push_feeds">推送设置</string>
   <string name="settings_more_query_limit">每次刷新消息的个数</string>
   <string name="settings_refresh">刷新设置</string>
+  <string name="message">消息通知</string>
+
 
 
 
